@@ -39,7 +39,7 @@ const CartC = () => {
     <div className="main-body">
       <HeaderC />
       <div className="center">
-        <p className="title">Shopping Cart</p>
+        <h1>Shopping Cart</h1>
       </div>
       <div className="cart-table">
         <div className="table-headers">

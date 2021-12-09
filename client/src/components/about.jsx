@@ -43,7 +43,7 @@ const AboutC = () => {
       <HeaderC />
       <div className="main-body">
         <div className="center">
-          <p className="title">about</p>
+          <h1>about</h1>
         </div>
         <div className="profile-info">
           <div className="profile-image-div">

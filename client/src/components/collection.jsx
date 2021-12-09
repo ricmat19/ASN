@@ -33,8 +33,8 @@ const CollectionC = () => {
             <img className="collection-thumbnail" src={item.imageBuffer} />
           </div>
           <div className="collection-thumbnail-footer">
-            <div className="Title">{item.title}</div>
-            <div className="Price">${item.price}.00</div>
+            <div>{item.title}</div>
+            <div className="price">${item.price}.00</div>
           </div>
         </div>
       );
@@ -111,13 +111,13 @@ const CollectionC = () => {
       <div className="main-body">
         <div className="center subtitle-div">
           <a className="subtitle-anchor" href="/collection/2D">
-            <p className="title">2D art</p>
+            <h1>2D art</h1>
           </a>
           <a className="subtitle-anchor" href="/collection/3D">
-            <p className="title">3D art</p>
+            <h1>3D art</h1>
           </a>
           <a className="subtitle-anchor" href="/collection/comic">
-            <p className="title">comics</p>
+            <h1>comics</h1>
           </a>
         </div>
         <div className="collection-menu">{displayItems}</div>

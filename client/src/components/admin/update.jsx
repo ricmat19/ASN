@@ -74,7 +74,7 @@ const AdminUpdateC = () => {
       <AdminHeaderC />
       <div className="main-body">
         <div className="center">
-          <p className="title">admin</p>
+          <h1>admin</h1>
         </div>
         <div className="admin-item-div">
           <div className="admin-image-div">
@@ -86,7 +86,7 @@ const AdminUpdateC = () => {
           </div>
           <form className="admin-form" action="/routes/admin.js" method="POST">
             <div className="admin-form-title">
-              <p className="title">Update</p>
+              <h1>Update</h1>
             </div>
             <div className="admin-form-field">
               <label className="admin-label" htmlFor="title">

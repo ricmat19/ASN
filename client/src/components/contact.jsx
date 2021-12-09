@@ -72,7 +72,7 @@ const ContactC = () => {
       <HeaderC />
       <div className="main-body">
         <div className="center">
-          <p className="title">contact</p>
+          <h1>contact</h1>
         </div>
         <div className="form-div">
           <form className="contact-form" method="POST" action="/contact">

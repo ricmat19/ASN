@@ -109,12 +109,12 @@ const HeaderC = () => {
   };
 
   return (
-    <div className="navbar-div">
+    <header className="navbar-div">
       {/* Signin */}
       <div className={signinModal}>
         <form>
           <div ref={signinRef} className="sign-content">
-            <p className="sign-header title">welcome</p>
+            <h1 className="sign-header">welcome</h1>
             <div>
               <div className="modal-input-div">
                 <input
@@ -160,7 +160,7 @@ const HeaderC = () => {
       <div className={signupModal}>
         <form>
           <div ref={signupRef} className="sign-content">
-            <p className="sign-header title">Create Account</p>
+            <h1 className="sign-header">Create Account</h1>
             <div className="sign-input">
               <div className="name-input-div">
                 <input
@@ -243,7 +243,7 @@ const HeaderC = () => {
       <div className={resetModal}>
         <form>
           <div ref={resetRef} className="sign-content">
-            <p className="sign-header title">Reset Password</p>
+            <h1 className="sign-header">Reset Password</h1>
             <div className="sign-input">
               <div className="forgot-input-div">
                 <input type="text" placeholder="Email" />
@@ -263,31 +263,31 @@ const HeaderC = () => {
 
       <div>
         <input type="checkbox" id="nav-toggle" className="nav-toggle" />
-        <label htmlFor="nav-toggle" className="title nav-toggle-label">
+        <label htmlFor="nav-toggle" className="nav-toggle-label">
           <a className="menu-toggle">
-            <p className="title">menu</p>
+            <h1>menu</h1>
           </a>
         </label>
         <nav className="navbar">
           <a href="/">
-            <p className="title">home</p>
+            <h1>home</h1>
           </a>
           <a href="/collection/2D">
-            <p className="title">store</p>
+            <h1>store</h1>
           </a>
           <a href="/about">
-            <p className="title">info</p>
+            <h1>info</h1>
           </a>
           <a href="/contact">
-            <p className="title">contact</p>
+            <h1>contact</h1>
           </a>
           <div onClick={displaySignin}>
-            <p className="title pointer">sign in</p>
+            <h1 className="pointer">sign in</h1>
           </div>
         </nav>
       </div>
       <hr />
-    </div>
+    </header>
   );
 };
 

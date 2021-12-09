@@ -74,7 +74,7 @@ const AdminCreateC = () => {
       <AdminHeaderC />
       <div className="main-body">
         <div className="center">
-          <p className="title">admin</p>
+          <h1>admin</h1>
         </div>
         <div className="admin-item-div">
           <div className="admin-image-div">
@@ -91,7 +91,7 @@ const AdminCreateC = () => {
             encType="multipart/form-data"
           >
             <div className="admin-form-title">
-              <p className="title">Create</p>
+              <h1>Create</h1>
             </div>
             <div className="admin-form-field">
               <label className="admin-label">Title:</label>
