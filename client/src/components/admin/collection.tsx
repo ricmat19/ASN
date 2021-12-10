@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useNavigate, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import CollectionAPI from "../../apis/collectionAPI";
 import { CollectionContext } from "../../context/collectionContext";
 import AdminHeaderC from "../admin/header";
@@ -29,8 +29,8 @@ const AdminCollectionC = () => {
               />
             </div>
             <div className="collection-thumbnail-footer">
-              <div>{item.title}</div>
-              <div className="price">${item.price}.00</div>
+              <div className="Title">{item.title}</div>
+              <div className="Price">${item.price}.00</div>
             </div>
           </div>
           <div className="admin-buttons">
@@ -64,7 +64,7 @@ const AdminCollectionC = () => {
     setPageNumber(selected);
   };
 
-  let navigation = useNavigate();
+  let history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,7 +115,7 @@ const AdminCollectionC = () => {
 
   const handleUpdate = async (id) => {
     try {
-      navigation.push(`/admin/update/${id}`);
+      history.push(`/admin/update/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -127,13 +127,13 @@ const AdminCollectionC = () => {
       <div className="main-body">
         <div className="center subtitle-div">
           <a className="subtitle-anchor" href="/admin/collection/2D">
-            <h1>2D art</h1>
+            <p className="title">2D art</p>
           </a>
           <a className="subtitle-anchor" href="/admin/collection/3D">
-            <h1>3D art</h1>
+            <p className="title">3D art</p>
           </a>
           <a className="subtitle-anchor" href="/admin/collection/comic">
-            <h1>comics</h1>
+            <p className="title">comics</p>
           </a>
         </div>
         <div className="collection-menu">{displayItems}</div>

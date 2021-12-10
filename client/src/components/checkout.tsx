@@ -97,15 +97,15 @@ const CheckoutC = () => {
 
       navigation.push(`/shipping`);
 
-      // emailInput.current.value = "";
-      // firstNameInput.current.value = "";
-      // lastNameInput.current.value = "";
-      // addressInput.current.value = "";
-      // suiteInput.current.value = "";
-      // cityInput.current.value = "";
-      // stateInput.current.value = "";
-      // zipcodeInput.current.value = "";
-      // phoneInput.current.value = "";
+      emailInput.current.value = "";
+      firstNameInput.current.value = "";
+      lastNameInput.current.value = "";
+      addressInput.current.value = "";
+      suiteInput.current.value = "";
+      cityInput.current.value = "";
+      stateInput.current.value = "";
+      zipcodeInput.current.value = "";
+      phoneInput.current.value = "";
     } catch (err) {
       console.log(err);
     }

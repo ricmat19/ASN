@@ -6,7 +6,7 @@ import CollectionAPI from "../apis/collectionAPI";
 
 const AboutC = () => {
   const [, setCart] = useState([]);
-  const [cartState, setCartState] = useState(false);
+  const [cartState] = useState(false);
   const [cartQty, setCartQty] = useState(0);
   const [cartCost, setCartCost] = useState(0);
 
