@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import AdminCreateC from "../../components/admin/create";
 
-const AdminCreateR = () => {
+const AdminCreateR: FC = () => {
   return (
     <div>
       <AdminCreateC />

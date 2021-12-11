@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import AdminHomeC from "../../components/admin/home";
 
-const AdminHomeR = () => {
+const AdminHomeR: FC = () => {
   return (
     <div>
       <AdminHomeC />

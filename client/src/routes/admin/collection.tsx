@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import AdminCollectionC from "../../components/admin/collection";
 
-const AdminCollectionR = () => {
+const AdminCollectionR: FC = () => {
   return (
     <div>
       <AdminCollectionC />

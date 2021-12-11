@@ -1,13 +1,13 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef, useEffect, FC, ChangeEvent } from "react";
 import CollectionAPI from "../apis/collectionAPI";
 import { CollectionContext } from "../context/collectionContext";
 
-const HeaderC = () => {
+const HeaderC: FC = () => {
   const { createUser } = useContext(CollectionContext);
 
-  const [signinModal, setSigninModal] = useState("sign-bg");
-  const [signupModal, setSignupModal] = useState("sign-bg");
-  const [resetModal, setResetModal] = useState("sign-bg");
+  const [signinModal, setSigninModal] = useState<string>("sign-bg");
+  const [signupModal, setSignupModal] = useState<string>("sign-bg");
+  const [resetModal, setResetModal] = useState<string>("sign-bg");
 
   const displaySignin = () => {
     setSigninModal("sign-bg sign-active");
@@ -59,7 +59,7 @@ const HeaderC = () => {
   const lastNameInput = useRef(null);
   const passwordCopyInput = useRef(null);
 
-  const handleSignin = async (e) => {
+  const handleSignin = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       await CollectionAPI.post("/signin", {
@@ -76,7 +76,7 @@ const HeaderC = () => {
     }
   };
 
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       const response = await CollectionAPI.post("/signup", {
@@ -99,7 +99,7 @@ const HeaderC = () => {
     }
   };
 
-  async (e) => {
+  async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       console.log("reset");

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import CheckoutC from "../components/checkout";
 
-const CheckoutR = () => {
+const CheckoutR: FC = () => {
   return (
     <div>
       <CheckoutC />

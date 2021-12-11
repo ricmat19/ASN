@@ -1,18 +1,18 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, FC, ChangeEvent } from "react";
 import CollectionAPI from "../../apis/collectionAPI";
 import { CollectionContext } from "../../context/collectionContext";
 import AdminHeaderC from "./header";
 import FooterC from "../footer";
 
-const AdminCreateC = () => {
+const AdminCreateC: FC = () => {
   const { createItem } = useContext(CollectionContext);
 
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [type, setType] = useState<string>("");
   const [images, setImages] = useState(null);
-  const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
-  const [info, setInfo] = useState("");
+  const [quantity, setQuantity] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [info, setInfo] = useState<string>("");
 
   const titleInput = useRef(null);
   const typeInput = useRef(null);
@@ -26,7 +26,7 @@ const AdminCreateC = () => {
     require("dotenv").config();
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       let formData = new FormData();

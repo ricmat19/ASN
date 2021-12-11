@@ -1,9 +1,9 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, FC } from "react";
 import PropTypes from "prop-types";
 
 export const CollectionContext = createContext();
 
-export const CollectionContextProvider = (props) => {
+export const CollectionContextProvider: FC = (props) => {
   const [collection, setCollection] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [user, setUser] = useState([]);

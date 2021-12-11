@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import ShippingC from "../components/shipping";
 
-const ShippingR = () => {
+const ShippingR: FC = () => {
   return (
     <div>
       <ShippingC />

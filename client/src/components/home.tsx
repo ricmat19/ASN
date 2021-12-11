@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import CartModalC from "./cartModal";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { CollectionContext } from "../context/collectionContext";
 
-const HomeC = () => {
+const HomeC: FC = () => {
   const { setCollection } = useContext(CollectionContext);
-  const [, setCart] = useState([]);
-  const [cartState, setCartState] = useState(false);
-  const [cartQty, setCartQty] = useState(0);
-  const [cartCost, setCartCost] = useState(0);
-  const [twoDImage, setTwoDImage] = useState("");
-  const [threeDImage, setThreeDImage] = useState("");
-  const [comicImage, setComicImage] = useState("");
+  const [, setCart] = useState<string[]>([]);
+  const [cartState, setCartState] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
+  const [twoDImage, setTwoDImage] = useState<string>("");
+  const [threeDImage, setThreeDImage] = useState<string>("");
+  const [comicImage, setComicImage] = useState<string>("");
 
   let productResponse;
   useEffect(() => {

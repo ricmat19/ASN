@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, FC, ChangeEvent } from "react";
 import { useParams } from "react-router";
 import CollectionAPI from "../apis/collectionAPI";
 import { CollectionContext } from "../context/collectionContext";
@@ -6,11 +6,11 @@ import CartModalC from "./cartModal";
 import HeaderC from "./header";
 import FooterC from "./footer";
 
-const ItemDetailsC = () => {
-  const [, setCart] = useState([]);
-  const [cartState, setCartState] = useState(false);
-  const [cartQty, setCartQty] = useState(0);
-  const [cartCost, setCartCost] = useState(0);
+const ItemDetailsC: FC = () => {
+  const [, setCart] = useState<string[]>([]);
+  const [cartState, setCartState] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
 
   const { product, id } = useParams();
   const { selectedItem, setSelectedItem } = useContext(CollectionContext);
@@ -62,7 +62,7 @@ const ItemDetailsC = () => {
     fetchData();
   }, []);
 
-  const addToCart = async (e) => {
+  const addToCart = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       const response = await CollectionAPI.post("/cart", {

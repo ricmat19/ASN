@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import OrderSummaryC from "./orderSummary";
 import HeaderC from "./header";
 import FooterC from "./footer";
@@ -6,16 +6,16 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CollectionAPI from "../apis/collectionAPI";
 import Paypal from "./paypalComponent";
 
-const PaymentC = () => {
+const PaymentC: FC = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [cart, setCart] = useState([]);
-  const [cartPrices, setCartPrices] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
+  const [cart, setCart] = useState<string[]>([]);
+  const [cartPrices, setCartPrices] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
   const [shipment, setShipment] = useState([]);
 
-  let cartPriceArray = [];
+  let cartPriceArray: number[] = [];
   let sub = 0;
   useEffect(() => {
     const fetchData = async () => {
@@ -23,10 +23,10 @@ const PaymentC = () => {
         const cartResponse = await CollectionAPI.get(`/cart`);
 
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          let itemSummaryPrice =
+          let itemSummaryPrice: number =
             cartResponse.data.data.cart[i].price *
             cartResponse.data.data.qty[i];
-          cartPriceArray.push(parseInt(itemSummaryPrice));
+          cartPriceArray.push(itemSummaryPrice);
         }
 
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
@@ -63,7 +63,7 @@ const PaymentC = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: ChangeEvent) => {
     e.preventDefault();
     const { err, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",

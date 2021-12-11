@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import CollectionAPI from "../apis/collectionAPI";
@@ -7,18 +7,18 @@ import CartModalC from "./cartModal";
 import HeaderC from "./header";
 import FooterC from "./footer";
 
-const CollectionC = () => {
-  const [, setCart] = useState([]);
-  const [cartState, setCartState] = useState(false);
-  const [cartQty, setCartQty] = useState(0);
-  const [cartCost, setCartCost] = useState(0);
+const CollectionC: FC = () => {
+  const [, setCart] = useState<string[]>([]);
+  const [cartState, setCartState] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
 
   const { product } = useParams();
   const { collection, setCollection } = useContext(CollectionContext);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const itemsPerPage = 9;
-  const pagesVisted = pageNumber * itemsPerPage;
+  const itemsPerPage: number = 9;
+  const pagesVisted: number = pageNumber * itemsPerPage;
 
   const displayItems = collection
     .slice(pagesVisted, pagesVisted + itemsPerPage)
@@ -130,8 +130,7 @@ const CollectionC = () => {
           previousLinkClassName={"prevButton"}
           nextLinkClassName={"nextButton"}
           disabledClassName={"disabledButton"}
-          activeClassName={"activeButton"}
-        />
+          activeClassName={"activeButton"} pageRangeDisplayed={undefined} marginPagesDisplayed={undefined}/>
       </div>
       <FooterC />
     </div>

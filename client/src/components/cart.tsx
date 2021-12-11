@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import CartItemC from "./cartItem";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
 
-const CartC = () => {
-  const [cart, setCart] = useState([]);
+const CartC: FC = () => {
+  const [cart, setCart] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

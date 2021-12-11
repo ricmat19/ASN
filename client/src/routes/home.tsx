@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import HomeC from "../components/home";
 
-const HomeR = () => {
+const HomeR: FC = () => {
   return (
     <div>
       <HomeC />

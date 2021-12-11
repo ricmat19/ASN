@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import StripeC from "../components/stripeComponent";
 
-const StripeR = () => {
+const StripeR: FC = () => {
   return (
     <div>
       <StripeC />

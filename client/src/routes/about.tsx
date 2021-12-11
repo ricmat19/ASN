@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import AboutC from "../components/about";
 
-const AboutR = () => {
+const AboutR: FC = () => {
   return (
     <div>
       <AboutC />

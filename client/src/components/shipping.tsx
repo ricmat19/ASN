@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import OrderSummaryC from "./orderSummary";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
 
-const ShippingC = () => {
-  const [cart, setCart] = useState([]);
-  const [cartPrices, setCartPrices] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
+const ShippingC: FC = () => {
+  const [cart, setCart] = useState<string[]>([]);
+  const [cartPrices, setCartPrices] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
   const [shipment, setShipment] = useState([]);
 
   let cartPriceArray = [];

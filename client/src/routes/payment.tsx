@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import PaymentC from "../components/payment";
 
-const PaymentR = () => {
+const PaymentR: FC = () => {
   return (
     <div>
       <PaymentC />

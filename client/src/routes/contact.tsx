@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import ContactC from "../components/contact";
 
-const ContactR = () => {
+const ContactR: FC = () => {
   return (
     <div>
       <ContactC />

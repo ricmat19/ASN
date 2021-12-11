@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import PropTypes from "prop-types";
 
-const CartModalC = (props) => {
-  const [cartFull, setCartFull] = useState(false);
-  const [cartQty, setCartQty] = useState(0);
-  const [cartCost, setCartCost] = useState(0);
-  const [cartModal, setCartModal] = useState("inactive-cart cart-modal");
+const CartModalC: FC = (props) => {
+  const [cartFull, setCartFull] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
+  const [cartModal, setCartModal] = useState<string>("inactive-cart cart-modal");
 
   useEffect(() => {
     const fetchData = async () => {

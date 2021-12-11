@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import collectionAPI from "../apis/collectionAPI";
 import PropTypes from "prop-types";
 
-const CartItemC = (props) => {
-  const [cart, setCart] = useState([]);
-  const [prices, setPrices] = useState([]);
-  const [cartQty, setCartQty] = useState([]);
-  const [subtotal, setSubtotal] = useState();
+const CartItemC: FC = (props) => {
+  const [cart, setCart] = useState<([]);
+  const [prices, setPrices] = useState<number[]>([]);
+  const [cartQty, setCartQty] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>();
 
   let sub = 0;
-  let priceArray = [];
-  let qtyArray = [];
+  let priceArray: number[] = [];
+  let qtyArray: number[] = [];
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +38,7 @@ const CartItemC = (props) => {
     fetchData();
   });
 
-  const deleteFromCart = async (id) => {
+  const deleteFromCart = async (id: String) => {
     try {
       await collectionAPI.put("/cart/delete", {
         id: id,
@@ -48,7 +48,7 @@ const CartItemC = (props) => {
     }
   };
 
-  const setItemQty = async (item, e) => {
+  const setItemQty = async (item, e: ChangeEvent) => {
     try {
       setPrices(priceArray);
       for (let i = 0; i < cart.length; i++) {

@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import OrderSummaryC from "./orderSummary";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { useNavigate } from "react-router-dom";
 
-const CheckoutC = () => {
-  const [cart, setCart] = useState([]);
-  const [cartPrices, setCartPrices] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
+const CheckoutC: FC = () => {
+  const [cart, setCart] = useState<string[]>([]);
+  const [cartPrices, setCartPrices] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
   const [, setShipment] = useState(null);
 
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ const CheckoutC = () => {
   const zipcodeInput = useRef(null);
   const phoneInput = useRef(null);
 
-  let cartPriceArray = [];
+  let cartPriceArray: Number[] = [];
   let sub = 0;
   useEffect(() => {
     const fetchData = async () => {
@@ -39,10 +39,10 @@ const CheckoutC = () => {
         const cartResponse = await CollectionAPI.get(`/cart`);
 
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          let itemSummaryPrice =
+          let itemSummaryPrice: Number =
             cartResponse.data.data.cart[i].price *
             cartResponse.data.data.qty[i];
-          cartPriceArray.push(parseInt(itemSummaryPrice));
+          cartPriceArray.push(itemSummaryPrice);
         }
 
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
@@ -77,7 +77,7 @@ const CheckoutC = () => {
   }, []);
 
   let navigation = useNavigate();
-  const handleCheckout = async (e) => {
+  const handleCheckout = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       const response = await CollectionAPI.post("/shipment", {
@@ -97,15 +97,15 @@ const CheckoutC = () => {
 
       navigation.push(`/shipping`);
 
-      emailInput.current.value = "";
-      firstNameInput.current.value = "";
-      lastNameInput.current.value = "";
-      addressInput.current.value = "";
-      suiteInput.current.value = "";
-      cityInput.current.value = "";
-      stateInput.current.value = "";
-      zipcodeInput.current.value = "";
-      phoneInput.current.value = "";
+      // emailInput.current.value = "";
+      // firstNameInput.current.value = "";
+      // lastNameInput.current.value = "";
+      // addressInput.current.value = "";
+      // suiteInput.current.value = "";
+      // cityInput.current.value = "";
+      // stateInput.current.value = "";
+      // zipcodeInput.current.value = "";
+      // phoneInput.current.value = "";
     } catch (err) {
       console.log(err);
     }

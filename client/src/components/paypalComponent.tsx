@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, FC } from "react";
 
-const PaypalC = () => {
+const PaypalC: FC = () => {
   const paypal = useRef();
 
   useEffect(() => {

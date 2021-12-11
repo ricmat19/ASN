@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, FC, ChangeEvent } from "react";
 import CollectionAPI from "../apis/collectionAPI";
 import CartModalC from "./cartModal";
 import HeaderC from "./header";
 import FooterC from "./footer";
 
-const ContactC = () => {
-  const [, setCart] = useState([]);
-  const [cartState, setCartState] = useState(false);
-  const [cartQty, setCartQty] = useState(0);
-  const [cartCost, setCartCost] = useState(0);
+const ContactC: FC = () => {
+  const [, setCart] = useState<string[]>([]);
+  const [cartState, setCartState] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   const nameInput = useRef(null);
   const emailInput = useRef(null);
@@ -47,7 +47,7 @@ const ContactC = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       await CollectionAPI.post("/contact", {

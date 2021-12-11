@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/home";
 import About from "./routes/about";
@@ -15,7 +15,7 @@ import AdminCreate from "./routes/admin/create";
 import AdminUpdate from "./routes/admin/update";
 import { CollectionContextProvider } from "./context/collectionContext";
 
-const App = () => {
+const App: FC = () => {
   return (
     <div>
       <CollectionContextProvider>

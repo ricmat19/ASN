@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import CartC from "../components/cart";
 
-const CartR = () => {
+const CartR: FC = () => {
   return (
     <div>
       <CartC />

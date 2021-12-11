@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CollectionAPI from "../../apis/collectionAPI";
 import { CollectionContext } from "../../context/collectionContext";
 import AdminHeaderC from "./header";
 import FooterC from "../footer";
 
-const AdminUpdateC = () => {
+const AdminUpdateC: FC = () => {
   const { id } = useParams();
   const { setCollection } = useContext(CollectionContext);
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
-  const [info, setInfo] = useState("");
-  const [primaryImage, setPrimaryImage] = useState();
+  const [image, setImage] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [type, setType] = useState<string>("");
+  const [quantity, setQuantity] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [info, setInfo] = useState<string>("");
+  const [primaryImage, setPrimaryImage] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +49,7 @@ const AdminUpdateC = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: ChangeEvent) => {
     e.preventDefault();
     try {
       console.log(primaryImage);

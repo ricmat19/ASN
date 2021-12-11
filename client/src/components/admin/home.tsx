@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import AdminHeaderC from "./header";
 import FooterC from "../footer";
 import CollectionAPI from "../../apis/collectionAPI";
 import { CollectionContext } from "../../context/collectionContext";
 
-const HomeC = () => {
+const HomeC: FC = () => {
   const { setCollection } = useContext(CollectionContext);
-  const [twoDImage, setTwoDImage] = useState("");
-  const [threeDImage, setThreeDImage] = useState("");
-  const [comicImage, setComicImage] = useState("");
+  const [twoDImage, setTwoDImage] = useState<string>("");
+  const [threeDImage, setThreeDImage] = useState<string>("");
+  const [comicImage, setComicImage] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {

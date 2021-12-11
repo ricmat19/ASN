@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const OrderSummaryC = (props) => {
-  const [cart, setCart] = useState([]);
-  const [cartPrices, setCartPrices] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
+const OrderSummaryC: FC = (props) => {
+  const [cart, setCart] = useState<string[]>([]);
+  const [cartPrices, setCartPrices] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {

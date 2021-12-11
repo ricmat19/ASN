@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import CartModalC from "./cartModal";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
 
-const AboutC = () => {
-  const [, setCart] = useState([]);
-  const [cartState] = useState(false);
-  const [cartQty, setCartQty] = useState(0);
-  const [cartCost, setCartCost] = useState(0);
+const AboutC: FC = () => {
+  const [, setCart] = useState<object[]>([]);
+  const [cartState, setCartState] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
