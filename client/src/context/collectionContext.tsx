@@ -1,39 +1,39 @@
 import React, { useState, createContext, FC } from "react";
 import PropTypes from "prop-types";
 
-export const CollectionContext = createContext();
+// export const CollectionContext = createContext();
 
-export const CollectionContextProvider: FC = (props) => {
-  const [collection, setCollection] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [user, setUser] = useState([]);
+// export const CollectionContextProvider: FC = (props) => {
+//   const [collection, setCollection] = useState([]);
+//   const [selectedItem, setSelectedItem] = useState(null);
+//   const [user, setUser] = useState([]);
 
-  const createItem = (item) => {
-    setCollection([...collection, item]);
-  };
+//   const createItem = (item) => {
+//     setCollection([...collection, item]);
+//   };
 
-  const createUser = (newUser) => {
-    setUser([...user, newUser]);
-  };
+//   const createUser = (newUser) => {
+//     setUser([...user, newUser]);
+//   };
 
-  return (
-    <CollectionContext.Provider
-      value={{
-        collection: collection,
-        setCollection: setCollection,
-        createItem,
-        selectedItem: selectedItem,
-        setSelectedItem: setSelectedItem,
-        user: user,
-        setUser: setUser,
-        createUser,
-      }}
-    >
-      {props.children}
-    </CollectionContext.Provider>
-  );
-};
+//   return (
+//     <CollectionContext.Provider
+//       value={{
+//         collection: collection,
+//         setCollection: setCollection,
+//         createItem,
+//         selectedItem: selectedItem,
+//         setSelectedItem: setSelectedItem,
+//         user: user,
+//         setUser: setUser,
+//         createUser,
+//       }}
+//     >
+//       {props.children}
+//     </CollectionContext.Provider>
+//   );
+// };
 
-CollectionContextProvider.propTypes = {
-  children: PropTypes.any,
-};
+// CollectionContextProvider.propTypes = {
+//   children: PropTypes.any,
+// };

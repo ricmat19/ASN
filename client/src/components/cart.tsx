@@ -1,13 +1,14 @@
-import React, { FC, useEffect, useState } from "react";
-import CartItemC from "./cartItem";
+import React, { FC, useEffect } from "react";
+// import CartItemC from "./cartItem";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
+// import { Cart } from "../interfaces";
 
 const CartC: FC = () => {
-  const [cart, setCart] = useState<string[]>([]);
+  // const [cart, setCart] = useState([]);
 
-  useEffect(() => {
+  useEffect((): void => {
     const fetchData = async () => {
       try {
         const cartResponse = await CollectionAPI.get(`/cart`);
@@ -26,7 +27,7 @@ const CartC: FC = () => {
             cartResponse.data.data.cart[i].imageBuffer = imagesResponse;
           }
         }
-        setCart(cartResponse.data.data.cart);
+        // setCart(cartResponse.data.data.cart);
       } catch (err) {
         console.log(err);
       }
@@ -49,7 +50,7 @@ const CartC: FC = () => {
         </div>
         <hr className="table-hr" />
         <div className="cart-items">
-          <CartItemC cartCollection={cart} />
+          {/* <CartItemC cartCollection={cart} /> */}
         </div>
         <div className="align-right cart-button">
           <button>

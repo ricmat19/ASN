@@ -1,36 +1,42 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import collectionAPI from "../apis/collectionAPI";
 import PropTypes from "prop-types";
+// import { Cart } from "../interfaces";
 
-const CartItemC: FC = (props) => {
-  const [cart, setCart] = useState<([]);
+// interface Props{
+//   cartCollection: Cart
+// }
+
+const CartItemC: FC = () => {
+  // const [cart, setCart] = useState<Cart[]>([]);
   const [prices, setPrices] = useState<number[]>([]);
   const [cartQty, setCartQty] = useState<number[]>([]);
   const [subtotal, setSubtotal] = useState<number>();
 
-  let sub = 0;
-  let priceArray: number[] = [];
-  let qtyArray: number[] = [];
-  useEffect(() => {
+//   let sub = 0;
+//   let priceArray: number[] = [];
+//   let qtyArray: number[] = [];
+  
+  useEffect((): void => {
     const fetchData = async () => {
       try {
-        if (cart.length === 0) {
-          setCart(props.cartCollection);
-        }
+//         if (cart.length === 0) {
+//           setCart(cartCollection);
+//         }
 
-        if (priceArray.length === 0) {
-          for (let i = 0; i < cart.length; i++) {
-            sub += parseInt(cart[i].price);
-          }
-        } else {
-          sub = priceArray.reduce(function (a, b) {
-            return a + b;
-          }, 0);
-        }
+//         if (priceArray.length === 0) {
+//           for (let i = 0; i < cart.length; i++) {
+//             sub += parseInt(cart[i].price);
+//           }
+//         } else {
+//           sub = priceArray.reduce(function (a, b): number {
+//             return a + b;
+//           }, 0);
+//         }
 
-        if (prices.length === 0) {
-          setSubtotal(sub);
-        }
+//         if (prices.length === 0) {
+//           setSubtotal(sub);
+//         }
       } catch (err) {
         console.log(err);
       }
@@ -48,49 +54,49 @@ const CartItemC: FC = (props) => {
     }
   };
 
-  const setItemQty = async (item, e: ChangeEvent) => {
-    try {
-      setPrices(priceArray);
-      for (let i = 0; i < cart.length; i++) {
-        if (cart[i].id === item.id) {
-          priceArray[i] = cart[i].price * e;
-        } else {
-          if (prices[i] !== undefined) {
-            priceArray[i] = prices[i];
-          } else {
-            priceArray[i] = parseInt(cart[i].price);
-          }
-        }
+//   const setItemQty = async (item, e: ChangeEvent) => {
+//     try {
+//       setPrices(priceArray);
+//       for (let i = 0; i < cart.length; i++) {
+//         if (cart[i].id === item.id) {
+//           priceArray[i] = cart[i].price * e;
+//         } else {
+//           if (prices[i] !== undefined) {
+//             priceArray[i] = prices[i];
+//           } else {
+//             priceArray[i] = parseInt(cart[i].price);
+//           }
+//         }
 
-        if (cart[i].id === item.id) {
-          qtyArray[i] = parseInt(e);
-        } else {
-          if (cartQty[i] !== undefined) {
-            qtyArray[i] = cartQty[i];
-          } else {
-            qtyArray[i] = 1;
-          }
-        }
-      }
-      setPrices(priceArray);
-      setCartQty(qtyArray);
-      await collectionAPI.put("/cart/quantity", {
-        cartQty: qtyArray,
-      });
+//         if (cart[i].id === item.id) {
+//           qtyArray[i] = parseInt(e);
+//         } else {
+//           if (cartQty[i] !== undefined) {
+//             qtyArray[i] = cartQty[i];
+//           } else {
+//             qtyArray[i] = 1;
+//           }
+//         }
+//       }
+//       setPrices(priceArray);
+//       setCartQty(qtyArray);
+//       await collectionAPI.put("/cart/quantity", {
+//         cartQty: qtyArray,
+//       });
 
-      sub = 0;
-      sub = priceArray.reduce(function (a, b) {
-        return a + b;
-      }, 0);
-      setSubtotal(sub);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//       sub = 0;
+//       sub = priceArray.reduce(function (a, b): number {
+//         return a + b;
+//       }, 0);
+//       setSubtotal(sub);
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
 
   return (
     <div>
-      {cart &&
+      {/* {cart &&
         cart.map((item, index) => {
           priceArray.push(parseInt(item.price));
 
@@ -139,7 +145,7 @@ const CartItemC: FC = (props) => {
       <div className="align-right subtotal-div">
         <span>subtotal</span>
         <span>${subtotal}.00</span>
-      </div>
+      </div> */}
     </div>
   );
 };

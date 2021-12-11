@@ -1,34 +1,35 @@
-import React, { FC, useEffect, useState } from "react";
-import CartModalC from "./cartModal";
+import React, { FC, useEffect } from "react";
+// import CartModalC from "./cartModal";
+// import {Cart} from "../interfaces"
 import HeaderC from "./header";
 import FooterC from "./footer";
-import CollectionAPI from "../apis/collectionAPI";
+// import CollectionAPI from "../apis/collectionAPI";
 
 const AboutC: FC = () => {
-  const [, setCart] = useState<object[]>([]);
-  const [cartState, setCartState] = useState<boolean>(false);
-  const [cartQty, setCartQty] = useState<number>(0);
-  const [cartCost, setCartCost] = useState<number>(0);
+  // const [, setCart] = useState<Cart[]>([]);
+  // const [cartState, setCartState] = useState<boolean>(false);
+  // const [cartQty, setCartQty] = useState<number>(0);
+  // const [cartCost, setCartCost] = useState<number>(0);
 
-  useEffect(() => {
+  useEffect((): void => {
     const fetchData = async () => {
       try {
-        const cartResponse = await CollectionAPI.get(`/cart`);
-        setCart(cartResponse.data.data.cart);
+        // const cartResponse = await CollectionAPI.get(`/cart`);
+        // setCart(cartResponse.data.data.cart);
 
-        setCartQty(cartResponse.data.data.cart.length);
+        // setCartQty(cartResponse.data.data.cart.length);
 
-        let price = 0;
-        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          price += parseInt(cartResponse.data.data.cart[i].price);
-        }
-        setCartCost(price);
+        // let price = 0;
+        // for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
+        //   price += parseInt(cartResponse.data.data.cart[i].price);
+        // }
+        // setCartCost(price);
 
-        if (cartResponse.length !== 0) {
-          setCartState(true);
-        } else {
-          setCartState(false);
-        }
+        // if (cartResponse.length !== 0) {
+        //   setCartState(true);
+        // } else {
+        //   setCartState(false); 
+        // }
       } catch (err) {
         console.log(err);
       }
@@ -39,7 +40,7 @@ const AboutC: FC = () => {
 
   return (
     <div>
-      <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
+      {/* <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} /> */}
       <HeaderC />
       <div className="main-body">
         <div className="center">

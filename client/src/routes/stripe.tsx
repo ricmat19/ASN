@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import StripeC from "../components/stripeComponent";
+// import StripeC from "../components/stripeComponent";
 
 const StripeR: FC = () => {
   return (
     <div>
-      <StripeC />
+      {/* <StripeC /> */}
     </div>
   );
 };

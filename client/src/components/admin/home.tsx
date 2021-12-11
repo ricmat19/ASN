@@ -1,16 +1,16 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AdminHeaderC from "./header";
 import FooterC from "../footer";
 import CollectionAPI from "../../apis/collectionAPI";
-import { CollectionContext } from "../../context/collectionContext";
+// import { CollectionContext } from "../../context/collectionContext";
 
 const HomeC: FC = () => {
-  const { setCollection } = useContext(CollectionContext);
+//   const { setCollection } = useContext(CollectionContext);
   const [twoDImage, setTwoDImage] = useState<string>("");
   const [threeDImage, setThreeDImage] = useState<string>("");
   const [comicImage, setComicImage] = useState<string>("");
 
-  useEffect(() => {
+  useEffect((): void => {
     const fetchData = async () => {
       try {
         const productResponse = await CollectionAPI.get(`/collection`);
@@ -46,7 +46,7 @@ const HomeC: FC = () => {
             }
           }
         }
-        setCollection(productResponse.data.data.collection);
+        // setCollection(productResponse.data.data.collection);
       } catch (err) {
         console.log(err);
       }

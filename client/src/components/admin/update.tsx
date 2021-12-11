@@ -1,22 +1,24 @@
-import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CollectionAPI from "../../apis/collectionAPI";
-import { CollectionContext } from "../../context/collectionContext";
+// import { CollectionContext } from "../../context/collectionContext";
 import AdminHeaderC from "./header";
 import FooterC from "../footer";
 
 const AdminUpdateC: FC = () => {
   const { id } = useParams();
-  const { setCollection } = useContext(CollectionContext);
+
+//   const { setCollection } = useContext(CollectionContext);
+
   const [image, setImage] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
-  const [primaryImage, setPrimaryImage] = useState<string>();
+  // const [primaryImage, setPrimaryImage] = useState<string>();
 
-  useEffect(() => {
+  useEffect((): void => {
     const fetchData = async () => {
       try {
         const response = await CollectionAPI.get(`/admin/update/${id}`);
@@ -25,7 +27,7 @@ const AdminUpdateC: FC = () => {
         setPrice(response.data.data.item.price);
         setInfo(response.data.data.item.info);
         setQuantity(response.data.data.item.qty);
-        setPrimaryImage(response.data.data.item.primaryimage);
+        // setPrimaryImage(response.data.data.item.primaryimage);
 
         if (response.data.data.item.imagekey !== null) {
           let imagesResponse = await CollectionAPI.get(
@@ -40,7 +42,7 @@ const AdminUpdateC: FC = () => {
           setImage(`data:image/png;base64,${imagesResponse}`);
         }
 
-        setCollection(response.data.data.item);
+        // setCollection(response.data.data.item);
       } catch (err) {
         console.log(err);
       }
@@ -49,25 +51,25 @@ const AdminUpdateC: FC = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e: ChangeEvent) => {
-    e.preventDefault();
-    try {
-      console.log(primaryImage);
+  // const handleSubmit = async (e: ChangeEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     console.log(primaryImage);
 
-      const update = await CollectionAPI.put(`/admin/update/${id}`, {
-        title,
-        type,
-        quantity,
-        price,
-        info,
-        primaryImage,
-      });
+  //     const update = await CollectionAPI.put(`/admin/update/${id}`, {
+  //       title,
+  //       type,
+  //       quantity,
+  //       price,
+  //       info,
+  //       primaryImage,
+  //     });
 
-      setCollection(update);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     // setCollection(update);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div>
@@ -172,7 +174,7 @@ const AdminUpdateC: FC = () => {
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
                 name="message"
-                rows="5"
+                // rows="5"
                 required
               ></textarea>
             </div>
@@ -181,7 +183,7 @@ const AdminUpdateC: FC = () => {
                 Primary:
               </label>
               <input
-                onChange={(e) => setPrimaryImage(e.target.value)}
+                // onChange={(e) => setPrimaryImage(e.target.value)}
                 type="checkbox"
                 name="primaryImage"
                 className="form-control"
@@ -192,7 +194,7 @@ const AdminUpdateC: FC = () => {
               <div className="text-center">
                 <div>
                   <button
-                    onClick={handleSubmit}
+                    // onClick={handleSubmit}
                     type="submit"
                     className="btn form-button"
                   >

@@ -7,18 +7,18 @@ const CartModalC: FC = (props) => {
   const [cartCost, setCartCost] = useState<number>(0);
   const [cartModal, setCartModal] = useState<string>("inactive-cart cart-modal");
 
-  useEffect(() => {
+  useEffect((): void => {
     const fetchData = async () => {
       try {
-        setCartFull(props.cartState);
-        setCartQty(props.cartQty);
-        setCartCost(props.cartCost);
+//         setCartFull(props.cartState);
+//         setCartQty(props.cartQty);
+//         setCartCost(props.cartCost);
 
-        if (cartFull === false) {
-          setCartModal("inactive-cart cart-modal");
-        } else {
-          setCartModal("active-cart cart-modal");
-        }
+//         if (cartFull === false) {
+//           setCartModal("inactive-cart cart-modal");
+//         } else {
+//           setCartModal("active-cart cart-modal");
+//         }
       } catch (err) {
         console.log(err);
       }

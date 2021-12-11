@@ -13,12 +13,12 @@ import AdminHome from "./routes/admin/home";
 import AdminCollection from "./routes/admin/collection";
 import AdminCreate from "./routes/admin/create";
 import AdminUpdate from "./routes/admin/update";
-import { CollectionContextProvider } from "./context/collectionContext";
+// import { CollectionContextProvider } from "./context/collectionContext";
 
 const App: FC = () => {
   return (
     <div>
-      <CollectionContextProvider>
+      {/* <CollectionContextProvider> */}
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -39,7 +39,7 @@ const App: FC = () => {
             <Route path="/admin/update/:id" element={<AdminUpdate />} />
           </Routes>
         </Router>
-      </CollectionContextProvider>
+      {/* </CollectionContextProvider> */}
     </div>
   );
 };

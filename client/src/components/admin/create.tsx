@@ -1,15 +1,15 @@
-import React, { useContext, useState, useRef, FC, ChangeEvent } from "react";
-import CollectionAPI from "../../apis/collectionAPI";
-import { CollectionContext } from "../../context/collectionContext";
+import React, { useState, useRef, FC } from "react";
+// import CollectionAPI from "../../apis/collectionAPI";
+// import { CollectionContext } from "../../context/collectionContext";
 import AdminHeaderC from "./header";
 import FooterC from "../footer";
 
 const AdminCreateC: FC = () => {
-  const { createItem } = useContext(CollectionContext);
+//   const { createItem } = useContext(CollectionContext);
 
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [images, setImages] = useState(null);
+  // const [images, setImages] = useState<string>();
   const [quantity, setQuantity] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
@@ -20,54 +20,54 @@ const AdminCreateC: FC = () => {
   const priceInput = useRef(null);
   const infoInput = useRef(null);
 
-  //insures that the .env file is only run in a development environment and not a production environment
-  if (process.env.NODE_ENV !== "production") {
-    //requires the the .env file configuration be run first hiding all info hidden via the .env file
-    require("dotenv").config();
-  }
+//   //insures that the .env file is only run in a development environment and not a production environment
+//   if (process.env.NODE_ENV !== "production") {
+//     //requires the the .env file configuration be run first hiding all info hidden via the .env file
+//     require("dotenv").config();
+//   }
 
-  const handleSubmit = async (e: ChangeEvent) => {
-    e.preventDefault();
-    try {
-      let formData = new FormData();
+  // const handleSubmit = async (e: ChangeEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   try {
+//       let formData = new FormData();
 
-      formData.append("title", title);
-      formData.append("product", type);
-      formData.append("images", images);
-      formData.append("quantity", quantity);
-      formData.append("price", price);
-      formData.append("info", info);
+//       formData.append("title", title);
+//       formData.append("product", type);
+//       formData.append("images", images);
+//       formData.append("quantity", quantity);
+//       formData.append("price", price);
+//       formData.append("info", info);
 
-      const response = await CollectionAPI.post("/admin/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+//       const response = await CollectionAPI.post("/admin/create", formData, {
+//         headers: { "Content-Type": "multipart/form-data" },
+//       })
+//         .then((res) => console.log(res))
+//         .catch((err) => console.log(err));
 
-      // const response = await CollectionAPI.post("/admin/create",{
-      //         title: title,
-      //         product: type,
-      //         images: images,
-      //         price: price,
-      //         info: info
-      // })
+//       // const response = await CollectionAPI.post("/admin/create",{
+//       //         title: title,
+//       //         product: type,
+//       //         images: images,
+//       //         price: price,
+//       //         info: info
+//       // })
 
-      createItem(response);
+//       createItem(response);
 
-      titleInput.current.value = "";
-      typeInput.current.value = "";
-      quantityInput.current.value = "";
-      priceInput.current.value = "";
-      infoInput.current.value = "";
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//       titleInput.current.value = "";
+//       typeInput.current.value = "";
+//       quantityInput.current.value = "";
+//       priceInput.current.value = "";
+//       infoInput.current.value = "";
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  let displayedImage = "../../images/loading.svg";
-  if (images !== null) {
-    displayedImage = URL.createObjectURL(images);
-  }
+//   let displayedImage = "../../images/loading.svg";
+//   if (images !== null) {
+//     displayedImage = URL.createObjectURL(images);
+//   }
 
   return (
     <div>
@@ -80,7 +80,7 @@ const AdminCreateC: FC = () => {
           <div className="admin-image-div">
             <div className="image">
               <div className="big-image-div">
-                <img className="big-image" src={displayedImage} alt="item" />
+                {/* <img className="big-image" src={displayedImage} alt="item" /> */}
               </div>
             </div>
           </div>
@@ -145,13 +145,13 @@ const AdminCreateC: FC = () => {
             </div>
             <div className="admin-form-field">
               <label className="admin-label">Images:</label>
-              <input
+              {/* <input
                 type="file"
                 onChange={(e) => setImages(e.target.files[0])}
                 name="images"
                 className="form-control"
                 required
-              />
+              /> */}
             </div>
             <div className="admin-form-field">
               <label className="admin-label">Quantity:</label>
@@ -184,7 +184,7 @@ const AdminCreateC: FC = () => {
                 ref={infoInput}
                 onChange={(e) => setInfo(e.target.value)}
                 name="message"
-                rows="5"
+                // rows="5"
                 required
               ></textarea>
             </div>
@@ -193,7 +193,7 @@ const AdminCreateC: FC = () => {
               <div className="text-center">
                 <div>
                   <button
-                    onClick={handleSubmit}
+                    // onClick={handleSubmit}
                     type="submit"
                     className="btn form-button"
                   >

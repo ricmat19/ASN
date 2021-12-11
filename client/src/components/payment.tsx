@@ -5,88 +5,88 @@ import FooterC from "./footer";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CollectionAPI from "../apis/collectionAPI";
 import Paypal from "./paypalComponent";
+// import { Cart } from "../interfaces";
 
 const PaymentC: FC = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [cart, setCart] = useState<string[]>([]);
+  // const [cart, setCart] = useState<Cart[]>([]);
   const [cartPrices, setCartPrices] = useState<number[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
-  const [shipment, setShipment] = useState([]);
+  // const [shipment, setShipment] = useState([]);
 
   let cartPriceArray: number[] = [];
   let sub = 0;
-  useEffect(() => {
+  useEffect((): void => {
     const fetchData = async () => {
       try {
-        const cartResponse = await CollectionAPI.get(`/cart`);
+//         const cartResponse = await CollectionAPI.get(`/cart`);
 
-        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          let itemSummaryPrice: number =
-            cartResponse.data.data.cart[i].price *
-            cartResponse.data.data.qty[i];
-          cartPriceArray.push(itemSummaryPrice);
-        }
+//         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
+//           let itemSummaryPrice: number =
+//             cartResponse.data.data.cart[i].price *
+//             cartResponse.data.data.qty[i];
+//           cartPriceArray.push(itemSummaryPrice);
+//         }
 
-        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          if (cartResponse.data.data.cart[i].imagekey !== null) {
-            let imagesResponse = await CollectionAPI.get(
-              `/images/${cartResponse.data.data.cart[i].imagekey}`,
-              {
-                responseType: "arraybuffer",
-              }
-            ).then((response) =>
-              Buffer.from(response.data, "binary").toString("base64")
-            );
+//         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
+//           if (cartResponse.data.data.cart[i].imagekey !== null) {
+//             let imagesResponse = await CollectionAPI.get(
+//               `/images/${cartResponse.data.data.cart[i].imagekey}`,
+//               {
+//                 responseType: "arraybuffer",
+//               }
+//             ).then((response) =>
+//               Buffer.from(response.data, "binary").toString("base64")
+//             );
 
-            cartResponse.data.data.cart[i].imageBuffer = imagesResponse;
-          }
-        }
+//             cartResponse.data.data.cart[i].imageBuffer = imagesResponse;
+//           }
+//         }
 
-        const shipmentResponse = await CollectionAPI.get(`/shipment`);
+//         const shipmentResponse = await CollectionAPI.get(`/shipment`);
 
-        setCartPrices(cartPriceArray);
+//         setCartPrices(cartPriceArray);
 
-        sub = cartPriceArray.reduce(function (a, b) {
-          return a + b;
-        }, 0);
-        setSubtotal(sub);
+//         sub = cartPriceArray.reduce(function (a, b): number {
+//           return a + b;
+//         }, 0);
+//         setSubtotal(sub);
 
-        setCart(cartResponse.data.data.cart);
-        setShipment(shipmentResponse.data.data.shipment.rows[0]);
+//         setCart(cartResponse.data.data.cart);
+//         setShipment(shipmentResponse.data.data.shipment.rows[0]);
       } catch (err) {
         console.log(err);
       }
     };
-
     fetchData();
   }, []);
 
   const handleSubmit = async (e: ChangeEvent) => {
     e.preventDefault();
-    const { err, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-    });
+//     const { err, paymentMethod } = await stripe.createPaymentMethod({
+//       type: "card",
+//       card: elements.getElement(CardElement),
+//     });
 
-    if (!err) {
+    // if (!err) {
       try {
-        const { id } = paymentMethod;
-        const response = await CollectionAPI.post(`/payment`, {
-          amount: 1000,
-          id: id,
-        });
+//         const { id } = paymentMethod;
+//         const response = await CollectionAPI.post(`/payment`, {
+//           amount: 1000,
+//           id: id,
+//         });
 
-        if (response.data.success) {
-          console.log("Successful payment!");
-        }
+//         if (response.data.success) {
+//           console.log("Successful payment!");
+//         }
       } catch (err) {
         console.log(err);
       }
-    } else {
-      console.log(err);
-    }
+    // } else {
+    //   console.log(err);
+    // }
   };
 
   const cardElementOptions = {
@@ -101,7 +101,7 @@ const PaymentC: FC = () => {
   return (
     <div>
       <HeaderC />
-      <div className="main-body payment-div">
+      {/* <div className="main-body payment-div">
         <div className="payment-selection-div">
           <div className="payment-info-div">
             <div className="payment-info">
@@ -175,10 +175,10 @@ const PaymentC: FC = () => {
                   <Paypal className="payment-button" />
                 </div>
                 <hr className="payment-hr" />
-                {/* <div className="payment-option">
-                                        <input className="align-left" type="radio" name="payment-method"/>
-                                        <label className="align-left">Amazon Pay</label>
-                                    </div> */}
+                <div className="payment-option">
+                    <input className="align-left" type="radio" name="payment-method"/>
+                    <label className="align-left">Amazon Pay</label>
+                </div>
               </div>
             </div>
           </div>
@@ -196,7 +196,7 @@ const PaymentC: FC = () => {
             <button>apply</button>
           </div>
         </div>
-      </div>
+      </div> */}
       <FooterC />
     </div>
   );
