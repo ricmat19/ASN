@@ -7,7 +7,7 @@ interface IModalState {
   onHide: () => void
 }
 
-function ResetPasswordModalC(props: IModalState) {
+function ResetModalC(props: IModalState) {
     return (
         <Modal
         {...props}
@@ -48,8 +48,8 @@ function ResetPasswordModalC(props: IModalState) {
   );
 }
 
-ResetPasswordModalC.propTypes = {
+ResetModalC.propTypes = {
   onHide: PropTypes.string,
 };
 
-export default ResetPasswordModalC;
+export default ResetModalC;

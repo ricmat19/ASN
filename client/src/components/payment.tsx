@@ -1,61 +1,73 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import OrderSummaryC from "./orderSummary";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CollectionAPI from "../apis/collectionAPI";
 import Paypal from "./paypalComponent";
-// import { Cart } from "../interfaces";
+import { ICart } from "../interfaces";
 
 const PaymentC: FC = () => {
-  const stripe = useStripe();
-  const elements = useElements();
+  const stripe: any = useStripe();
+  const elements: any = useElements();
 
-  // const [cart, setCart] = useState<Cart[]>([]);
+  const [cart, setCart] = useState<ICart[]>([]);
   const [cartPrices, setCartPrices] = useState<number[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
-  // const [shipment, setShipment] = useState([]);
+  const [email, setEmail] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [zipcode, setZipcode] = useState<string>("");
 
   let cartPriceArray: number[] = [];
   let sub = 0;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-//         const cartResponse = await CollectionAPI.get(`/cart`);
+        const cartResponse = await CollectionAPI.get(`/cart`);
 
-//         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-//           let itemSummaryPrice: number =
-//             cartResponse.data.data.cart[i].price *
-//             cartResponse.data.data.qty[i];
-//           cartPriceArray.push(itemSummaryPrice);
-//         }
+        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
+          if(cartResponse.data.data.qty[i] === null){
+            cartResponse.data.data.qty[i] = 0;
+          }
+          let itemSummaryPrice: number =
+            cartResponse.data.data.cart[i].price *
+            cartResponse.data.data.qty[i];
+          cartPriceArray.push(itemSummaryPrice);
+        }
 
-//         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-//           if (cartResponse.data.data.cart[i].imagekey !== null) {
-//             let imagesResponse = await CollectionAPI.get(
-//               `/images/${cartResponse.data.data.cart[i].imagekey}`,
-//               {
-//                 responseType: "arraybuffer",
-//               }
-//             ).then((response) =>
-//               Buffer.from(response.data, "binary").toString("base64")
-//             );
+        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
+          if (cartResponse.data.data.cart[i].imagekey !== null) {
+            let imagesResponse = await CollectionAPI.get(
+              `/images/${cartResponse.data.data.cart[i].imagekey}`,
+              {
+                responseType: "arraybuffer",
+              }
+            ).then((response) =>
+              Buffer.from(response.data, "binary").toString("base64")
+            );
 
-//             cartResponse.data.data.cart[i].imageBuffer = imagesResponse;
-//           }
-//         }
+            cartResponse.data.data.cart[i].imageBuffer = imagesResponse;
+          }
+        }
 
-//         const shipmentResponse = await CollectionAPI.get(`/shipment`);
+        setCartPrices(cartPriceArray);
 
-//         setCartPrices(cartPriceArray);
+        sub = cartPriceArray.reduce(function (a, b): number {
+          return a + b;
+        }, 0);
+        setSubtotal(sub);
 
-//         sub = cartPriceArray.reduce(function (a, b): number {
-//           return a + b;
-//         }, 0);
-//         setSubtotal(sub);
+        setCart(cartResponse.data.data.cart);
 
-//         setCart(cartResponse.data.data.cart);
-//         setShipment(shipmentResponse.data.data.shipment.rows[0]);
+        const shipmentResponse = await CollectionAPI.get(`/shipment`);
+        setEmail(shipmentResponse.data.data.shipment.rows[0].email)
+        setAddress(shipmentResponse.data.data.shipment.rows[0].address)
+        setCity(shipmentResponse.data.data.shipment.rows[0].city)
+        setState(shipmentResponse.data.data.shipment.rows[0].state)
+        setZipcode(shipmentResponse.data.data.shipment.rows[0].zipcode)
+
       } catch (err) {
         console.log(err);
       }
@@ -63,30 +75,30 @@ const PaymentC: FC = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e: ChangeEvent) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-//     const { err, paymentMethod } = await stripe.createPaymentMethod({
-//       type: "card",
-//       card: elements.getElement(CardElement),
-//     });
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+    });
 
-    // if (!err) {
+    if (!error) {
       try {
-//         const { id } = paymentMethod;
-//         const response = await CollectionAPI.post(`/payment`, {
-//           amount: 1000,
-//           id: id,
-//         });
+        const { id } = paymentMethod;
+        const response = await CollectionAPI.post(`/payment`, {
+          amount: 1000,
+          id: id,
+        });
 
-//         if (response.data.success) {
-//           console.log("Successful payment!");
-//         }
+        if (response.data.success) {
+          console.log("Successful payment!");
+        }
       } catch (err) {
         console.log(err);
       }
-    // } else {
-    //   console.log(err);
-    // }
+    } else {
+      console.log(error);
+    }
   };
 
   const cardElementOptions = {
@@ -101,12 +113,12 @@ const PaymentC: FC = () => {
   return (
     <div>
       <HeaderC />
-      {/* <div className="main-body payment-div">
+      <div className="main-body payment-div">
         <div className="payment-selection-div">
           <div className="payment-info-div">
             <div className="payment-info">
               <p className="align-left">contact</p>
-              <p className="align-left">{shipment.email}</p>
+              <p className="align-left">{email}</p>
               <a className="align-right" href="/checkout">
                 <p>change</p>
               </a>
@@ -115,8 +127,8 @@ const PaymentC: FC = () => {
             <div className="payment-info">
               <p className="align-left">ship to</p>
               <p className="align-left">
-                {shipment.address} {shipment.city}, {shipment.state}{" "}
-                {shipment.zipcode}
+                {address} {city}, {state}{" "}
+                {zipcode}
               </p>
               <a className="align-right" href="/checkout">
                 <p>change</p>
@@ -172,7 +184,7 @@ const PaymentC: FC = () => {
                     name="payment-method"
                   />
                   <label className="align-left">PayPal</label>
-                  <Paypal className="payment-button" />
+                  <Paypal/>
                 </div>
                 <hr className="payment-hr" />
                 <div className="payment-option">
@@ -196,7 +208,7 @@ const PaymentC: FC = () => {
             <button>apply</button>
           </div>
         </div>
-      </div> */}
+      </div>
       <FooterC />
     </div>
   );

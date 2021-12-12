@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Modal, Button } from 'react-bootstrap';
-import CollectionAPI from "../apis/collectionAPI";
+import CollectionAPI from "../../apis/collectionAPI";
 
 interface IModalState {
   show: boolean,

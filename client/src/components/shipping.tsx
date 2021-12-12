@@ -1,28 +1,35 @@
-import React, { FC, useEffect } from "react";
-// import OrderSummaryC from "./orderSummary";
+import React, { FC, useEffect, useState } from "react";
+import OrderSummaryC from "./orderSummary";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
-// import { Cart } from "../interfaces";
+import { ICart } from "../interfaces";
 
 const ShippingC: FC = () => {
-//   const [cart, setCart] = useState<Cart[]>([]);
-  // const [cartPrices, setCartPrices] = useState<number[]>([]);
-  // const [subtotal, setSubtotal] = useState<number>(0);
-  // const [shipment, setShipment] = useState([]);
+  const [cart, setCart] = useState<ICart[]>([]);
+  const [cartPrices, setCartPrices] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [email, setEmail] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [zipcode, setZipcode] = useState<string>("");
 
-  // let cartPriceArray = [];
-  // let sub = 0;
+  let cartPriceArray: number[] = [];
+  let sub = 0;
   useEffect((): void => {
     const fetchData = async () => {
       try {
         const cartResponse = await CollectionAPI.get(`/cart`);
 
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          // let itemSummaryPrice =
-          //   cartResponse.data.data.cart[i].price *
-          //   cartResponse.data.data.qty[i];
-          // cartPriceArray.push(parseInt(itemSummaryPrice));
+          if(cartResponse.data.data.qty[i] === null){
+            cartResponse.data.data.qty[i] = 0;
+          }
+          let itemSummaryPrice =
+            cartResponse.data.data.cart[i].price *
+            cartResponse.data.data.qty[i];
+          cartPriceArray.push(itemSummaryPrice);
         }
 
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
@@ -40,17 +47,21 @@ const ShippingC: FC = () => {
           }
         }
 
-        // const shipmentResponse = await CollectionAPI.get(`/shipment`);
+        const checkoutResponse = await CollectionAPI.get(`/shipment`);
+        setEmail(checkoutResponse.data.data.shipment.rows[0].email)
+        setAddress(checkoutResponse.data.data.shipment.rows[0].address)
+        setCity(checkoutResponse.data.data.shipment.rows[0].city)
+        setState(checkoutResponse.data.data.shipment.rows[0].state)
+        setZipcode(checkoutResponse.data.data.shipment.rows[0].zipcode)
 
-        // setCartPrices(cartPriceArray);
+        setCartPrices(cartPriceArray);
 
-        // sub = cartPriceArray.reduce(function (a, b): number {
-        //   return a + b;
-        // }, 0);
-        // setSubtotal(sub);
+        sub = cartPriceArray.reduce(function (a, b): number {
+          return a + b;
+        }, 0);
+        setSubtotal(sub);
 
-        // setCart(cartResponse.data.data.cart);
-        // setShipment(shipmentResponse.data.data.shipment.rows[0]);
+        setCart(cartResponse.data.data.cart);
       } catch (err) {
         console.log(err);
       }
@@ -67,7 +78,7 @@ const ShippingC: FC = () => {
           <div className="shipping-info-div">
             <div className="shipping-info">
               <p className="align-left">contact</p>
-              {/* <p className="align-left">{shipment.email}</p> */}
+              <p className="align-left">{email}</p>
               <a className="align-right" href="">
                 <p>change</p>
               </a>
@@ -75,10 +86,10 @@ const ShippingC: FC = () => {
             <hr className="shipping-hr" />
             <div className="shipping-info">
               <p className="align-left">ship to</p>
-              {/* <p className="align-left">
-                {shipment.address} {shipment.city}, {shipment.state}{" "}
-                {shipment.zipcode}
-              </p> */}
+              <p className="align-left">
+                {address} {city}, {state}{" "}
+                {zipcode}
+              </p>
               <a className="align-right" href="">
                 <p>change</p>
               </a>
@@ -124,11 +135,11 @@ const ShippingC: FC = () => {
         </div>
         <div className="order-summary">
           <div>
-            {/* <OrderSummaryC
+            <OrderSummaryC
               cartCollection={cart}
               cartPrices={cartPrices}
               subtotal={subtotal}
-            /> */}
+            />
           </div>
           <div className="two-column-div checkout-discount">
             <input type="text" placeholder="discount code" />

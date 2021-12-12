@@ -1,76 +1,73 @@
-import React, { FC, useEffect } from "react";
-// import CartModalC from "./cartModal";
+import React, { FC, useEffect, useState } from "react";
+import CartModalC from "./cartModal";
 import HeaderC from "./header";
 import FooterC from "./footer";
-// import CollectionAPI from "../apis/collectionAPI";
-// import { CollectionContext } from "../context/collectionContext";
-// import { Cart } from "../interfaces";
+import CollectionAPI from "../apis/collectionAPI";
+import { ICart } from "../interfaces";
 
 const HomeC: FC = () => {
-//   const { setCollection } = useContext(CollectionContext);
-//   const [, setCart] = useState<Cart[]>([]);
-  // const [cartState, setCartState] = useState<boolean>(false);
-  // const [cartQty, setCartQty] = useState<number>(0);
-  // const [cartCost, setCartCost] = useState<number>(0);
-  // const [twoDImage, setTwoDImage] = useState<string>("");
-  // const [threeDImage, setThreeDImage] = useState<string>("");
-  // const [comicImage, setComicImage] = useState<string>("");
+  const [, setCart] = useState<ICart[]>([]);
+  const [cartState, setCartState] = useState<boolean>(false);
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [cartCost, setCartCost] = useState<number>(0);
+  const [twoDImage, setTwoDImage] = useState<string>("");
+  const [threeDImage, setThreeDImage] = useState<string>("");
+  const [comicImage, setComicImage] = useState<string>("");
 
-  // let productResponse;
+  let productResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-//         const cartResponse = await CollectionAPI.get(`/cart`);
-//         setCart(cartResponse.data.data.cart);
+        const cartResponse = await CollectionAPI.get(`/cart`);
+        setCart(cartResponse.data.data.cart);
 
-//         setCartQty(cartResponse.data.data.cart.length);
+        setCartQty(cartResponse.data.data.cart.length);
 
-//         let price = 0;
-//         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-//           price += parseInt(cartResponse.data.data.cart[i].price);
-//         }
-//         setCartCost(price);
+        let price = 0;
+        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
+          price += parseInt(cartResponse.data.data.cart[i].price);
+        }
+        setCartCost(price);
 
-//         if (cartResponse.length !== 0) {
-//           setCartState(true);
-//         } else {
-//           setCartState(false);
-//         }
+        if (cartResponse.data.data.cart.length !== 0) {
+          setCartState(true);
+        } else {
+          setCartState(false);
+        }
 
-//         productResponse = await CollectionAPI.get(`/collection`);
+        productResponse = await CollectionAPI.get(`/collection`);
 
-//         for (let i = 0; i < productResponse.data.data.collection.length; i++) {
-//           if (productResponse.data.data.collection[i].imagekey !== null) {
-//             let imagesResponse = await CollectionAPI.get(
-//               `/images/${productResponse.data.data.collection[i].imagekey}`,
-//               {
-//                 responseType: "arraybuffer",
-//               }
-//             ).then((response) =>
-//               Buffer.from(response.data, "binary").toString("base64")
-//             );
+        for (let i = 0; i < productResponse.data.data.collection.length; i++) {
+          if (productResponse.data.data.collection[i].imagekey !== null) {
+            let imagesResponse = await CollectionAPI.get(
+              `/images/${productResponse.data.data.collection[i].imagekey}`,
+              {
+                responseType: "arraybuffer",
+              }
+            ).then((response) =>
+              Buffer.from(response.data, "binary").toString("base64")
+            );
 
-//             if (
-//               productResponse.data.data.collection[i].primaryimage &&
-//               productResponse.data.data.collection[i].product === "2D"
-//             ) {
-//               setTwoDImage(`data:image/png;base64,${imagesResponse}`);
-//             }
-//             if (
-//               productResponse.data.data.collection[i].primaryimage &&
-//               productResponse.data.data.collection[i].product === "3D"
-//             ) {
-//               setThreeDImage(`data:image/png;base64,${imagesResponse}`);
-//             }
-//             if (
-//               productResponse.data.data.collection[i].primaryimage &&
-//               productResponse.data.data.collection[i].product === "comic"
-//             ) {
-//               setComicImage(`data:image/png;base64,${imagesResponse}`);
-//             }
-//           }
-//         }
-//         setCollection(productResponse.data.data.collection);
+            if (
+              productResponse.data.data.collection[i].primaryimage &&
+              productResponse.data.data.collection[i].product === "2D"
+            ) {
+              setTwoDImage(`data:image/png;base64,${imagesResponse}`);
+            }
+            if (
+              productResponse.data.data.collection[i].primaryimage &&
+              productResponse.data.data.collection[i].product === "3D"
+            ) {
+              setThreeDImage(`data:image/png;base64,${imagesResponse}`);
+            }
+            if (
+              productResponse.data.data.collection[i].primaryimage &&
+              productResponse.data.data.collection[i].product === "comic"
+            ) {
+              setComicImage(`data:image/png;base64,${imagesResponse}`);
+            }
+          }
+        }
       } catch (err) {
         console.log(err);
       }
@@ -80,24 +77,24 @@ const HomeC: FC = () => {
 
   return (
     <div>
-      {/* <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} /> */}
+      <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
       <HeaderC />
       <div className="main-body home-menu">
         <a href="collection/2D">
           <div className="menu-item">
-            {/* <img className="menu-image" src={twoDImage} alt="prints" /> */}
+            <img className="menu-image" src={twoDImage} alt="prints" />
             <h1>2D art</h1>
           </div>
         </a>
         <a href="collection/3D">
           <div className="menu-item">
-            {/* <img className="menu-image" src={threeDImage} alt="3d art" /> */}
+            <img className="menu-image" src={threeDImage} alt="3d art" />
             <h1>3D art</h1>
           </div>
         </a>
         <a href="collection/comic">
           <div className="menu-item">
-            {/* <img className="menu-image" src={comicImage} alt="comics" /> */}
+            <img className="menu-image" src={comicImage} alt="comics" />
             <h1>comics</h1>
           </div>
         </a>

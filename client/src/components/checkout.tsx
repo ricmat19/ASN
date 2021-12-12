@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-// import OrderSummaryC from "./orderSummary";
+import OrderSummaryC from "./orderSummary";
 import HeaderC from "./header";
 import FooterC from "./footer";
 import CollectionAPI from "../apis/collectionAPI";
-// import { useNavigate } from "react-router-dom";
-// import { Cart } from "../interfaces";
+import { useNavigate } from "react-router-dom";
+import { ICart, ICheckout } from "../interfaces";
 
 const CheckoutC: FC = () => {
-  // const [cart, setCart] = useState<Cart[]>([]);
-  // const [cartPrices, setCartPrices] = useState<number[]>([]);
-  // const [subtotal, setSubtotal] = useState<number>(0);
-  // const [, setShipment] = useState(null);
+  const [cart, setCart] = useState<ICart[]>([]);
+  const [cartPrices, setCartPrices] = useState<number[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [, setCheckOut] = useState<ICheckout[]>([]);
 
   const [email, setEmail] = useState("");
   const [firstname, setFirstName] = useState("");
@@ -33,15 +33,20 @@ const CheckoutC: FC = () => {
   const phoneInput = useRef(null);
 
   let cartPriceArray: number[] = [];
-  // let sub = 0;
+  let sub = 0;
   
   useEffect((): void => {
     const fetchData = async () => {
       try {
         const cartResponse = await CollectionAPI.get(`/cart`);
 
+        console.log(cartResponse.data.data.cart[0].price)
+        console.log(cartResponse.data.data.qty)
         for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          let itemSummaryPrice: number =
+          if(cartResponse.data.data.qty[i] === null){
+            cartResponse.data.data.qty[i] = 0;
+          }
+          let itemSummaryPrice =
             cartResponse.data.data.cart[i].price *
             cartResponse.data.data.qty[i];
           cartPriceArray.push(itemSummaryPrice);
@@ -62,14 +67,14 @@ const CheckoutC: FC = () => {
           }
         }
 
-        // setCartPrices(cartPriceArray);
+        setCartPrices(cartPriceArray);
 
-        // sub = cartPriceArray.reduce(function (a, b): number {
-        //   return a + b;
-        // }, 0);
-        // setSubtotal(sub);
+        sub = cartPriceArray.reduce(function (a, b): number {
+          return a + b;
+        }, 0);
+        setSubtotal(sub);
 
-        // setCart(cartResponse.data.data.cart);
+        setCart(cartResponse.data.data.cart);
       } catch (err) {
         console.log(err);
       }
@@ -78,40 +83,30 @@ const CheckoutC: FC = () => {
     fetchData();
   }, []);
 
-//   let navigation = useNavigate();
-  // const handleCheckout = async (e: ChangeEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await CollectionAPI.post("/shipment", {
-  //       email: email,
-  //       firstname: firstname,
-  //       lastname: lastname,
-  //       address: address,
-  //       suite: suite,
-  //       city: city,
-  //       state: state,
-  //       zipcode: zipcode,
-  //       phone: phone,
-  //     });
+  let navigation = useNavigate();
 
-  //     console.log(response);
-  //     setShipment(response.data.data.newShipment);
+  const handleCheckout = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await CollectionAPI.post("/shipment", {
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        address: address,
+        suite: suite,
+        city: city,
+        state: state,
+        zipcode: zipcode,
+        phone: phone,
+      });
 
-  //     // navigation.push(`/shipping`);
+      setCheckOut(response.data.data.newAddress);
 
-  //     // emailInput.current.value = "";
-  //     // firstNameInput.current.value = "";
-  //     // lastNameInput.current.value = "";
-  //     // addressInput.current.value = "";
-  //     // suiteInput.current.value = "";
-  //     // cityInput.current.value = "";
-  //     // stateInput.current.value = "";
-  //     // zipcodeInput.current.value = "";
-  //     // phoneInput.current.value = "";
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+      navigation(`/shipping`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -279,7 +274,7 @@ const CheckoutC: FC = () => {
                 />
               </div>
               <div className="two-column-div">
-                {/* <button onClick={handleCheckout}>continue to shipping</button> */}
+                <button onClick={handleCheckout}>continue to shipping</button>
                 <a href="/cart">
                   <p>return to cart</p>
                 </a>
@@ -289,11 +284,11 @@ const CheckoutC: FC = () => {
         </form>
         <div className="order-summary">
           <div>
-            {/* <OrderSummaryC
+            <OrderSummaryC
               cartCollection={cart}
               cartPrices={cartPrices}
               subtotal={subtotal}
-            /> */}
+            />
           </div>
           <div className="two-column-div checkout-discount">
             <input type="text" placeholder="discount code" />

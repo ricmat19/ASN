@@ -1,18 +1,24 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-// import { Cart } from "../interfaces";
+import { ICart } from "../interfaces";
 
-const OrderSummaryC: FC = (props) => {
-//   const [cart, setCart] = useState<Cart[]>([]);
+interface ICartContent {
+  cartCollection: ICart[],
+  cartPrices: number[],
+  subtotal: number
+}
+
+const OrderSummaryC = (props: ICartContent) => {
+  const [cart, setCart] = useState<ICart[]>([]);
   const [cartPrices, setCartPrices] = useState<number[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
 
   useEffect((): void => {
     const fetchData = async () => {
       try {
-//         setCart(props.cartCollection);
-//         setCartPrices(props.cartPrices);
-//         setSubtotal(props.subtotal);
+        setCart(props.cartCollection);
+        setCartPrices(props.cartPrices);
+        setSubtotal(props.subtotal);
       } catch (err) {
         console.log(err);
       }
@@ -22,7 +28,7 @@ const OrderSummaryC: FC = (props) => {
 
   return (
     <div>
-      {/* {cart &&
+      {cart &&
         cartPrices &&
         cart.map((item, index) => {
           return (
@@ -42,7 +48,7 @@ const OrderSummaryC: FC = (props) => {
               </div>
             </div>
           );
-        })} */}
+        })}
       <hr className="checkout-hr" />
       <div className="two-column-div">
         <p className="align-left">subtotal</p>
