@@ -2,8 +2,9 @@ import React, { useEffect, FC, useState } from "react";
 import { useParams } from "react-router";
 import CollectionAPI from "../apis/collectionAPI";
 import CartModalC from "./cartModal";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import { ICart, IProduct } from "../interfaces";
 
 const ItemDetailsC: FC = () => {
@@ -95,7 +96,8 @@ const ItemDetailsC: FC = () => {
   return (
     <div>
       <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="main-body item-details">
         <div className="item-images">
           <div className="image-div">

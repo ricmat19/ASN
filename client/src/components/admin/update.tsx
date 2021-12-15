@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CollectionAPI from "../../apis/collectionAPI";
 import AdminHeaderC from "./header";
-import FooterC from "../footer";
+import FooterC from "../standard/footer";
 
 const AdminUpdateC: FC = () => {
   const { id } = useParams();

@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import CartItemC from "./cartItem";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { ICart } from "../interfaces";
 
@@ -38,7 +39,8 @@ const CartC: FC = () => {
 
   return (
     <div className="main-body">
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="center">
         <h1>Shopping Cart</h1>
       </div>

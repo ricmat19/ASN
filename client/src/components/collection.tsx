@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import CollectionAPI from "../apis/collectionAPI";
 import CartModalC from "./cartModal";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import { ICart, IProduct } from "../interfaces";
 
 const CollectionC: FC = () => {
@@ -107,7 +108,8 @@ const CollectionC: FC = () => {
   return (
     <div>
       <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="main-body">
         <div className="center subtitle-div">
           <a className="subtitle-anchor" href="/collection/2D">

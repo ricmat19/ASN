@@ -1,7 +1,7 @@
 import React, { useState, useRef, FC } from "react";
 import CollectionAPI from "../../apis/collectionAPI";
 import AdminHeaderC from "./header";
-import FooterC from "../footer";
+import FooterC from "../standard/footer";
 
 const AdminCreateC: FC = () => {
 

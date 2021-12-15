@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import OrderSummaryC from "./orderSummary";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { ICart } from "../interfaces";
 
@@ -72,7 +73,8 @@ const ShippingC: FC = () => {
 
   return (
     <div>
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="main-body shipping-div">
         <div className="shipping-selection-div">
           <div className="shipping-info-div">

@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, FC, useState } from "react";
 import CollectionAPI from "../apis/collectionAPI";
 import CartModalC from "./cartModal";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import { ICart } from "../interfaces";
 
 const ContactC: FC = () => {
@@ -70,7 +71,8 @@ const ContactC: FC = () => {
   return (
     <div>
       <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="main-body">
         <div className="center">
           <h1>contact</h1>

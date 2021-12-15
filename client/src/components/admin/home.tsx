@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import AdminHeaderC from "./header";
-import FooterC from "../footer";
+import FooterC from "../standard/footer";
 import CollectionAPI from "../../apis/collectionAPI";
 
 const HomeC: FC = () => {

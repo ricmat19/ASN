@@ -1,22 +1,9 @@
-import React, { useState, FC } from "react";
-import SignInModalC from "./signinModal";
+import React, { FC } from "react";
 
-const HeaderC: FC = () => {
-
-  const [displaySignin, setDisplaySignIn] = useState<boolean>(false);
-  const [email, ] = useState<string>("");
-  const [password, ] = useState<string>("");
+const MenuHeaderC: FC = () => {
 
   return (
     <header className="navbar-div">
-
-      {/* Signin */}
-      <SignInModalC 
-        show={displaySignin} 
-        onHide={() => setDisplaySignIn(false)}
-        email={email}
-        password={password}
-      />
 
       <div>
         <input type="checkbox" id="nav-toggle" className="nav-toggle" />
@@ -38,9 +25,6 @@ const HeaderC: FC = () => {
           <a href="/contact">
             <h1>contact</h1>
           </a>
-          <div>
-            <h1 className="pointer" onClick={() => setDisplaySignIn(true)}>sign in</h1>
-          </div>
         </nav>
       </div>
       <hr />
@@ -48,4 +32,4 @@ const HeaderC: FC = () => {
   );
 };
 
-export default HeaderC;
+export default MenuHeaderC;

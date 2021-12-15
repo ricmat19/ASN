@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CollectionAPI from "../../apis/collectionAPI";
 import { IProduct } from "../../interfaces";
 import AdminHeaderC from "../admin/header";
-import FooterC from "../footer";
+import FooterC from "../standard/footer";
 
 const AdminCollectionC: FC = () => {
   const { product } = useParams();

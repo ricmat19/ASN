@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import OrderSummaryC from "./orderSummary";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { useNavigate } from "react-router-dom";
 import { ICart, ICheckout } from "../interfaces";
@@ -110,7 +111,8 @@ const CheckoutC: FC = () => {
 
   return (
     <div>
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="main-body checkout-div">
         <form className="checkout-info" method="POST">
           <h1>express checkout</h1>

@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import CartModalC from "./cartModal";
-import HeaderC from "./header";
-import FooterC from "./footer";
+import AccountHeaderC from "./standard/accountHeader";
+import MenuHeaderC from "./standard/menuHeader";
+import FooterC from "./standard/footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { ICart } from "../interfaces";
 
@@ -78,7 +79,8 @@ const HomeC: FC = () => {
   return (
     <div>
       <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
-      <HeaderC />
+      <AccountHeaderC />
+      <MenuHeaderC/>
       <div className="main-body home-menu">
         <a href="collection/2D">
           <div className="menu-item">
