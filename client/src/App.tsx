@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/home";
 import About from "./routes/about";
-import Product from "./routes/collection";
+import CollectionThumbnails from "./routes/storeThumbnails";
 import Item from "./routes/itemDetails";
 import Cart from "./routes/cart";
 import Checkout from "./routes/checkout";
@@ -13,7 +13,6 @@ import AdminHome from "./routes/admin/home";
 import AdminCollection from "./routes/admin/collection";
 import AdminCreate from "./routes/admin/create";
 import AdminUpdate from "./routes/admin/update";
-// import { CollectionContextProvider } from "./context/collectionContext";
 
 const App: FC = () => {
   return (
@@ -22,7 +21,7 @@ const App: FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/collection/:product" element={<Product />} />
+          <Route path="/collection/:product" element={<CollectionThumbnails />} />
           <Route path="/collection/:product/:id" element={<Item />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

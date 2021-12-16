@@ -5,7 +5,7 @@ import { Grid, Menu, Avatar, Divider, MenuItem, ListItemIcon } from '@mui/materi
 const AccountHeaderC: FC = () => {
 
   const [displaySigninModal, setDisplaySignInModal] = useState<boolean>(false);
-  const [signedIn,] = useState<boolean>(false);
+  const [signedIn,] = useState<boolean>(true);
   const [email, ] = useState<string>("");
   const [password, ] = useState<string>("");
 
@@ -23,33 +23,40 @@ const AccountHeaderC: FC = () => {
 
   if(signedIn){
     return (
-      <header className="navbar-div">  
+      <header>  
         <nav>
           <Grid container>
-            <Grid xs={1}>
+            <Grid xs={1} sx={{textAlign: 'center', alignSelf: "center"}}>
               <label className="example-logo">Logo</label>
             </Grid>
-            <Grid xs={7}>
-            <input type="text" placeholder="test"/>
-            </Grid>
-              <Grid container xs={4}>
-                <Grid xs={2} sx={{ml: 0, mr: 2}}>
-                  <i className="far fa-bell account-menu-icon"></i>
-                </Grid>
-                <Grid xs={2} sx={{ml: 0, mr: 2}}>
-                  <i className="far fa-paper-plane account-menu-icon"></i>
-                </Grid>
-                <Grid xs={2} sx={{ml: 0, mr: 2}}>
-                  <i className="far fa-heart account-menu-icon"></i>
-                </Grid>
-                <Grid xs={2} sx={{ml: 0, mr: 2}}>
-                  <i className="fas fa-shopping-cart account-menu-icon"></i>
-                </Grid>
-                <Grid xs={2} sx={{ml: 0, mr: 2}}>
-                  <i className="fas fa-user-circle account-menu-icon" onClick={handleClick}></i>
-                </Grid>
-                <h1 className="pointer" onClick={() => handleOpen}>sign in</h1>
+            <Grid xs={9} container sx={{alignContent: "center"}}>
+              <Grid xs={1} sx={{ textAlign: 'center', alignSelf: "center"}}>
+                <label>Search</label>
               </Grid>
+              <Grid xs={11} container>
+                <input type="text" placeholder="test" className="search-field test-border"/>
+              </Grid>
+            </Grid>
+            <Grid container xs={2} sx={{alignContent: "center"}}>
+              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center"}}>
+                <h1><i className="far fa-bell account-menu-icon"></i></h1>
+              </Grid>
+              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                <h1><i className="far fa-paper-plane account-menu-icon"></i></h1>
+              </Grid>
+              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                <h1><i className="far fa-heart account-menu-icon"></i></h1>
+              </Grid>
+              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                <h1><i className="fas fa-shopping-cart account-menu-icon"></i></h1>
+              </Grid>
+              <Grid xs={3} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                <h1><i className="fas fa-user-circle account-menu-icon" onClick={handleClick}></i></h1>
+              </Grid>
+              <Grid xs={1} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                <h1><i className="fas fa-ellipsis-v" onClick={handleClick}></i></h1>
+              </Grid>
+            </Grid>
           </Grid>
           <Menu
           anchorEl={anchorEl}
@@ -106,11 +113,12 @@ const AccountHeaderC: FC = () => {
           </MenuItem>
         </Menu>
         </nav>
+        <hr/>
       </header>
     );
   }else{
     return(
-      <header className="navbar-div">
+      <header>
   
         {/* Signin */}
         <SignInModalC 
@@ -121,31 +129,37 @@ const AccountHeaderC: FC = () => {
         />
   
         <nav>
-          <Grid container sx={{height: "50px"}}>
-            <Grid xs={1}>
+          <Grid container>
+            <Grid xs={1} sx={{textAlign: 'center', alignSelf: "center"}}>
               <label className="example-logo">Logo</label>
             </Grid>
-            <Grid xs={9} container>
-              <Grid xs={1}>
+            <Grid xs={9} container sx={{alignContent: "center"}}>
+              <Grid xs={1} sx={{ textAlign: 'center', alignSelf: "center"}}>
                 <label>Search</label>
               </Grid>
               <Grid xs={11} container>
                 <input type="text" placeholder="test" className="search-field test-border"/>
               </Grid>
             </Grid>
-            <Grid container xs={2}>
+            <Grid container xs={2} sx={{alignContent: "center"}}>
               <Grid xs={4} sx={{ textAlign: 'center', alignSelf: "center" }}>
                 <i className="fas fa-shopping-cart account-menu-icon"></i>
               </Grid>
-              <Grid xs={4}>
+              <Grid xs={4} sx={{ textAlign: 'center', alignSelf: "center" }}>
                 <h1 className="pointer" onClick={() => handleOpen}>sign up</h1>
               </Grid>
-              <Grid xs={4}>
-                <h1 className="pointer" onClick={() => handleOpen}>sign in</h1>
+              <Grid xs={4} container>
+                <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                  <i className="fas fa-sign-out-alt"></i>
+                </Grid>
+                <Grid xs={10} sx={{ textAlign: 'center', alignSelf: "center" }}>
+                  <h1 className="pointer" onClick={() => handleOpen}>sign in</h1>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </nav>
+        <hr/>
       </header>
     );
   }

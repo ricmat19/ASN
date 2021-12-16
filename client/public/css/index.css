@@ -4,6 +4,10 @@ body {
   margin: 0;
 }
 
+hr{
+  margin: 0;
+}
+
 .account-menu-icon{
   margin: 0 20px;
   font-size: 23px;
@@ -89,12 +93,6 @@ button a:hover {
   background-color: rgb(243, 243, 243);
   position: fixed;
   right: 11px;
-}
-
-.navbar {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
 }
 
 .cart-icon {
@@ -332,21 +330,17 @@ button {
   .menu-toggle {
     display: grid;
   }
-
-  .navbar {
-    display: none;
-  }
 }
 
 a {
   color: #000000;
 }
 
-hr {
+/* hr {
   margin: 15px 15%;
   align-content: center;
   justify-self: center;
-}
+} */
 
 .form-hr {
   margin: 0;

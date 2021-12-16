@@ -7,8 +7,9 @@ import AccountHeaderC from "./standard/accountHeader";
 import MenuHeaderC from "./standard/menuHeader";
 import FooterC from "./standard/footer";
 import { ICart, IProduct } from "../interfaces";
+import CoursesMenuC from "./coursesMenu";
 
-const CollectionC: FC = () => {
+const CoursesThumbnailsC: FC = () => {
 
   const { product } = useParams();
 
@@ -99,7 +100,7 @@ const CollectionC: FC = () => {
 
   const displayItem = async (product: string, id: string) => {
     try {
-      navigation(`/collection/${product}/${id}`);
+      navigation(`/store/${product}/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -111,17 +112,7 @@ const CollectionC: FC = () => {
       <AccountHeaderC />
       <MenuHeaderC/>
       <div className="main-body">
-        <div className="center subtitle-div">
-          <a className="subtitle-anchor" href="/collection/2D">
-            <h1>2D art</h1>
-          </a>
-          <a className="subtitle-anchor" href="/collection/3D">
-            <h1>3D art</h1>
-          </a>
-          <a className="subtitle-anchor" href="/collection/comic">
-            <h1>comics</h1>
-          </a>
-        </div>
+        <CoursesMenuC />
         <div className="collection-menu">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}
@@ -139,4 +130,4 @@ const CollectionC: FC = () => {
   );
 };
 
-export default CollectionC;
+export default CoursesThumbnailsC;
