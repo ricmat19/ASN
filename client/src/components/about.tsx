@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import AccountHeaderC from "./standard/accountHeader";
-import MenuHeaderC from "./standard/menuHeader";
+import AccountHeaderC from "./standard/accountNav";
+import MenuHeaderC from "./standard/menuNav";
 import CartModalC from "./cartModal";
 import FooterC from "./standard/footer";
 import { ICart } from "../interfaces";

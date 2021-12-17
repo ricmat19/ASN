@@ -1,22 +1,17 @@
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import CollectionAPI from "../apis/collectionAPI";
-import CartModalC from "./cartModal";
-import AccountHeaderC from "./standard/accountHeader";
-import MenuHeaderC from "./standard/menuHeader";
-import FooterC from "./standard/footer";
-import { ICart, IProduct } from "../interfaces";
-import StoreMenuC from "./storeMenu";
+import CollectionAPI from "../../apis/collectionAPI";
+import { IProduct } from "../../interfaces";
+import StoreMenuC from "../menues/productsMenu";
+import AccountNavC from "../standard/accountNav";
+import MenuNavC from "../standard/menuNav";
+import FooterC from "../standard/footer";
 
-const StoreThumbnailsC: FC = () => {
+const ProjectsC: FC = () => {
 
   const { product } = useParams();
 
-  const [, setCart] = useState<ICart[]>([]);
-  const [cartState, setCartState] = useState<boolean>(false);
-  const [cartQty, setCartQty] = useState<number>(0);
-  const [cartCost, setCartCost] = useState<number>(0);
   const [collection, setCollection ] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
@@ -55,7 +50,7 @@ const StoreThumbnailsC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await CollectionAPI.get(`/collection/${product}`);
+        productResponse = await CollectionAPI.get(`/products/${product}`);
 
         for (let i = 0; i < productResponse.data.data.product.length; i++) {
           if (productResponse.data.data.product[i].imagekey !== null) {
@@ -75,22 +70,6 @@ const StoreThumbnailsC: FC = () => {
         }
         setCollection(productResponse.data.data.product);
 
-        const cartResponse = await CollectionAPI.get(`/cart`);
-        setCart(cartResponse.data.data.cart);
-
-        setCartQty(cartResponse.data.data.cart.length);
-
-        let price = 0;
-        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          price += parseInt(cartResponse.data.data.cart[i].price);
-        }
-        setCartCost(price);
-
-        if (cartResponse.data.data.cart.length !== 0) {
-          setCartState(true);
-        } else {
-          setCartState(false);
-        }
       } catch (err) {
         console.log(err);
       }
@@ -100,7 +79,7 @@ const StoreThumbnailsC: FC = () => {
 
   const displayItem = async (product: string, id: string) => {
     try {
-      navigation(`/collection/${product}/${id}`);
+      navigation(`/products/${product}/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -108,12 +87,11 @@ const StoreThumbnailsC: FC = () => {
 
   return (
     <div>
-      <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
-      <AccountHeaderC />
-      <MenuHeaderC/>
+      <AccountNavC />
+      <MenuNavC />
       <div className="main-body">
         <StoreMenuC />
-        <div className="collection-menu">{displayItems}</div>
+        <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}
@@ -130,4 +108,4 @@ const StoreThumbnailsC: FC = () => {
   );
 };
 
-export default StoreThumbnailsC;
+export default ProjectsC;

@@ -2,10 +2,10 @@ import React, { useState, FC } from "react";
 import SignInModalC from "../signinModal";
 import { Grid, Menu, Avatar, Divider, MenuItem, ListItemIcon } from '@mui/material';
 
-const AccountHeaderC: FC = () => {
+const AccountNavC: FC = () => {
 
   const [displaySigninModal, setDisplaySignInModal] = useState<boolean>(false);
-  const [signedIn,] = useState<boolean>(true);
+  const [signedIn,] = useState<boolean>(false);
   const [email, ] = useState<string>("");
   const [password, ] = useState<string>("");
 
@@ -27,34 +27,34 @@ const AccountHeaderC: FC = () => {
         <nav>
           <Grid container>
             <Grid xs={1} sx={{textAlign: 'center', alignSelf: "center"}}>
-              <label className="example-logo">Logo</label>
+              <h1>Logo</h1>
             </Grid>
             <Grid xs={9} container sx={{alignContent: "center"}}>
               <Grid xs={1} sx={{ textAlign: 'center', alignSelf: "center"}}>
-                <label>Search</label>
+                <h1>Search</h1>
               </Grid>
-              <Grid xs={11} container>
-                <input type="text" placeholder="test" className="search-field test-border"/>
+              <Grid xs={11} container sx={{pt: "10px", pb: "10px"}}>
+                <input type="text" placeholder="test" className="search-field"/>
               </Grid>
             </Grid>
             <Grid container xs={2} sx={{alignContent: "center"}}>
-              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center"}}>
+              <Grid xs={2} container sx={{justifyContent: "center"}}>
                 <h1><i className="far fa-bell account-menu-icon"></i></h1>
               </Grid>
-              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+              <Grid xs={2} container sx={{justifyContent: "center"}}>
                 <h1><i className="far fa-paper-plane account-menu-icon"></i></h1>
               </Grid>
-              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+              <Grid xs={2} container sx={{justifyContent: "center"}}>
                 <h1><i className="far fa-heart account-menu-icon"></i></h1>
               </Grid>
-              <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
+              <Grid xs={2} container sx={{justifyContent: "center"}}>
                 <h1><i className="fas fa-shopping-cart account-menu-icon"></i></h1>
               </Grid>
-              <Grid xs={3} sx={{ textAlign: 'center', alignSelf: "center" }}>
+              <Grid xs={2} container sx={{justifyContent: "center"}}>
                 <h1><i className="fas fa-user-circle account-menu-icon" onClick={handleClick}></i></h1>
               </Grid>
-              <Grid xs={1} sx={{ textAlign: 'center', alignSelf: "center" }}>
-                <h1><i className="fas fa-ellipsis-v" onClick={handleClick}></i></h1>
+              <Grid xs={2} container sx={{justifyContent: "center"}}>
+                  <h1><i className="fas fa-ellipsis-v" onClick={handleClick}></i></h1>
               </Grid>
             </Grid>
           </Grid>
@@ -131,30 +131,25 @@ const AccountHeaderC: FC = () => {
         <nav>
           <Grid container>
             <Grid xs={1} sx={{textAlign: 'center', alignSelf: "center"}}>
-              <label className="example-logo">Logo</label>
+              <h1>Logo</h1>
             </Grid>
             <Grid xs={9} container sx={{alignContent: "center"}}>
               <Grid xs={1} sx={{ textAlign: 'center', alignSelf: "center"}}>
-                <label>Search</label>
+                <h1>Search</h1>
               </Grid>
-              <Grid xs={11} container>
-                <input type="text" placeholder="test" className="search-field test-border"/>
+              <Grid xs={11} container sx={{pt: "10px", pb: "10px"}}>
+                <input type="text" placeholder="test" className="search-field"/>
               </Grid>
             </Grid>
             <Grid container xs={2} sx={{alignContent: "center"}}>
-              <Grid xs={4} sx={{ textAlign: 'center', alignSelf: "center" }}>
+              <Grid xs={2}container sx={{justifyContent: "center", alignSelf: "center" }}>
                 <i className="fas fa-shopping-cart account-menu-icon"></i>
               </Grid>
-              <Grid xs={4} sx={{ textAlign: 'center', alignSelf: "center" }}>
-                <h1 className="pointer" onClick={() => handleOpen}>sign up</h1>
+              <Grid xs={5} container sx={{justifyContent: "center"}}>
+                <h2 className="pointer" onClick={() => handleOpen}>sign up</h2>
               </Grid>
-              <Grid xs={4} container>
-                <Grid xs={2} sx={{ textAlign: 'center', alignSelf: "center" }}>
-                  <i className="fas fa-sign-out-alt"></i>
-                </Grid>
-                <Grid xs={10} sx={{ textAlign: 'center', alignSelf: "center" }}>
-                  <h1 className="pointer" onClick={() => handleOpen}>sign in</h1>
-                </Grid>
+              <Grid xs={5} container sx={{justifyContent: "center"}}>
+                  <h2 className="pointer" onClick={() => handleOpen}>sign in</h2>
               </Grid>
             </Grid>
           </Grid>
@@ -166,4 +161,4 @@ const AccountHeaderC: FC = () => {
 
 };
 
-export default AccountHeaderC;
+export default AccountNavC;

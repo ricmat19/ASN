@@ -1,13 +1,13 @@
 import React, { useEffect, FC, useState } from "react";
 import { useParams } from "react-router";
-import CollectionAPI from "../apis/collectionAPI";
-import CartModalC from "./cartModal";
-import AccountHeaderC from "./standard/accountHeader";
-import MenuHeaderC from "./standard/menuHeader";
-import FooterC from "./standard/footer";
-import { ICart, IProduct } from "../interfaces";
+import CollectionAPI from "../../apis/collectionAPI";
+import CartModalC from "../cartModal";
+import AccountHeaderC from "../standard/accountNav";
+import MenuHeaderC from "../standard/menuNav";
+import FooterC from "../standard/footer";
+import { ICart, IProduct } from "../../interfaces";
 
-const ItemDetailsC: FC = () => {
+const ProjectC: FC = () => {
   const { product, id } = useParams();
 
   const [, setCart] = useState<ICart[]>([]);
@@ -25,7 +25,7 @@ const ItemDetailsC: FC = () => {
     const fetchData = async () => {
       try {
         const productResponse = await CollectionAPI.get(
-          `/collection/${product}/${id}`
+          `/products/${product}/${id}`
         );
 
         if (productResponse.data.data.item.imagekey !== null) {
@@ -140,4 +140,4 @@ const ItemDetailsC: FC = () => {
   );
 };
 
-export default ItemDetailsC;
+export default ProjectC;

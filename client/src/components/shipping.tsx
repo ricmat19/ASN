@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import OrderSummaryC from "./orderSummary";
-import AccountHeaderC from "./standard/accountHeader";
-import MenuHeaderC from "./standard/menuHeader";
+import AccountHeaderC from "./standard/accountNav";
+import MenuHeaderC from "./standard/menuNav";
 import FooterC from "./standard/footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { ICart } from "../interfaces";

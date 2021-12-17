@@ -6,7 +6,7 @@ const app = express();
 const adminCollectionRouter = require("./routes/admin/collection");
 const adminCreateRouter = require("./routes/admin/create");
 const adminUpdateRouter = require("./routes/admin/update");
-const collectionRouter = require("./routes/collection");
+const productsR = require("./routes/products");
 const contactRouter = require("./routes/contact");
 const usersRouter = require("./routes/users");
 const cartRouter = require("./routes/cart");
@@ -43,7 +43,7 @@ app.use(
 app.use(adminCollectionRouter);
 app.use(adminCreateRouter);
 app.use(adminUpdateRouter);
-app.use(collectionRouter);
+app.use(productsR);
 app.use(contactRouter);
 app.use(usersRouter);
 app.use(cartRouter);

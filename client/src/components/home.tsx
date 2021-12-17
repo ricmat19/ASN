@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import CartModalC from "./cartModal";
-import AccountHeaderC from "./standard/accountHeader";
-import MenuHeaderC from "./standard/menuHeader";
+import AccountHeaderC from "./standard/accountNav";
+import MenuHeaderC from "./standard/menuNav";
 import FooterC from "./standard/footer";
 import CollectionAPI from "../apis/collectionAPI";
 import { ICart } from "../interfaces";
@@ -82,19 +82,19 @@ const HomeC: FC = () => {
       <AccountHeaderC />
       <MenuHeaderC/>
       <div className="main-body home-menu">
-        <a href="collection/2D">
+        <a href="products/2D">
           <div className="menu-item">
             <img className="menu-image" src={twoDImage} alt="prints" />
             <h1>2D art</h1>
           </div>
         </a>
-        <a href="collection/3D">
+        <a href="products/3D">
           <div className="menu-item">
             <img className="menu-image" src={threeDImage} alt="3d art" />
             <h1>3D art</h1>
           </div>
         </a>
-        <a href="collection/comic">
+        <a href="products/comic">
           <div className="menu-item">
             <img className="menu-image" src={comicImage} alt="comics" />
             <h1>comics</h1>

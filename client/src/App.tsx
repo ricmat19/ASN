@@ -1,9 +1,12 @@
 import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./routes/home";
 import About from "./routes/about";
-import CollectionThumbnails from "./routes/storeThumbnails";
-import Item from "./routes/itemDetails";
+import ProductsR from "./routes/products";
+import ProductR from "./routes/product";
+import CoursesR from "./routes/courses";
+import CourseR from "./routes/course";
+import MediasR from "./routes/medias";
+import MediaR from "./routes/media";
 import Cart from "./routes/cart";
 import Checkout from "./routes/checkout";
 import Shipping from "./routes/shipping";
@@ -19,10 +22,17 @@ const App: FC = () => {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/collection/:product" element={<CollectionThumbnails />} />
-          <Route path="/collection/:product/:id" element={<Item />} />
+          <Route path="/products/:product" element={<ProductsR />} />
+          <Route path="/products/:product/:id" element={<ProductR />} />
+          <Route path="/courses/:subject" element={<CoursesR />} />
+          <Route path="/courses/:subject/:id" element={<CourseR />} />
+          <Route path="/medias/:media" element={<MediasR />} />
+          <Route path="/medias/:media/:post" element={<MediaR />} />
+
+
+
+
+
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/shipping" element={<Shipping />} />
@@ -35,6 +45,8 @@ const App: FC = () => {
           />
           <Route path="/admin/create" element={<AdminCreate />} />
           <Route path="/admin/update/:id" element={<AdminUpdate />} />
+
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </div>
