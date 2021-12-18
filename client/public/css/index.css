@@ -1,7 +1,16 @@
 body {
-  color: #000000;
+  color: #ffffff;
+  background-color: #000000;
   font-family: "Rajdhani";
   margin: 0;
+}
+
+a{
+  color: white;
+}
+
+a:visited{
+  color: white;
 }
 
 hr{
@@ -40,12 +49,17 @@ h1 {
   font-size: 25px;
 }
 
+h1:hover {
+  color: rgb(255, 68, 208);
+  cursor: pointer;
+}
+
 a {
   text-decoration: none;
 }
 
 a:hover {
-  color: rgb(212, 0, 28);
+  color: rgb(255, 68, 208);
 }
 
 button a,
@@ -79,7 +93,7 @@ button a:hover {
 
 .pointer:hover {
   cursor: pointer;
-  color: rgb(212, 0, 28);
+  color: rgb(255, 68, 208);
 }
 
 .inactive-cart {
@@ -126,7 +140,7 @@ button a:hover {
 }
 
 .modal-link:hover {
-  color: rgb(212, 0, 28);
+  color: rgb(255, 68, 208);
 }
 
 .sign-active {
@@ -303,7 +317,7 @@ button a:hover {
 }
 
 .active {
-  color: rgb(212, 0, 28);
+  color: rgb(255, 68, 208);
 }
 
 .main-body {
@@ -608,8 +622,8 @@ label {
 }
 
 .delete {
-  background-color: rgb(212, 0, 28);
-  border-color: rgb(212, 0, 28);
+  color: rgb(255, 68, 208);
+  color: rgb(255, 68, 208);
   color: white;
   text-align: left;
 }
@@ -737,7 +751,7 @@ label {
   padding: 10px;
   margin: 1px;
   border-style: none;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -751,7 +765,12 @@ label {
   display: grid;
 }
 
-.activeButton a {
+.activeButton a, .activeButton a:hover {
+  color: black;
+  background-color: rgb(243, 243, 243);
+}
+
+.activeButton a:hover {
   color: black;
   background-color: rgb(243, 243, 243);
 }
