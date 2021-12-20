@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import CartModalC from "./cartModal";
+import CartModalC from "./cart/cartModal";
 import AccountHeaderC from "./standard/accountNav";
 import MenuHeaderC from "./standard/menuNav";
 import FooterC from "./standard/footer";
-import CollectionAPI from "../apis/collectionAPI";
+import CollectionAPI from "../apis/storeAPI";
 import { ICart } from "../interfaces";
 
 const HomeC: FC = () => {

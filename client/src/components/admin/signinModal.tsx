@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Modal, Button } from 'react-bootstrap';
 import SignUpModalC from "./signupModal";
 import ResetPasswordModalC from "./resetModal";
-import CollectionAPI from "../../apis/collectionAPI";
+import CollectionAPI from "../../apis/storeAPI";
 
 interface IModalState {
   show: boolean,

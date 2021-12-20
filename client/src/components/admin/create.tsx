@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC } from "react";
-import CollectionAPI from "../../apis/collectionAPI";
+import CollectionAPI from "../../apis/storeAPI";
 import AdminHeaderC from "./header";
 import FooterC from "../standard/footer";
 

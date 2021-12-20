@@ -62,7 +62,7 @@ const MenuNavC: FC = () => {
               <i className="fas fa-comments"></i>
             </Grid>
             <Grid sx={{textAlign: 'center', alignSelf: "center"}}>
-              <a href="/community">
+              <a href="/threads">
                 <h1 className="pointer">community</h1>
               </a>
             </Grid>

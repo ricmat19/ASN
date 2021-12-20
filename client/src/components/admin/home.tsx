@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import AdminHeaderC from "./header";
 import FooterC from "../standard/footer";
-import CollectionAPI from "../../apis/collectionAPI";
+import CollectionAPI from "../../apis/storeAPI";
 
 const HomeC: FC = () => {
   const [twoDImage, setTwoDImage] = useState<string>("");

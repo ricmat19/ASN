@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, FC, useState } from "react";
-import CollectionAPI from "../apis/collectionAPI";
-import CartModalC from "./cartModal";
+import CollectionAPI from "../apis/storeAPI";
+import CartModalC from "./cart/cartModal";
 import AccountHeaderC from "./standard/accountNav";
 import MenuHeaderC from "./standard/menuNav";
 import FooterC from "./standard/footer";
