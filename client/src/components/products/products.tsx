@@ -51,11 +51,12 @@ const ProductsC: FC = () => {
     const fetchData = async () => {
       try {
         productResponse = await CollectionAPI.get(`/products/${product}`);
+        console.log(productResponse.data.data)
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < productResponse.data.data.products.length; i++) {
+          if (productResponse.data.data.products[i].imagekey !== null) {
             let imagesResponse = await CollectionAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${productResponse.data.data.products[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -63,12 +64,12 @@ const ProductsC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            productResponse.data.data.products[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setCollection(productResponse.data.data.products);
 
       } catch (err) {
         console.log(err);

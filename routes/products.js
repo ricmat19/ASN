@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const { getFileStream } = require("../s3");
 
+//Get the specified image (identified by it's key) from AWS S3
 router.get("/images/:key", async (req, res) => {
   try {
     const key = req.params.key;
@@ -13,19 +14,19 @@ router.get("/images/:key", async (req, res) => {
   }
 });
 
-//Get all collection items of a certain type
+//Get all products of a type
 router.get("/products/:product", async (req, res) => {
   try {
-    const product = await db.query(
-      "SELECT * FROM collection WHERE PRODUCT=$1 ORDER BY qty DESC",
+    const products = await db.query(
+      "SELECT * FROM products WHERE product=$1 ORDER BY qty DESC",
       [req.params.product]
     );
 
     res.status(200).json({
       status: "success",
-      results: product.rows.length,
+      results: products.rows.length,
       data: {
-        product: product.rows,
+        products: products.rows,
       },
     });
   } catch (err) {
@@ -33,17 +34,17 @@ router.get("/products/:product", async (req, res) => {
   }
 });
 
-//Get a specific collection item
+//Get a specific product
 router.get("/products/:product/:id", async (req, res) => {
   try {
-    const item = await db.query(`SELECT * FROM collection WHERE id=$1`, [
+    const product = await db.query(`SELECT * FROM products WHERE id=$1`, [
       req.params.id,
     ]);
     res.status(200).json({
       status: "success",
-      results: item.rows.length,
+      results: product.rows.length,
       data: {
-        item: item.rows[0],
+        product: product.rows[0],
       },
     });
   } catch (err) {

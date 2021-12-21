@@ -91,7 +91,7 @@ const MediasC: FC = () => {
       <MenuNavC />
       <div className="main-body">
         <MediaMenuC />
-        <div className="collection-menu">{displayItems}</div>
+        <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

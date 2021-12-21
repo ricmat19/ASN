@@ -51,13 +51,13 @@ const AccountNavC: FC = () => {
                 <h1><i className="far fa-bell account-menu-icon"></i></h1>
               </Grid>
               <Grid xs={2} container sx={{justifyContent: "center"}}>
-                <h1><i className="far fa-paper-plane account-menu-icon"></i></h1>
+                <a href="/inbox"><h1><i className="far fa-paper-plane account-menu-icon"></i></h1></a>
               </Grid>
               <Grid xs={2} container sx={{justifyContent: "center"}}>
-                <h1><i className="far fa-heart account-menu-icon"></i></h1>
+                <a href="/collection"><h1><i className="far fa-heart account-menu-icon"></i></h1></a>
               </Grid>
               <Grid xs={2} container sx={{justifyContent: "center"}}>
-                <h1><i className="fas fa-shopping-cart account-menu-icon"></i></h1>
+                <a href="/cart"><h1><i className="fas fa-shopping-cart account-menu-icon"></i></h1></a>
               </Grid>
               <Grid xs={2} container sx={{justifyContent: "center"}}>
                 <h1><i className="fas fa-user-circle account-menu-icon" onClick={handleClick}></i></h1>
@@ -270,7 +270,7 @@ const AccountNavC: FC = () => {
             </Grid>
             <Grid container xs={2} sx={{alignContent: "center"}}>
               <Grid xs={2}container sx={{justifyContent: "center", alignSelf: "center" }}>
-                <i className="fas fa-shopping-cart account-menu-icon"></i>
+                <a href="/cart"><i className="fas fa-shopping-cart account-menu-icon"></i></a>
               </Grid>
               <Grid xs={5} container sx={{justifyContent: "center"}}>
                 <h2 className="pointer" onClick={() => handleOpen}>sign up</h2>

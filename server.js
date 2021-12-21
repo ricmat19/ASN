@@ -3,15 +3,21 @@ const morgan = require("morgan");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const app = express();
-const adminCollectionRouter = require("./routes/admin/collection");
-const adminCreateRouter = require("./routes/admin/create");
-const adminUpdateRouter = require("./routes/admin/update");
+const adminCoursesR = require("./routes/admin/products");
+const adminEventsR = require("./routes/admin/events");
+const adminMediasR = require("./routes/admin/medias");
+const adminProductsR = require("./routes/admin/products");
+const adminProjectsR = require("./routes/admin/projects");
+const cartR = require("./routes/cart");
+const communityR = require("./routes/community");
+const coursesR = require("./routes/courses");
+const eventsR = require("./routes/events");
+const mediasR = require("./routes/medias");
 const productsR = require("./routes/products");
-const contactRouter = require("./routes/contact");
-const usersRouter = require("./routes/users");
-const cartRouter = require("./routes/cart");
-const paymentRouter = require("./routes/payment");
-const shipmentRouter = require("./routes/shipment");
+const projectsR = require("./routes/projects");
+const usersR = require("./routes/users");
+
+const contactR = require("./routes/contact");
 
 //insures that the .env file is only run in a development environment and not a production environment
 if (process.env.NODE_ENV !== "production") {
@@ -40,12 +46,18 @@ app.use(
   })
 );
 
-app.use(adminCollectionRouter);
-app.use(adminCreateRouter);
-app.use(adminUpdateRouter);
+app.use(adminCoursesR);
+app.use(adminEventsR);
+app.use(adminMediasR);
+app.use(adminProductsR);
+app.use(adminProjectsR);
+app.use(cartR);
+app.use(communityR);
+app.use(coursesR);
+app.use(eventsR);
+app.use(mediasR);
 app.use(productsR);
-app.use(contactRouter);
-app.use(usersRouter);
-app.use(cartRouter);
-app.use(paymentRouter);
-app.use(shipmentRouter);
+app.use(projectsR);
+app.use(usersR);
+
+app.use(contactR);

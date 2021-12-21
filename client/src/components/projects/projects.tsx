@@ -89,7 +89,7 @@ const ProjectsC: FC = () => {
       <AccountNavC />
       <MenuNavC />
       <div className="main-body">
-        <div className="project-thumbnail-display">{displayItems}</div>
+        <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

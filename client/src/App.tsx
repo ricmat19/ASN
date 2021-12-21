@@ -19,9 +19,12 @@ import PaymentR from "./routes/cart/stripe";
 import InboxR from "./routes/account/inbox";
 import CollectionR from "./routes/account/collection";
 import PortfolioR from "./routes/account/portfolio";
+import AboutR from "./routes/info/about";
+import HelpR from "./routes/info/help";
+import PrivacyPolicyR from "./routes/info/privacyPolicy";
+import SubscribeR from "./routes/info/subscribe";
+import TermsOfServiceR from "./routes/info/termsOfService";
 
-
-import About from "./routes/info/about";
 import Contact from "./routes/contact";
 import AdminHome from "./routes/admin/home";
 import AdminCollection from "./routes/admin/collection";
@@ -52,7 +55,11 @@ const App: FC = () => {
           <Route path="/inbox" element={<InboxR />} />
           <Route path="/collection" element={<CollectionR />} />
           <Route path="/portfolio" element={<PortfolioR />} />
-
+          <Route path="/about" element={<AboutR />} />
+          <Route path="/help" element={<HelpR />} />
+          <Route path="/privacyPolicy" element={<PrivacyPolicyR />} />
+          <Route path="/subscribe" element={<SubscribeR />} />
+          <Route path="/termsOfService" element={<TermsOfServiceR />} />
 
 
 
@@ -66,7 +73,7 @@ const App: FC = () => {
           <Route path="/admin/create" element={<AdminCreate />} />
           <Route path="/admin/update/:id" element={<AdminUpdate />} />
 
-          <Route path="/about" element={<About />} />
+
         </Routes>
       </Router>
     </div>

@@ -91,7 +91,7 @@ const CoursesC: FC = () => {
       <MenuNavC />
       <div className="main-body">
         <CoursesMenuC />
-        <div className="collection-menu">{displayItems}</div>
+        <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

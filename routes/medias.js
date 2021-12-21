@@ -2,19 +2,19 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-//Get all collection items of a certain type
+//Get all medias of a type
 router.get("/medias/:media", async (req, res) => {
   try {
-    const media = await db.query(
-      "SELECT * FROM medias WHERE media=$1 ORDER BY qty DESC",
+    const medias = await db.query(
+      "SELECT * FROM medias WHERE media=$1",
       [req.params.media]
     );
 
     res.status(200).json({
       status: "success",
-      results: media.rows.length,
+      results: medias.rows.length,
       data: {
-        medium: media.rows,
+        medias: medias.rows,
       },
     });
   } catch (err) {
@@ -22,11 +22,11 @@ router.get("/medias/:media", async (req, res) => {
   }
 });
 
-//Get a specific collection item
-router.get("/medias/:media/:post", async (req, res) => {
+//Get a specific media post
+router.get("/medias/:media/:id", async (req, res) => {
   try {
     const post = await db.query(`SELECT * FROM medias WHERE id=$1`, [
-      req.params.post,
+      req.params.id,
     ]);
     res.status(200).json({
       status: "success",

@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate, useParams } from "react-router-dom";
-import CollectionAPI from "../../apis/storeAPI";
-import { IProduct } from "../../interfaces";
-import AdminHeaderC from "../admin/header";
-import FooterC from "../standard/footer";
+import CollectionAPI from "../../../apis/storeAPI";
+import { IProduct } from "../../../interfaces";
+import AdminHeaderC from "../header";
+import FooterC from "../../standard/footer";
 
 const AdminCollectionC: FC = () => {
   const { product } = useParams();

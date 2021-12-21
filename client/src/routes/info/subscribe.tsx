@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import SubscribeC from "../../components/info/subscribe";
 
-const SubscriberR: FC = () => {
+const SubscribeR: FC = () => {
   return (
     <div>
       <SubscribeC />
@@ -9,4 +9,4 @@ const SubscriberR: FC = () => {
   );
 };
 
-export default SubscriberR;
+export default SubscribeR;

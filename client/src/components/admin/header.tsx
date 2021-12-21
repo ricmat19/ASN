@@ -1,7 +1,7 @@
 import React, { useState, FC } from "react";
 import SignInModalC from "./signinModal";
 
-const HeaderC: FC = () => {
+const AdminHeaderC: FC = () => {
 
   const [displaySignin, setDisplaySignIn] = useState<boolean>(false);
   const [email, ] = useState<string>("");
@@ -45,4 +45,4 @@ const HeaderC: FC = () => {
   );
 };
 
-export default HeaderC;
+export default AdminHeaderC;

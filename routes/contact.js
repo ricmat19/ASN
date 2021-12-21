@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-//Get all collection items of a certain type
+//Send an email to me
 router.post("/contact", async (req, res) => {
   const output = `
     <h3>Message Details:</h3>

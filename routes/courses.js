@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-//Get all collection items of a certain type
+//Get all courses of a certain subject
 router.get("/courses/:subject", async (req, res) => {
   try {
     const subject = await db.query(
-      "SELECT * FROM courses WHERE subject=$1 ORDER BY qty DESC",
+      "SELECT * FROM courses WHERE subject=$1",
       [req.params.subject]
     );
 
@@ -22,11 +22,11 @@ router.get("/courses/:subject", async (req, res) => {
   }
 });
 
-//Get a specific collection item
-router.get("/courses/:subject/:course", async (req, res) => {
+//Get a specific course
+router.get("/courses/:subject/:id", async (req, res) => {
   try {
     const course = await db.query(`SELECT * FROM courses WHERE id=$1`, [
-      req.params.course,
+      req.params.id,
     ]);
     res.status(200).json({
       status: "success",
