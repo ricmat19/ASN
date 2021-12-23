@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import AdminHeaderC from "./header";
-import FooterC from "../standard/footer";
-import CollectionAPI from "../../apis/storeAPI";
+import FooterC from "../user/standard/footer";
+import IndexAPI from "../../apis/indexAPI";
 
 const HomeC: FC = () => {
   const [twoDImage, setTwoDImage] = useState<string>("");
@@ -11,11 +11,11 @@ const HomeC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const productResponse = await CollectionAPI.get(`/collection`);
+        const productResponse = await IndexAPI.get(`/collection`);
 
         for (let i = 0; i < productResponse.data.data.collection.length; i++) {
           if (productResponse.data.data.collection[i].imagekey !== null) {
-            let imagesResponse = await CollectionAPI.get(
+            let imagesResponse = await IndexAPI.get(
               `/images/${productResponse.data.data.collection[i].imagekey}`,
               {
                 responseType: "arraybuffer",

@@ -1,97 +1,44 @@
 import React, { FC, useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
 import { useNavigate, useParams } from "react-router-dom";
-import CollectionAPI from "../../../apis/storeAPI";
+import ReactPaginate from "react-paginate";
+import IndexAPI from "../../../apis/indexAPI";
 import { IProduct } from "../../../interfaces";
-import AdminHeaderC from "../header";
-import FooterC from "../../standard/footer";
+import StoreMenuC from "./productsMenu";
+import AdminAccountNavC from "../standard/accountNav";
+import AdminMenuNavC from "../standard/menuNav";
+import FooterC from "../../user/standard/footer";
+import { Grid } from "@mui/material";
 
-const AdminCollectionC: FC = () => {
+const AdminProductsC: FC = () => {
+
   const { product } = useParams();
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+
+  const [products, setProducts ] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const itemsPerPage = 9;
-  const pagesVisted = pageNumber * itemsPerPage;
+  const itemsPerPage: number = 9;
+  const pagesVisted: number = pageNumber * itemsPerPage;
 
-  useEffect((): void => {
-    const fetchData = async () => {
-      try {
-        const productResponse = await CollectionAPI.get(
-          `/admin/collection/${product}`
-        );
-        console.log(productResponse);
-
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
-            let imagesResponse = await CollectionAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
-              {
-                responseType: "arraybuffer",
-              }
-            ).then((response) =>
-              Buffer.from(response.data, "binary").toString("base64")
-            );
-
-            productResponse.data.data.product[
-              i
-            ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
-          }
-        }
-
-        setCollection(productResponse.data.data.product);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const displayItems = collection
+  const displayItems = products
     .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
+    .map((product) => {
       return (
-        <div key={item.id}>
-          <div className="collection-item-div">
-            <div className="collection-item">
-              <img
-                className="collection-thumbnail"
-                src={item.imageBuffer}
-                alt="thumbnail"
-              />
-            </div>
-            <div className="collection-thumbnail-footer">
-              <div className="Title">{item.title}</div>
-              <div className="Price">${item.price}.00</div>
-            </div>
-          </div>
-          <div className="admin-buttons">
-            <div className="admin-collection-button-div text-center">
-              <div>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="btn form-button delete"
-                >
-                  Delete
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={() => handleUpdate(item.id)}
-                  type="submit"
-                  className="btn form-button"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Grid
+          className="collection-item-div"
+          key={product.id}
+          onClick={() => displayItem(product.product, product.id)}
+        >
+          <Grid className="collection-item">
+            <img className="collection-thumbnail" src={product.imageBuffer} />
+          </Grid>
+          <Grid>
+            <Grid xs={12}>{product.title}</Grid>
+          </Grid>
+        </Grid>
       );
     });
 
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
+  const pageCount = Math.ceil(products.length / itemsPerPage);
 
   const changePage = ({selected}: {selected:number}): void => {
     setPageNumber(selected);
@@ -99,22 +46,41 @@ const AdminCollectionC: FC = () => {
 
   let navigation = useNavigate();
 
-  const handleDelete = async (id: string) => {
-    try {
-      await CollectionAPI.delete(`/admin/delete/${id}`);
-      setCollection(
-        collection.filter((item) => {
-          return item.id !== id;
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  let productResponse;
+  useEffect((): void => {
+    const fetchData = async () => {
+      try {
+        productResponse = await IndexAPI.get(`/products/${product}`);
+        console.log(productResponse.data.data)
 
-  const handleUpdate = async (id: String) => {
+        for (let i = 0; i < productResponse.data.data.products.length; i++) {
+          if (productResponse.data.data.products[i].imagekey !== null) {
+            let imagesResponse = await IndexAPI.get(
+              `/images/${productResponse.data.data.products[i].imagekey}`,
+              {
+                responseType: "arraybuffer",
+              }
+            ).then((response) =>
+              Buffer.from(response.data, "binary").toString("base64")
+            );
+
+            productResponse.data.data.products[
+              i
+            ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
+          }
+        }
+        setProducts(productResponse.data.data.products);
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const displayItem = async (product: string, id: string) => {
     try {
-      navigation(`/admin/update/${id}`);
+      navigation(`/admin/products/${product}/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -122,20 +88,11 @@ const AdminCollectionC: FC = () => {
 
   return (
     <div>
-      <AdminHeaderC />
+      <AdminAccountNavC />
+      <AdminMenuNavC />
       <div className="main-body">
-        <div className="center subtitle-div">
-          <a className="subtitle-anchor" href="/admin/collection/2D">
-            <h1>2D art</h1>
-          </a>
-          <a className="subtitle-anchor" href="/admin/collection/3D">
-            <h1>3D art</h1>
-          </a>
-          <a className="subtitle-anchor" href="/admin/collection/comic">
-            <h1>comics</h1>
-          </a>
-        </div>
-        <div className="collection-menu">{displayItems}</div>
+        <StoreMenuC />
+        <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}
@@ -152,4 +109,4 @@ const AdminCollectionC: FC = () => {
   );
 };
 
-export default AdminCollectionC;
+export default AdminProductsC;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Modal, Button } from 'react-bootstrap';
 import SignUpModalC from "./signupModal";
 import ResetPasswordModalC from "./resetModal";
-import CollectionAPI from "../../apis/storeAPI";
+import IndexAPI from "../../apis/indexAPI";
 
 interface IModalState {
   show: boolean,
@@ -24,7 +24,7 @@ function SignInModalC(props: IModalState) {
   const handleSignin = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      await CollectionAPI.post("/signin", {
+      await IndexAPI.post("/signin", {
         email: email,
         password: password,
       })

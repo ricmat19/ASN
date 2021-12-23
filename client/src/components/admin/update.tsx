@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CollectionAPI from "../../apis/storeAPI";
+import IndexAPI from "../../apis/indexAPI";
 import AdminHeaderC from "./header";
-import FooterC from "../standard/footer";
+import FooterC from "../user/standard/footer";
 
 const AdminUpdateC: FC = () => {
   const { id } = useParams();
@@ -18,7 +18,7 @@ const AdminUpdateC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const response = await CollectionAPI.get(`/admin/update/${id}`);
+        const response = await IndexAPI.get(`/admin/update/${id}`);
         setTitle(response.data.data.item.title);
         setType(response.data.data.item.product);
         setPrice(response.data.data.item.price);
@@ -27,7 +27,7 @@ const AdminUpdateC: FC = () => {
         setPrimaryImage(response.data.data.item.primaryimage);
 
         if (response.data.data.item.imagekey !== null) {
-          let imagesResponse = await CollectionAPI.get(
+          let imagesResponse = await IndexAPI.get(
             `/images/${response.data.data.item.imagekey}`,
             {
               responseType: "arraybuffer",
@@ -50,7 +50,7 @@ const AdminUpdateC: FC = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      await CollectionAPI.put(`/admin/update/${id}`, {
+      await IndexAPI.put(`/admin/update/${id}`, {
         title,
         type,
         quantity,

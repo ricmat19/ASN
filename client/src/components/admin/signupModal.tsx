@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Modal, Button } from 'react-bootstrap';
-import CollectionAPI from "../../apis/storeAPI";
+import IndexAPI from "../../apis/indexAPI";
 
 interface IModalState {
   show: boolean,
@@ -24,7 +24,7 @@ function SignUpModalC(props: IModalState) {
     e.preventDefault();
     try {
     //   const response = 
-      await CollectionAPI.post("/signup", {
+      await IndexAPI.post("/signup", {
         firstName: firstName,
         lastName: lastName,
         email: email,

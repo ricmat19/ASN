@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import CartModalC from "./cart/cartModal";
-import AccountHeaderC from "./standard/accountNav";
-import MenuHeaderC from "./standard/menuNav";
-import FooterC from "./standard/footer";
-import CollectionAPI from "../apis/storeAPI";
+import CartModalC from "./user/cart/cartModal";
+import AccountHeaderC from "./user/standard/accountNav";
+import MenuHeaderC from "./user/standard/menuNav";
+import FooterC from "./user/standard/footer";
+import IndexAPI from "../apis/indexAPI";
 import { ICart } from "../interfaces";
 
 const HomeC: FC = () => {
@@ -19,7 +19,7 @@ const HomeC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const cartResponse = await CollectionAPI.get(`/cart`);
+        const cartResponse = await IndexAPI.get(`/cart`);
         setCart(cartResponse.data.data.cart);
 
         setCartQty(cartResponse.data.data.cart.length);
@@ -36,11 +36,11 @@ const HomeC: FC = () => {
           setCartState(false);
         }
 
-        productResponse = await CollectionAPI.get(`/collection`);
+        productResponse = await IndexAPI.get(`/collection`);
 
         for (let i = 0; i < productResponse.data.data.collection.length; i++) {
           if (productResponse.data.data.collection[i].imagekey !== null) {
-            let imagesResponse = await CollectionAPI.get(
+            let imagesResponse = await IndexAPI.get(
               `/images/${productResponse.data.data.collection[i].imagekey}`,
               {
                 responseType: "arraybuffer",

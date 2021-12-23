@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, FC, useState } from "react";
-import CollectionAPI from "../apis/storeAPI";
-import CartModalC from "./cart/cartModal";
-import AccountHeaderC from "./standard/accountNav";
-import MenuHeaderC from "./standard/menuNav";
-import FooterC from "./standard/footer";
+import IndexAPI from "../apis/indexAPI";
+import CartModalC from "./user/cart/cartModal";
+import AccountHeaderC from "./user/standard/accountNav";
+import MenuHeaderC from "./user/standard/menuNav";
+import FooterC from "./user/standard/footer";
 import { ICart } from "../interfaces";
 
 const ContactC: FC = () => {
@@ -25,7 +25,7 @@ const ContactC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const cartResponse = await CollectionAPI.get(`/cart`);
+        const cartResponse = await IndexAPI.get(`/cart`);
         setCart(cartResponse.data.data.cart);
 
         setCartQty(cartResponse.data.data.cart.length);
@@ -51,7 +51,7 @@ const ContactC: FC = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      await CollectionAPI.post("/contact", {
+      await IndexAPI.post("/contact", {
         name: name,
         email: email,
         subject: subject,

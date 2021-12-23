@@ -1,7 +1,7 @@
 import React, { useState, useRef, FC } from "react";
-import CollectionAPI from "../../apis/storeAPI";
+import IndexAPI from "../../apis/indexAPI";
 import AdminHeaderC from "./header";
-import FooterC from "../standard/footer";
+import FooterC from "../user/standard/footer";
 
 const AdminCreateC: FC = () => {
 
@@ -36,7 +36,7 @@ const AdminCreateC: FC = () => {
       formData.append("price", price);
       formData.append("info", info);
 
-      await CollectionAPI.post("/admin/create", formData, {
+      await IndexAPI.post("/admin/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => console.log(res))
