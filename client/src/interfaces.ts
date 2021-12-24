@@ -37,3 +37,19 @@ export interface ICheckout {
   firstname: string,
   lastname: string,
 }
+
+export interface ICourse {
+
+}
+
+export interface IMedia {
+
+}
+
+export interface IProject {
+
+}
+
+export interface IEvent {
+
+}

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import IndexAPI from "../../../apis/indexAPI";
 import FooterC from "../../user/standard/footer";
@@ -9,8 +9,9 @@ import { Button } from "@mui/material";
 
 const AdminEventsC: FC = () => {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect((): void => {
     const fetchData = async () => {
@@ -52,7 +53,7 @@ const AdminEventsC: FC = () => {
 
   return (
     <div>
-      <AddEvent open={open}/>
+      <AddEvent open={open} handleClose={handleClose}/>
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">

@@ -1,25 +1,27 @@
-import React, { useEffect, FC, useState } from "react";
+import React, { useEffect, FC, useState, useRef } from "react";
 import { useParams } from "react-router";
 import IndexAPI from "../../../apis/indexAPI";
-import CartModalC from "../../user/cart/cartModal";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import FooterC from "../../user/standard/footer";
-import { ICart, IProduct } from "../../../interfaces";
+import { IEvent } from "../../../interfaces";
+import { Grid } from "@mui/material";
 
 const AdminEventC: FC = () => {
   const { product, id } = useParams();
 
-  const [, setCart] = useState<ICart[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<IProduct[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
-  const [qty, setQty] = useState<number>(0);
+  const [, setImages] = useState(null);
+  const [spots, setSpots] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
-  const [cartState, setCartState] = useState<boolean>(false);
-  const [cartQty, setCartQty] = useState<number>(0);
-  const [cartCost, setCartCost] = useState<number>(0);
-  const [imageBuffer, setImageBuffer] = useState("../../images/loading.svg");
+
+  const [, setSelectedProduct] = useState<IEvent[]>([]);
+  const [imageBuffer, setImageBuffer] = useState("");
+
+  const titleInput = useRef(null);
+  const priceInput = useRef(null);
+  const infoInput = useRef(null);
 
   useEffect((): void => {
     const fetchData = async () => {
@@ -43,25 +45,9 @@ const AdminEventC: FC = () => {
         setSelectedProduct(productResponse.data.data.item)
         setTitle(productResponse.data.data.item.title);
         setPrice(productResponse.data.data.item.price);
-        setQty(productResponse.data.data.item.qty);
+        setSpots(productResponse.data.data.item.qty);
         setInfo(productResponse.data.data.item.info);
 
-        const cartResponse = await IndexAPI.get(`/cart`);
-        setCart(cartResponse.data.data.cart);
-
-        setCartQty(cartResponse.data.data.cart.length);
-
-        let price = 0;
-        for (let i = 0; i < cartResponse.data.data.cart.length; i++) {
-          price += parseInt(cartResponse.data.data.cart[i].price);
-        }
-        setCartCost(price);
-
-        if (cartResponse.data.data.cart.length !== 0) {
-          setCartState(true);
-        } else {
-          setCartState(false);
-        }
       } catch (err) {
         console.log(err);
       }
@@ -69,14 +55,30 @@ const AdminEventC: FC = () => {
     fetchData();
   }, []);
 
-  const addToCart = async (e: { preventDefault: () => void }) => {
+  const updateEvent = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      const response = await IndexAPI.post("/cart", {
-        id: id,
-      });
+      let formData = new FormData();
 
-      console.log(response.data);
+      formData.append("title", title);
+      // formData.append("images", images);
+      formData.append("spots", spots);
+      formData.append("price", price);
+      formData.append("info", info);
+
+      await IndexAPI.post("/admin/products/create", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+
+      // createItem(response);
+
+      // titleInput.current.value = "";
+      // typeInput.current.value = "";
+      // quantityInput.current.value = "";
+      // priceInput.current.value = "";
+      // infoInput.current.value = "";
     } catch (err) {
       console.log(err);
     }
@@ -95,7 +97,6 @@ const AdminEventC: FC = () => {
 
   return (
     <div>
-      <CartModalC cartState={cartState} cartQty={cartQty} cartCost={cartCost} />
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body item-details">
@@ -111,28 +112,84 @@ const AdminEventC: FC = () => {
             </div>
           </div>
         </div>
-        <form className="item-form" method="POST" action="/cart">
-          <div className="info-div">
-            <h1>{selectedProduct && title}</h1>
-            <div className="info-detail-div">
-              <label>price:</label>
-              <p className="no-margin">
-                ${selectedProduct && price}.00
-              </p>
-            </div>
-            <div className="info-detail-div">
-              <label>quantity:</label>
-              <p className="no-margin">{selectedProduct && qty}</p>
-            </div>
-            <div className="info-detail-div">
-              <label>info:</label>
-              <p className="no-margin">{selectedProduct && info}</p>
-            </div>
-            <hr className="no-margin" />
-            <div className="cart-options">
-              <button onClick={addToCart}>Add To Cart</button>
-            </div>
-          </div>
+        <form
+          className="admin-form"
+          action="/admin/products/create"
+          method="POST"
+          encType="multipart/form-data"
+        >
+          <Grid className="admin-form-title">
+            <h2 className="align-center">Create</h2>
+          </Grid>
+          <Grid className="admin-form-field">
+            <label className="admin-label">Title:</label>
+            <input
+              value={title}
+              ref={titleInput}
+              onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              name="name"
+              className="form-control"
+              required
+            />
+          </Grid>
+          <Grid className="admin-form-field">
+            <label className="admin-label">Images:</label>
+            <input
+              type="file"
+              onChange={(e: any) => setImages(e.target.files[0])}
+              name="images"
+              className="form-control file-input"
+              required
+            />
+          </Grid>
+          <Grid className="admin-form-field">
+            <label className="admin-label">Spots:</label>
+            <input
+              value={spots}
+              onChange={(e) => setSpots(e.target.value)}
+              type="number"
+              name="spots"
+              className="form-control"
+              required
+            />
+          </Grid>
+          <Grid className="admin-form-field">
+            <label className="admin-label">Price:</label>
+            <input
+              value={price}
+              ref={priceInput}
+              onChange={(e) => setPrice(e.target.value)}
+              type="number"
+              name="price"
+              className="form-control"
+              required
+            />
+          </Grid>
+          <Grid className="admin-form-field">
+            <label className="admin-label">Info:</label>
+            <textarea
+              value={info}
+              ref={infoInput}
+              onChange={(e) => setInfo(e.target.value)}
+              name="message"
+              rows={5}
+              required
+            ></textarea>
+          </Grid>
+          <Grid className="admin-form-button">
+            <Grid className="text-center">
+              <Grid>
+                <button
+                  onClick={updateEvent}
+                  type="submit"
+                  className="btn form-button"
+                >
+                  Submit
+                </button>
+              </Grid>
+            </Grid>
+          </Grid>
         </form>
       </div>
       <FooterC />

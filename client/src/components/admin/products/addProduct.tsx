@@ -4,19 +4,17 @@ import { Backdrop, Box, Fade, Modal, Grid } from "@mui/material";
 
 interface IModalState {
   open: boolean,
+  handleClose: () => void
 }
 
 const AdminCreateProductC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [images, setImages] = useState();
+  const [images, setImages] = useState(null);
   const [quantity, setQuantity] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
-
-  const [, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
 
   const titleInput = useRef(null);
   const typeInput = useRef(null);
@@ -60,9 +58,9 @@ const AdminCreateProductC = (props: IModalState) => {
     }
   };
 
-  let displayedImage = "../../images/loading.svg";
+  let displayedImage = "";
   if (images !== null) {
-    // displayedImage = URL.createObjectURL(images);
+    displayedImage = URL.createObjectURL(images);
   }
 
   return (
@@ -71,7 +69,7 @@ const AdminCreateProductC = (props: IModalState) => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={props.open}
-        onClose={handleClose}
+        onClose={props.handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -94,16 +92,15 @@ const AdminCreateProductC = (props: IModalState) => {
               flexDirection: "row",
               flexWrap: "nowrap",
               alignItems: "center",
-              gap: "45px",
               color: "#000"}}>
-              <Grid sx={{width: "400px"}}>
+              <Grid sx={{padding: "0 15px 0 0"}}>
                 <div className="image">
                   <div className="big-image-div">
-                    <img className="big-image" src={displayedImage} alt="item" />
+                    <img className="big-image" src={displayedImage} />
                   </div>
                 </div>
               </Grid>
-              <Grid sx={{width: "500px"}}>
+              <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
                 <form
                   className="admin-form"
                   action="/admin/products/create"
@@ -131,27 +128,60 @@ const AdminCreateProductC = (props: IModalState) => {
                     </Grid>
                     <Grid className="radio-div">
                       <Grid>
-                        <label className=" radio">2D art</label>
+                        <label className=" radio">print</label>
                         <input
                           value={type}
                           ref={typeInput}
-                          onChange={() => setType("2D")}
+                          onChange={() => setType("print")}
                           type="radio"
                           name="product"
                         />
                       </Grid>
                       <Grid>
-                        <label className=" radio">3D art</label>
+                        <label className=" radio">model</label>
                         <input
                           value={type}
                           ref={typeInput}
-                          onChange={() => setType("3D")}
+                          onChange={() => setType("model")}
                           type="radio"
                           name="product"
                         />
                       </Grid>
                       <Grid>
-                        <label className=" radio">Comic</label>
+                        <label className=" radio">painting</label>
+                        <input
+                          value={type}
+                          ref={typeInput}
+                          onChange={() => setType("painting")}
+                          type="radio"
+                          name="product"
+                          required
+                        />
+                      </Grid>
+                      <Grid>
+                        <label className=" radio">sculpture</label>
+                        <input
+                          value={type}
+                          ref={typeInput}
+                          onChange={() => setType("sculpture")}
+                          type="radio"
+                          name="product"
+                          required
+                        />
+                      </Grid>
+                      <Grid>
+                        <label className=" radio">book</label>
+                        <input
+                          value={type}
+                          ref={typeInput}
+                          onChange={() => setType("book")}
+                          type="radio"
+                          name="product"
+                          required
+                        />
+                      </Grid>
+                      <Grid>
+                        <label className=" radio">comic</label>
                         <input
                           value={type}
                           ref={typeInput}
@@ -169,7 +199,7 @@ const AdminCreateProductC = (props: IModalState) => {
                       type="file"
                       onChange={(e: any) => setImages(e.target.files[0])}
                       name="images"
-                      className="form-control"
+                      className="form-control file-input"
                       required
                     />
                   </Grid>

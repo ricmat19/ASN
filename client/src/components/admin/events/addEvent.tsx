@@ -4,23 +4,18 @@ import { Backdrop, Box, Fade, Modal, Grid } from "@mui/material";
 
 interface IModalState {
   open: boolean,
+  handleClose: () => void
 }
 
 const AdminCreateEventC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [images, setImages] = useState();
-  const [quantity, setQuantity] = useState<string>("");
+  const [images, setImages] = useState(null);
+  const [spots, setSpots] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
 
-  const [, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
-
   const titleInput = useRef(null);
-  const typeInput = useRef(null);
-  const quantityInput = useRef(null);
   const priceInput = useRef(null);
   const infoInput = useRef(null);
 
@@ -36,9 +31,8 @@ const AdminCreateEventC = (props: IModalState) => {
       let formData = new FormData();
 
       formData.append("title", title);
-      formData.append("product", type);
       // formData.append("images", images);
-      formData.append("quantity", quantity);
+      formData.append("spots", spots);
       formData.append("price", price);
       formData.append("info", info);
 
@@ -60,9 +54,9 @@ const AdminCreateEventC = (props: IModalState) => {
     }
   };
 
-  let displayedImage = "../../images/loading.svg";
+  let displayedImage = "";
   if (images !== null) {
-    // displayedImage = URL.createObjectURL(images);
+    displayedImage = URL.createObjectURL(images);
   }
 
   return (
@@ -71,7 +65,7 @@ const AdminCreateEventC = (props: IModalState) => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={props.open}
-        onClose={handleClose}
+        onClose={props.handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -94,19 +88,18 @@ const AdminCreateEventC = (props: IModalState) => {
               flexDirection: "row",
               flexWrap: "nowrap",
               alignItems: "center",
-              gap: "45px",
               color: "#000"}}>
-              <Grid sx={{width: "400px"}}>
+              <Grid sx={{padding: "0 15px 0 0"}}>
                 <div className="image">
                   <div className="big-image-div">
-                    <img className="big-image" src={displayedImage} alt="item" />
+                    <img className="big-image" src={displayedImage} />
                   </div>
                 </div>
               </Grid>
-              <Grid sx={{width: "500px"}}>
+              <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
                 <form
                   className="admin-form"
-                  action="/admin/create"
+                  action="/admin/products/create"
                   method="POST"
                   encType="multipart/form-data"
                 >
@@ -126,61 +119,22 @@ const AdminCreateEventC = (props: IModalState) => {
                     />
                   </Grid>
                   <Grid className="admin-form-field">
-                    <Grid>
-                      <label className="admin-label">Type:</label>
-                    </Grid>
-                    <Grid className="radio-div">
-                      <Grid>
-                        <label className=" radio">2D art</label>
-                        <input
-                          value={type}
-                          ref={typeInput}
-                          onChange={() => setType("2D")}
-                          type="radio"
-                          name="product"
-                        />
-                      </Grid>
-                      <Grid>
-                        <label className=" radio">3D art</label>
-                        <input
-                          value={type}
-                          ref={typeInput}
-                          onChange={() => setType("3D")}
-                          type="radio"
-                          name="product"
-                        />
-                      </Grid>
-                      <Grid>
-                        <label className=" radio">Comic</label>
-                        <input
-                          value={type}
-                          ref={typeInput}
-                          onChange={() => setType("comic")}
-                          type="radio"
-                          name="product"
-                          required
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid className="admin-form-field">
                     <label className="admin-label">Images:</label>
                     <input
                       type="file"
                       onChange={(e: any) => setImages(e.target.files[0])}
                       name="images"
-                      className="form-control"
+                      className="form-control file-input"
                       required
                     />
                   </Grid>
                   <Grid className="admin-form-field">
-                    <label className="admin-label">Quantity:</label>
+                    <label className="admin-label">Spots:</label>
                     <input
-                      value={quantity}
-                      ref={quantityInput}
-                      onChange={(e) => setQuantity(e.target.value)}
+                      value={spots}
+                      onChange={(e) => setSpots(e.target.value)}
                       type="number"
-                      name="quantity"
+                      name="spots"
                       className="form-control"
                       required
                     />

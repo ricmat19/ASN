@@ -11,6 +11,9 @@ const AdminCoursesMenuC: FC = () => {
         <a href="/admin/courses/painting">
           <h1>painting</h1>
         </a>
+        <a href="/admin/courses/modeling">
+          <h1>modeling</h1>
+        </a>
         <a href="/admin/courses/sculpting">
           <h1>sculpting</h1>
         </a>

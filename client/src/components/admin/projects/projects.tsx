@@ -16,8 +16,9 @@ const AdminProjectsC: FC = () => {
   const [collection, setCollection ] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
@@ -91,7 +92,7 @@ const AdminProjectsC: FC = () => {
 
   return (
     <div>
-      <AddProject open={open}/>
+      <AddProject open={open} handleClose={handleClose}/>
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">

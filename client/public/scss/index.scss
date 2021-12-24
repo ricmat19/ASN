@@ -17,6 +17,10 @@ body {
     margin: 0;
   }
   
+  label, .file-input{
+    color: white;
+  }
+
   input{
     padding: 5px;
   }
@@ -463,8 +467,7 @@ body {
   .big-image {
     border-style: none;
     background: rgb(243, 243, 243);
-    height: 400px;
-    width: 400px;
+    height: 440px;
   }
   
   .image-thumbnail {
@@ -564,12 +567,12 @@ body {
   
   .admin-form {
     padding: 0 40px 40px 40px;
-    background-color: rgb(243, 243, 243);
+    background-color: #000000
   }
   
   .admin-form-title {
     display: grid;
-    margin: 15px 0;
+    padding-top: 15px;
   }
   
   .admin-form-field {
