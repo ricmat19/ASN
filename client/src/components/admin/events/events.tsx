@@ -4,10 +4,13 @@ import IndexAPI from "../../../apis/indexAPI";
 import FooterC from "../../user/standard/footer";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
+import AddEvent from "./addEvent";
+import { Button } from "@mui/material";
 
 const AdminEventsC: FC = () => {
 
-//   let navigation = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
 
   useEffect((): void => {
     const fetchData = async () => {
@@ -49,9 +52,11 @@ const AdminEventsC: FC = () => {
 
   return (
     <div>
+      <AddEvent open={open}/>
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
+        <Button onClick={handleOpen}>Add Event</Button>
         <div className="collection-menu">{}</div>
       </div>
       <FooterC />

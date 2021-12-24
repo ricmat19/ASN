@@ -7,7 +7,8 @@ import StoreMenuC from "./productsMenu";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import FooterC from "../../user/standard/footer";
-import { Grid } from "@mui/material";
+import AddProduct from "./addProduct";
+import { Grid, Button } from "@mui/material";
 
 const AdminProductsC: FC = () => {
 
@@ -15,6 +16,9 @@ const AdminProductsC: FC = () => {
 
   const [products, setProducts ] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
 
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
@@ -88,9 +92,11 @@ const AdminProductsC: FC = () => {
 
   return (
     <div>
+      <AddProduct open={open}/>
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
+        <Button onClick={handleOpen}>Add Product</Button>
         <StoreMenuC />
         <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate

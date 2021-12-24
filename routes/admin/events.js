@@ -9,19 +9,18 @@ const unlinkFile = util.promisify(fs.unlink);
 
 const upload = multer({ dest: "images/" });
 
-//Get all products
-router.get("/admin/products/:product", async (req, res) => {
+//Get all events
+router.get("/admin/events", async (req, res) => {
   try {
-    const products = await db.query(
-      "SELECT * FROM products WHERE product=$1 ORDER BY qty DESC",
-      [req.params.product]
+    const events = await db.query(
+      "SELECT * FROM events"
     );
 
     res.status(200).json({
       status: "success",
-      results: products.rows.length,
+      results: events.rows.length,
       data: {
-        products: products.rows,
+        events: events.rows,
       },
     });
   } catch (err) {
@@ -29,16 +28,16 @@ router.get("/admin/products/:product", async (req, res) => {
   }
 });
 
-//Create a collection item
-router.post("/admin/create", upload.single("images"), async (req, res) => {
+//Create an event
+router.post("/admin/events/create", upload.single("images"), async (req, res) => {
   try {
     // const result = ""
     const file = req.file;
     const result = await uploadFile(file);
     res.send({ imagePath: `/images/${result.key}` });
     await unlinkFile(file.path);
-    const newItem = await db.query(
-      "INSERT INTO collection (title, product, imagekey, qty, price, info) values ($1, $2, $3, $4, $5, $6) RETURNING *",
+    const events = await db.query(
+      "INSERT INTO events (title, product, imagekey, qty, price, info) values ($1, $2, $3, $4, $5, $6) RETURNING *",
       [
         req.body.title,
         req.body.product,
@@ -50,9 +49,9 @@ router.post("/admin/create", upload.single("images"), async (req, res) => {
     );
     res.status(201).json({
       status: "success",
-      results: newItem.rows.length,
+      results: events.rows.length,
       data: {
-        newItem: newItem.rows[0],
+        events: events.rows[0],
       },
     });
   } catch (err) {
@@ -60,10 +59,10 @@ router.post("/admin/create", upload.single("images"), async (req, res) => {
   }
 });
 
-//Delete a collection item
-router.delete("/admin/delete/:id", async (req, res) => {
+//Delete an event
+router.delete("/admin/events/delete/:id", async (req, res) => {
   try {
-    await db.query("DELETE FROM collection WHERE id = $1", [
+    await db.query("DELETE FROM events WHERE id = $1", [
       req.params.id,
     ]);
     res.status(204).json({
@@ -74,17 +73,17 @@ router.delete("/admin/delete/:id", async (req, res) => {
   }
 });
 
-//Get a specific collection item for update
-router.get("/admin/update/:id", async (req, res) => {
+//Get a specific event to update
+router.get("/admin/events/update/:id", async (req, res) => {
   try {
-    const item = await db.query(`SELECT * FROM collection WHERE id=$1`, [
+    const events = await db.query(`SELECT * FROM events WHERE id=$1`, [
       req.params.id,
     ]);
     res.status(200).json({
       status: "success",
-      results: item.rows.length,
+      results: events.rows.length,
       data: {
-        item: item.rows[0],
+        events: events.rows[0],
       },
     });
   } catch (err) {
@@ -92,20 +91,18 @@ router.get("/admin/update/:id", async (req, res) => {
   }
 });
 
-// //Update a collection item
-router.put("/admin/update/:id", async (req, res) => {
+//Update an event
+router.put("/admin/events/update/:id", async (req, res) => {
   try {
-    console.log(req.body.primaryImage);
-    console.log(req.body.type);
     if (req.body.primaryImage === "on") {
       await db.query(
-        "UPDATE collection SET primaryimage=false WHERE product=$1",
-        [req.body.type]
+        "UPDATE events SET primaryimage=false WHERE event=$1",
+        [req.body.id]
       );
     }
 
-    const item = await db.query(
-      "UPDATE collection SET title=$1, product=$2, qty=$3, price=$4, info=$5, primaryimage=$6 WHERE id=$7",
+    const event = await db.query(
+      "UPDATE events SET title=$1, product=$2, qty=$3, price=$4, info=$5, primaryimage=$6 WHERE id=$7",
       [
         req.body.title,
         req.body.type,
@@ -118,9 +115,9 @@ router.put("/admin/update/:id", async (req, res) => {
     );
     res.status(201).json({
       status: "success",
-      results: item.rows.length,
+      results: event.rows.length,
       data: {
-        item: item.rows[0],
+        event: event.rows[0],
       },
     });
   } catch (err) {

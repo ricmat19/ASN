@@ -6,6 +6,8 @@ import { IProduct } from "../../../interfaces";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import FooterC from "../../user/standard/footer";
+import AddProject from "./addProject";
+import { Button } from "@mui/material";
 
 const AdminProjectsC: FC = () => {
 
@@ -13,6 +15,9 @@ const AdminProjectsC: FC = () => {
 
   const [collection, setCollection ] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
 
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
@@ -86,9 +91,11 @@ const AdminProjectsC: FC = () => {
 
   return (
     <div>
+      <AddProject open={open}/>
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
+        <Button onClick={handleOpen}>Add Project</Button>
         <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}

@@ -7,6 +7,8 @@ import { IProduct } from "../../../interfaces";
 import MediaMenuC from "./mediasMenu";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
+import AddMedia from "./addMedia";
+import { Button } from "@mui/material";
 
 const AdminMediasC: FC = () => {
 
@@ -14,6 +16,9 @@ const AdminMediasC: FC = () => {
 
   const [collection, setCollection ] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
 
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
@@ -87,9 +92,11 @@ const AdminMediasC: FC = () => {
 
   return (
     <div>
+      <AddMedia open={open}/>
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
+        <Button onClick={handleOpen}>Add Media</Button>
         <MediaMenuC />
         <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
