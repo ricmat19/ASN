@@ -3,20 +3,19 @@ const morgan = require("morgan");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const app = express();
-const adminCoursesR = require("./routes/admin/products");
-const adminEventsR = require("./routes/admin/events");
-const adminMediasR = require("./routes/admin/medias");
 const adminProductsR = require("./routes/admin/products");
+const adminCoursesR = require("./routes/admin/courses");
+const adminMediasR = require("./routes/admin/medias");
 const adminProjectsR = require("./routes/admin/projects");
+const adminEventsR = require("./routes/admin/events");
+const productsR = require("./routes/products");
+const coursesR = require("./routes/courses");
+const mediasR = require("./routes/medias");
+const projectsR = require("./routes/projects");
+const eventsR = require("./routes/events");
 const cartR = require("./routes/cart");
 const communityR = require("./routes/community");
-const coursesR = require("./routes/courses");
-const eventsR = require("./routes/events");
-const mediasR = require("./routes/medias");
-const productsR = require("./routes/products");
-const projectsR = require("./routes/projects");
 const usersR = require("./routes/users");
-
 const contactR = require("./routes/contact");
 
 //insures that the .env file is only run in a development environment and not a production environment

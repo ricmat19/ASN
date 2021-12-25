@@ -13,7 +13,7 @@ const upload = multer({ dest: "images/" });
 router.get("/admin/medias/:media", async (req, res) => {
   try {
     const medias = await db.query(
-      "SELECT * FROM medias WHERE media=$1 ORDER BY date DESC",
+      "SELECT * FROM medias WHERE media=$1",
       [req.params.media]
     );
 
@@ -30,30 +30,21 @@ router.get("/admin/medias/:media", async (req, res) => {
 });
 
 //Create a media
-router.post("/admin/medias/create", upload.single("images"), async (req, res) => {
+router.post("/admin/media/create", upload.single("images"), async (req, res) => {
   try {
     const file = req.file;
     const result = await uploadFile(file);
     res.send({ imagePath: `/images/${result.key}` });
     await unlinkFile(file.path);
-    const media = await db.query(
-      "INSERT INTO medias (title, product, imagekey, qty, price, info) values ($1, $2, $3, $4, $5, $6) RETURNING *",
+    await db.query(
+      "INSERT INTO medias (title, media, imagekey, info) values ($1, $2, $3, $4) RETURNING *",
       [
         req.body.title,
-        req.body.product,
+        req.body.media,
         result.key,
-        req.body.quantity,
-        req.body.price,
         req.body.info,
       ]
     );
-    res.status(201).json({
-      status: "success",
-      results: media.rows.length,
-      data: {
-        media: media.rows[0],
-      },
-    });
   } catch (err) {
     console.log(err);
   }
@@ -74,7 +65,7 @@ router.delete("/admin/medias/delete/:id", async (req, res) => {
 });
 
 //Get a specific media to update
-router.get("/admin/medias/update/:id", async (req, res) => {
+router.get("/admin/medias/:id", async (req, res) => {
   try {
     const media = await db.query(`SELECT * FROM medias WHERE id=$1`, [
       req.params.id,

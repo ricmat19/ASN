@@ -4,7 +4,7 @@ CREATE TABLE products(
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(50),
     product VARCHAR(50),
-    images BYTEA,
+    images VARCHAR(300),
     price MONEY,
     info VARCHAR(300)
 );
@@ -32,7 +32,7 @@ CREATE TABLE shipment(
 CREATE TABLE projects(
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    images BYTEA,
+    images VARCHAR(300),
     info VARCHAR(300)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE medias(
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     media VARCHAR(50) NOT NULL,
-    images BYTEA,
+    images VARCHAR(300),
     content BYTEA,
     info VARCHAR(2000)
 );
@@ -49,7 +49,7 @@ CREATE TABLE events(
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     event_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    images BYTEA,
+    images VARCHAR(300),
     price MONEY NOT NULL,
     info VARCHAR(300) NOT NULL
 );
@@ -58,7 +58,7 @@ CREATE TABLE courses(
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     course_subject VARCHAR(50) NOT NULL,
-    images BYTEA,
+    images VARCHAR(300),
     content BYTEA,
     info VARCHAR(300)
 );

@@ -10,8 +10,8 @@ interface IModalState {
 const AdminCreateCourseC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [images, setImages] = useState(null);
+  const [subject, setSubject] = useState<string>("");
+  const [images, setImages] = useState<File>();
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
 
@@ -26,22 +26,25 @@ const AdminCreateCourseC = (props: IModalState) => {
     require("dotenv").config();
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const createCourse = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      let formData = new FormData();
+      if(images){
+        console.log(subject)
+        let formData = new FormData();
 
-      formData.append("title", title);
-      formData.append("product", type);
-      // formData.append("images", images);
-      formData.append("price", price);
-      formData.append("info", info);
+        formData.append("title", title);
+        formData.append("subject", subject);
+        formData.append("images", images);
+        formData.append("info", info);
+        formData.append("price", price);
 
-      await IndexAPI.post("/admin/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+        await IndexAPI.post("/admin/course/create", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+      }
 
       // createItem(response);
 
@@ -56,7 +59,7 @@ const AdminCreateCourseC = (props: IModalState) => {
   };
 
   let displayedImage = "";
-  if (images !== null) {
+  if (images !== undefined) {
     displayedImage = URL.createObjectURL(images);
   }
 
@@ -100,12 +103,12 @@ const AdminCreateCourseC = (props: IModalState) => {
               <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
                 <form
                   className="admin-form"
-                  action="/admin/products/create"
+                  action="/admin/course/create"
                   method="POST"
                   encType="multipart/form-data"
                 >
                   <Grid className="admin-form-title">
-                    <h2 className="align-center">Create</h2>
+                    <h1 className="align-center">Create</h1>
                   </Grid>
                   <Grid className="admin-form-field">
                     <label className="admin-label">Title:</label>
@@ -127,9 +130,9 @@ const AdminCreateCourseC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">drawing</label>
                         <input
-                          value={type}
+                          value={subject}
                           ref={typeInput}
-                          onChange={() => setType("drawing")}
+                          onChange={() => setSubject("drawing")}
                           type="radio"
                           name="course"
                         />
@@ -137,9 +140,9 @@ const AdminCreateCourseC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">painting</label>
                         <input
-                          value={type}
+                          value={subject}
                           ref={typeInput}
-                          onChange={() => setType("painting")}
+                          onChange={() => setSubject("painting")}
                           type="radio"
                           name="course"
                         />
@@ -147,9 +150,9 @@ const AdminCreateCourseC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">modeling</label>
                         <input
-                          value={type}
+                          value={subject}
                           ref={typeInput}
-                          onChange={() => setType("modeling")}
+                          onChange={() => setSubject("modeling")}
                           type="radio"
                           name="course"
                           required
@@ -158,9 +161,9 @@ const AdminCreateCourseC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">sculpting</label>
                         <input
-                          value={type}
+                          value={subject}
                           ref={typeInput}
-                          onChange={() => setType("sculpting")}
+                          onChange={() => setSubject("sculpting")}
                           type="radio"
                           name="course"
                           required
@@ -169,9 +172,9 @@ const AdminCreateCourseC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">writing</label>
                         <input
-                          value={type}
+                          value={subject}
                           ref={typeInput}
-                          onChange={() => setType("writing")}
+                          onChange={() => setSubject("writing")}
                           type="radio"
                           name="course"
                           required
@@ -216,7 +219,7 @@ const AdminCreateCourseC = (props: IModalState) => {
                     <Grid className="text-center">
                       <Grid>
                         <button
-                          onClick={handleSubmit}
+                          onClick={createCourse}
                           type="submit"
                           className="btn form-button"
                         >

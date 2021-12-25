@@ -30,14 +30,13 @@ router.get("/admin/products/:product", async (req, res) => {
 });
 
 //Create a product
-router.post("/admin/products/create", upload.single("images"), async (req, res) => {
+router.post("/admin/product/create", upload.single("images"), async (req, res) => {
   try {
-    // const result = ""
     const file = req.file;
     const result = await uploadFile(file);
     res.send({ imagePath: `/images/${result.key}` });
     await unlinkFile(file.path);
-    const product = await db.query(
+    await db.query(
       "INSERT INTO products (title, product, imagekey, qty, price, info) values ($1, $2, $3, $4, $5, $6) RETURNING *",
       [
         req.body.title,
@@ -48,13 +47,6 @@ router.post("/admin/products/create", upload.single("images"), async (req, res) 
         req.body.info,
       ]
     );
-    res.status(201).json({
-      status: "success",
-      results: product.rows.length,
-      data: {
-        product: product.rows[0],
-      },
-    });
   } catch (err) {
     console.log(err);
   }

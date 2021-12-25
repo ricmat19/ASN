@@ -11,7 +11,7 @@ const AdminCreateProductC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState<File>();
   const [quantity, setQuantity] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
@@ -28,23 +28,26 @@ const AdminCreateProductC = (props: IModalState) => {
     require("dotenv").config();
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const createProduct = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      let formData = new FormData();
 
-      formData.append("title", title);
-      formData.append("product", type);
-      // formData.append("images", images);
-      formData.append("quantity", quantity);
-      formData.append("price", price);
-      formData.append("info", info);
+      if(images){
+        let formData = new FormData();
 
-      await IndexAPI.post("/admin/products/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+        formData.append("title", title);
+        formData.append("product", type);
+        formData.append("images", images);
+        formData.append("quantity", quantity);
+        formData.append("price", price);
+        formData.append("info", info);
+  
+        await IndexAPI.post("/admin/product/create", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+      }
 
       // createItem(response);
 
@@ -59,7 +62,7 @@ const AdminCreateProductC = (props: IModalState) => {
   };
 
   let displayedImage = "";
-  if (images !== null) {
+  if (images !== undefined) {
     displayedImage = URL.createObjectURL(images);
   }
 
@@ -103,12 +106,12 @@ const AdminCreateProductC = (props: IModalState) => {
               <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
                 <form
                   className="admin-form"
-                  action="/admin/products/create"
+                  action="/admin/product/create"
                   method="POST"
                   encType="multipart/form-data"
                 >
                   <Grid className="admin-form-title">
-                    <h2 className="align-center">Create</h2>
+                    <h1 className="align-center">Create</h1>
                   </Grid>
                   <Grid className="admin-form-field">
                     <label className="admin-label">Title:</label>
@@ -242,7 +245,7 @@ const AdminCreateProductC = (props: IModalState) => {
                     <Grid className="text-center">
                       <Grid>
                         <button
-                          onClick={handleSubmit}
+                          onClick={createProduct}
                           type="submit"
                           className="btn form-button"
                         >

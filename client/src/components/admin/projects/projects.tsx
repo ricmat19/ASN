@@ -7,7 +7,7 @@ import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import FooterC from "../../user/standard/footer";
 import AddProject from "./addProject";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const AdminProjectsC: FC = () => {
 
@@ -55,7 +55,7 @@ const AdminProjectsC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/projects/${project}`);
+        productResponse = await IndexAPI.get(`/admin/projects/${project}`);
 
         for (let i = 0; i < productResponse.data.data.product.length; i++) {
           if (productResponse.data.data.product[i].imagekey !== null) {
@@ -96,7 +96,9 @@ const AdminProjectsC: FC = () => {
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
-        <Button onClick={handleOpen}>Add Project</Button>
+        <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
+          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add project</a></Button>
+        </Grid>
         <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate
           previousLabel={"prev"}

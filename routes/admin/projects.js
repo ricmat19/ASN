@@ -30,7 +30,7 @@ router.get("/admin/projects/:project", async (req, res) => {
 });
 
 //Create a project
-router.post("/admin/projects/create", upload.single("images"), async (req, res) => {
+router.post("/admin/project/create", upload.single("images"), async (req, res) => {
   try {
     // const result = ""
     const file = req.file;

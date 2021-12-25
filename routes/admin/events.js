@@ -29,7 +29,7 @@ router.get("/admin/events", async (req, res) => {
 });
 
 //Create an event
-router.post("/admin/events/create", upload.single("images"), async (req, res) => {
+router.post("/admin/event/create", upload.single("images"), async (req, res) => {
   try {
     // const result = ""
     const file = req.file;

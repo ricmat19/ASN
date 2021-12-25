@@ -33,11 +33,11 @@ const AdminProductsC: FC = () => {
           key={product.id}
           onClick={() => displayItem(product.product, product.id)}
         >
-          <Grid className="collection-item">
+          <Grid sx={{justifySelf: "center"}} className="collection-item">
             <img className="collection-thumbnail" src={product.imageBuffer} />
           </Grid>
           <Grid>
-            <Grid xs={12}>{product.title}</Grid>
+            <Grid>{product.title}</Grid>
           </Grid>
         </Grid>
       );
@@ -55,7 +55,7 @@ const AdminProductsC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/products/${product}`);
+        productResponse = await IndexAPI.get(`/admin/products/${product}`);
         console.log(productResponse.data.data)
 
         for (let i = 0; i < productResponse.data.data.products.length; i++) {
@@ -97,7 +97,9 @@ const AdminProductsC: FC = () => {
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
-        <Button onClick={handleOpen}>Add Product</Button>
+        <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
+          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add product</a></Button>
+        </Grid>
         <StoreMenuC />
         <div className="thumbnail-display">{displayItems}</div>
         <ReactPaginate

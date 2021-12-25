@@ -39,11 +39,24 @@ export interface ICheckout {
 }
 
 export interface ICourse {
-
+  id: string,
+  title: string,
+  subject: string,
+  imagekey?: string,
+  imageBuffer?: string,
+  content?: string,
+  info: string,
+  price: number,
 }
 
 export interface IMedia {
-
+  id: string,
+  title: string,
+  media: string,
+  imagekey?: string,
+  imageBuffer?: string,
+  info: string,
+  price: number,
 }
 
 export interface IProject {
@@ -51,5 +64,9 @@ export interface IProject {
 }
 
 export interface IEvent {
+
+}
+
+export interface IFile {
 
 }

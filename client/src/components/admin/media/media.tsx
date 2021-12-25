@@ -8,11 +8,11 @@ import { IMedia } from "../../../interfaces";
 import { Grid } from "@mui/material";
 
 const AdminMediaC: FC = () => {
-  const { product, id } = useParams();
+  const { type, id } = useParams();
 
   const [, setSelectedProduct] = useState<IMedia[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
+  const [media, setMedia] = useState<string>("");
   const [, setImages] = useState(null);
   const [qty, setQty] = useState<string>("");
   const [price, setPrice] = useState<string>("");
@@ -20,7 +20,7 @@ const AdminMediaC: FC = () => {
   const [imageBuffer, setImageBuffer] = useState("../../images/loading.svg");
 
   const titleInput = useRef(null);
-  const typeInput = useRef(null);
+  const mediaInput = useRef(null);
   const qtyInput = useRef(null);
   const priceInput = useRef(null);
   const infoInput = useRef(null);
@@ -28,13 +28,13 @@ const AdminMediaC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const productResponse = await IndexAPI.get(
-          `/products/${product}/${id}`
+        const mediaResponse = await IndexAPI.get(
+          `/admin/medias/${type}/${id}`
         );
 
-        if (productResponse.data.data.item.imagekey !== null) {
+        if (mediaResponse.data.data.media.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
-            `/images/${productResponse.data.data.item.imagekey}`,
+            `/images/${mediaResponse.data.data.media.imagekey}`,
             {
               responseType: "arraybuffer",
             }
@@ -44,12 +44,10 @@ const AdminMediaC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setSelectedProduct(productResponse.data.data.item)
-        setTitle(productResponse.data.data.item.title);
-        setPrice(productResponse.data.data.item.price);
-        setQty(productResponse.data.data.item.qty);
-        setInfo(productResponse.data.data.item.info);
-
+        setTitle(mediaResponse.data.data.media.title);
+        setInfo(mediaResponse.data.data.media.info);
+        
+        setSelectedProduct(mediaResponse.data.data.media)
       } catch (err) {
         console.log(err);
       }
@@ -63,17 +61,17 @@ const AdminMediaC: FC = () => {
       let formData = new FormData();
 
       formData.append("title", title);
-      formData.append("product", type);
+      formData.append("media", media);
       // formData.append("images", images);
       formData.append("quantity", qty);
       formData.append("price", price);
       formData.append("info", info);
 
-      await IndexAPI.post("/admin/products/create", formData, {
+      await IndexAPI.post("/admin/media/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
       // createItem(response);
 
@@ -113,7 +111,7 @@ const AdminMediaC: FC = () => {
         </div>
         <form
           className="admin-form"
-          action="/admin/products/create"
+          action="/admin/media/create"
           method="POST"
           encType="multipart/form-data"
         >
@@ -140,9 +138,9 @@ const AdminMediaC: FC = () => {
               <Grid>
                 <label className=" radio">print</label>
                 <input
-                  value={type}
-                  ref={typeInput}
-                  onChange={() => setType("print")}
+                  value={media}
+                  ref={mediaInput}
+                  onChange={() => setMedia("print")}
                   type="radio"
                   name="product"
                 />
@@ -150,9 +148,9 @@ const AdminMediaC: FC = () => {
               <Grid>
                 <label className=" radio">model</label>
                 <input
-                  value={type}
-                  ref={typeInput}
-                  onChange={() => setType("model")}
+                  value={media}
+                  ref={mediaInput}
+                  onChange={() => setMedia("model")}
                   type="radio"
                   name="product"
                 />
@@ -160,9 +158,9 @@ const AdminMediaC: FC = () => {
               <Grid>
                 <label className=" radio">painting</label>
                 <input
-                  value={type}
-                  ref={typeInput}
-                  onChange={() => setType("painting")}
+                  value={media}
+                  ref={mediaInput}
+                  onChange={() => setMedia("painting")}
                   type="radio"
                   name="product"
                   required
@@ -171,9 +169,9 @@ const AdminMediaC: FC = () => {
               <Grid>
                 <label className=" radio">sculpture</label>
                 <input
-                  value={type}
-                  ref={typeInput}
-                  onChange={() => setType("sculpture")}
+                  value={media}
+                  ref={mediaInput}
+                  onChange={() => setMedia("sculpture")}
                   type="radio"
                   name="product"
                   required
@@ -182,9 +180,9 @@ const AdminMediaC: FC = () => {
               <Grid>
                 <label className=" radio">book</label>
                 <input
-                  value={type}
-                  ref={typeInput}
-                  onChange={() => setType("book")}
+                  value={media}
+                  ref={mediaInput}
+                  onChange={() => setMedia("book")}
                   type="radio"
                   name="product"
                   required
@@ -193,9 +191,9 @@ const AdminMediaC: FC = () => {
               <Grid>
                 <label className=" radio">comic</label>
                 <input
-                  value={type}
-                  ref={typeInput}
-                  onChange={() => setType("comic")}
+                  value={media}
+                  ref={mediaInput}
+                  onChange={() => setMedia("comic")}
                   type="radio"
                   name="product"
                   required

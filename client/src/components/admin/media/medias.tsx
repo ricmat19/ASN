@@ -3,18 +3,26 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IndexAPI from "../../../apis/indexAPI";
 import FooterC from "../../user/standard/footer";
-import { IProduct } from "../../../interfaces";
+import { IMedia } from "../../../interfaces";
 import MediaMenuC from "./mediasMenu";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import AddMedia from "./addMedia";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+
+// id: string,
+// title: string,
+// media: string,
+// imagekey?: string,
+// imageBuffer?: string,
+// info: string,
+// price: number,
 
 const AdminMediasC: FC = () => {
 
   const { media } = useParams();
 
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+  const [medias, setMedias ] = useState<IMedia[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [open, setOpen] = useState(false);
@@ -24,27 +32,26 @@ const AdminMediasC: FC = () => {
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
 
-  const displayItems = collection
+  const displayMedias = medias
     .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
+    .map((media) => {
       return (
-        <div
+        <Grid
           className="collection-item-div"
-          key={item.id}
-          onClick={() => displayItem(item.product, item.id)}
+          key={media.id}
+          onClick={() => displayItem(media.media, media.id)}
         >
-          <div className="collection-item">
-            <img className="collection-thumbnail" src={item.imageBuffer} />
-          </div>
-          <div className="collection-thumbnail-footer">
-            <div>{item.title}</div>
-            <div className="price">${item.price}.00</div>
-          </div>
-        </div>
+          <Grid className="collection-item">
+            <img className="collection-thumbnail" src={media.imageBuffer} />
+          </Grid>
+          <Grid>
+            <Grid>{media.title}</Grid>
+          </Grid>
+        </Grid>
       );
     });
 
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
+  const pageCount = Math.ceil(medias.length / itemsPerPage);
 
   const changePage = ({selected}: {selected:number}): void => {
     setPageNumber(selected);
@@ -52,16 +59,17 @@ const AdminMediasC: FC = () => {
 
   let navigation = useNavigate();
 
-  let productResponse;
+  let mediasResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/medias/${media}`);
+        mediasResponse = await IndexAPI.get(`/admin/medias/${media}`);
+        console.log(mediasResponse)
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < mediasResponse.data.data.medias.length; i++) {
+          if (mediasResponse.data.data.medias[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${mediasResponse.data.data.medias[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -69,12 +77,12 @@ const AdminMediasC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            mediasResponse.data.data.medias[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setMedias(mediasResponse.data.data.medias);
 
       } catch (err) {
         console.log(err);
@@ -97,9 +105,11 @@ const AdminMediasC: FC = () => {
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
-        <Button onClick={handleOpen}>Add Media</Button>
+        <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
+          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add media</a></Button>
+        </Grid>
         <MediaMenuC />
-        <div className="thumbnail-display">{displayItems}</div>
+        <div className="thumbnail-display">{displayMedias}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

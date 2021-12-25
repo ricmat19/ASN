@@ -2,19 +2,19 @@ import React, { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IndexAPI from "../../../apis/indexAPI";
-import { IProduct } from "../../../interfaces";
+import { ICourse } from "../../../interfaces";
 import FooterC from "../../user/standard/footer";
 import CoursesMenuC from "./coursesMenu";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import AddCourse from "./addCourse";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const AdminCoursesC: FC = () => {
 
-  const { product } = useParams();
+  const { subject } = useParams();
 
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+  const [courses, setCourses] = useState<ICourse[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [open, setOpen] = useState(false);
@@ -24,27 +24,26 @@ const AdminCoursesC: FC = () => {
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
 
-  const displayItems = collection
+  const displayCourses = courses
     .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
+    .map((course) => {
       return (
-        <div
+        <Grid
           className="collection-item-div"
-          key={item.id}
-          onClick={() => displayItem(item.product, item.id)}
+          key={course.id}
+          onClick={() => displayCourse(course.subject, course.id)}
         >
-          <div className="collection-item">
-            <img className="collection-thumbnail" src={item.imageBuffer} />
-          </div>
-          <div className="collection-thumbnail-footer">
-            <div>{item.title}</div>
-            <div className="price">${item.price}.00</div>
-          </div>
-        </div>
+          <Grid className="collection-item">
+            <img className="collection-thumbnail" src={course.imageBuffer} />
+          </Grid>
+          <Grid>
+            <Grid>{course.title}</Grid>
+          </Grid>
+        </Grid>
       );
     });
 
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
+  const pageCount = Math.ceil(courses.length / itemsPerPage);
 
   const changePage = ({selected}: {selected:number}): void => {
     setPageNumber(selected);
@@ -52,16 +51,17 @@ const AdminCoursesC: FC = () => {
 
   let navigation = useNavigate();
 
-  let productResponse;
+  let coursesResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/products/${product}`);
+        coursesResponse = await IndexAPI.get(`/admin/courses/${subject}`);
+        console.log(coursesResponse)
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < coursesResponse.data.data.courses.length; i++) {
+          if (coursesResponse.data.data.courses[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${coursesResponse.data.data.courses[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -69,12 +69,12 @@ const AdminCoursesC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            coursesResponse.data.data.courses[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setCourses(coursesResponse.data.data.courses);
 
       } catch (err) {
         console.log(err);
@@ -83,9 +83,9 @@ const AdminCoursesC: FC = () => {
     fetchData();
   }, []);
 
-  const displayItem = async (product: string, id: string) => {
+  const displayCourse = async (subject: string, id: string) => {
     try {
-      navigation(`/admin/store/${product}/${id}`);
+      navigation(`/admin/courses/${subject}/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -97,9 +97,11 @@ const AdminCoursesC: FC = () => {
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
-        <Button onClick={handleOpen}>Add Course</Button>
+        <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
+          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add course</a></Button>
+        </Grid>
         <CoursesMenuC />
-        <div className="thumbnail-display">{displayItems}</div>
+        <div className="thumbnail-display">{displayCourses}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

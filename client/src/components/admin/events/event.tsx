@@ -27,7 +27,7 @@ const AdminEventC: FC = () => {
     const fetchData = async () => {
       try {
         const productResponse = await IndexAPI.get(
-          `/products/${product}/${id}`
+          `/admin/products/${product}/${id}`
         );
 
         if (productResponse.data.data.item.imagekey !== null) {
@@ -66,7 +66,7 @@ const AdminEventC: FC = () => {
       formData.append("price", price);
       formData.append("info", info);
 
-      await IndexAPI.post("/admin/products/create", formData, {
+      await IndexAPI.post("/admin/events/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => console.log(res))

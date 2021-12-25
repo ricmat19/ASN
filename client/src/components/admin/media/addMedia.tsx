@@ -10,8 +10,8 @@ interface IModalState {
 const AdminCreateMediaC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [images, setImages] = useState(null);
+  const [media, setMedia] = useState<string>("");
+  const [images, setImages] = useState<File>();
   const [info, setInfo] = useState<string>("");
 
   const titleInput = useRef(null);
@@ -24,21 +24,23 @@ const AdminCreateMediaC = (props: IModalState) => {
     require("dotenv").config();
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const createMedia = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      let formData = new FormData();
+      if(images){
+        let formData = new FormData();
 
-      formData.append("title", title);
-      formData.append("product", type);
-      // formData.append("images", images);
-      formData.append("info", info);
+        formData.append("title", title);
+        formData.append("media", media);
+        formData.append("images", images);
+        formData.append("info", info);
 
-      await IndexAPI.post("/admin/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+        await IndexAPI.post("/admin/media/create", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+      }
 
       // createItem(response);
 
@@ -53,7 +55,7 @@ const AdminCreateMediaC = (props: IModalState) => {
   };
 
   let displayedImage = "";
-  if (images !== null) {
+  if (images !== undefined) {
     displayedImage = URL.createObjectURL(images);
   }
 
@@ -97,12 +99,12 @@ const AdminCreateMediaC = (props: IModalState) => {
               <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
                 <form
                   className="admin-form"
-                  action="/admin/products/create"
+                  action="/admin/media/create"
                   method="POST"
                   encType="multipart/form-data"
                 >
                   <Grid className="admin-form-title">
-                    <h2 className="align-center">Create</h2>
+                    <h1 className="align-center">Create</h1>
                   </Grid>
                   <Grid className="admin-form-field">
                     <label className="admin-label">Title:</label>
@@ -124,9 +126,9 @@ const AdminCreateMediaC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">blog</label>
                         <input
-                          value={type}
+                          value={media}
                           ref={typeInput}
-                          onChange={() => setType("blog")}
+                          onChange={() => setMedia("blog")}
                           type="radio"
                           name="media"
                         />
@@ -134,9 +136,9 @@ const AdminCreateMediaC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">podcast</label>
                         <input
-                          value={type}
+                          value={media}
                           ref={typeInput}
-                          onChange={() => setType("podcast")}
+                          onChange={() => setMedia("podcast")}
                           type="radio"
                           name="media"
                         />
@@ -144,9 +146,9 @@ const AdminCreateMediaC = (props: IModalState) => {
                       <Grid>
                         <label className=" radio">channel</label>
                         <input
-                          value={type}
+                          value={media}
                           ref={typeInput}
-                          onChange={() => setType("channel")}
+                          onChange={() => setMedia("channel")}
                           type="radio"
                           name="media"
                           required
@@ -179,7 +181,7 @@ const AdminCreateMediaC = (props: IModalState) => {
                     <Grid className="text-center">
                       <Grid>
                         <button
-                          onClick={handleSubmit}
+                          onClick={createMedia}
                           type="submit"
                           className="btn form-button"
                         >

@@ -10,18 +10,18 @@ const unlinkFile = util.promisify(fs.unlink);
 const upload = multer({ dest: "images/" });
 
 //Get all courses
-router.get("/admin/courses/:course", async (req, res) => {
+router.get("/admin/courses/:subject", async (req, res) => {
   try {
-    const course = await db.query(
-      "SELECT * FROM courses WHERE course=$1 ORDER BY date DESC",
-      [req.params.course]
+    const courses = await db.query(
+      "SELECT * FROM courses WHERE subject=$1",
+      [req.params.subject]
     );
 
     res.status(200).json({
       status: "success",
-      results: course.rows.length,
+      results: courses.rows.length,
       data: {
-        course: course.rows,
+        courses: courses.rows,
       },
     });
   } catch (err) {
@@ -34,26 +34,20 @@ router.post("/admin/course/create", upload.single("images"), async (req, res) =>
   try {
     const file = req.file;
     const result = await uploadFile(file);
+    console.log(result.key)
     res.send({ imagePath: `/images/${result.key}` });
     await unlinkFile(file.path);
-    const course = await db.query(
-      "INSERT INTO courses (title, product, imagekey, qty, price, info) values ($1, $2, $3, $4, $5, $6) RETURNING *",
+    await db.query(
+      "INSERT INTO courses (title, subject, imagekey, info, price) values ($1, $2, $3, $4, $5) RETURNING *",
       [
         req.body.title,
-        req.body.product,
+        req.body.subject,
         result.key,
-        req.body.quantity,
-        req.body.price,
         req.body.info,
+        req.body.price,
       ]
     );
-    res.status(201).json({
-      status: "success",
-      results: course.rows.length,
-      data: {
-        course: course.rows[0],
-      },
-    });
+    console.log(result.key)
   } catch (err) {
     console.log(err);
   }

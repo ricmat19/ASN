@@ -67,8 +67,7 @@ body {
     color: rgb(255, 68, 208);
   }
   
-  button a,
-  button a:hover {
+  button a {
     color: white;
   }
   
@@ -220,6 +219,10 @@ body {
     justify-content: center;
     grid-template-columns: 50px 50px 1fr;
     height: 50px;
+  }
+
+  .item-images{
+    align-self: center;
   }
   
   .cart-item-qty,
@@ -429,13 +432,15 @@ body {
   
   .collection-item {
     text-align: center;
+    justify-self: center;
   }
   
   .collection-thumbnail {
     border-style: none;
     background: rgb(243, 243, 243);
-    height: 300px;
-    width: 300px;
+    height: auto;
+    width: 100%;
+    max-height: 350px;
   }
   
   .collection-thumbnail-footer {
@@ -467,14 +472,17 @@ body {
   .big-image {
     border-style: none;
     background: rgb(243, 243, 243);
-    height: 440px;
+    height: auto;
+    width: 100%;
+    max-height: 440px;
   }
   
   .image-thumbnail {
     border-style: none;
     background: rgb(243, 243, 243);
-    height: 100px;
+    height: auto;
     width: 100px;
+    max-height: 440px;
     margin: 0 5px;
   }
   
@@ -632,6 +640,7 @@ body {
   .radio-div {
     display: grid;
     grid-template-columns: auto auto auto;
+    text-align: left;
   }
   
   .delete {

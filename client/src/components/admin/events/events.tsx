@@ -5,7 +5,7 @@ import FooterC from "../../user/standard/footer";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import AddEvent from "./addEvent";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const AdminEventsC: FC = () => {
 
@@ -57,7 +57,9 @@ const AdminEventsC: FC = () => {
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
-        <Button onClick={handleOpen}>Add Event</Button>
+        <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
+          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add event</a></Button>
+        </Grid>
         <div className="collection-menu">{}</div>
       </div>
       <FooterC />

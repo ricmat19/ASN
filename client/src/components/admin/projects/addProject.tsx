@@ -9,7 +9,7 @@ interface IModalState {
 
 const AdminCreateProjectC = (props: IModalState) => {
   const [title, setTitle] = useState<string>("");
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState<File>();
   const [info, setInfo] = useState<string>("");
 
   const titleInput = useRef(null);
@@ -24,17 +24,19 @@ const AdminCreateProjectC = (props: IModalState) => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      let formData = new FormData();
+      if(images){
+        let formData = new FormData();
 
-      formData.append("title", title);
-      // formData.append("images", images);
-      formData.append("info", info);
+        formData.append("title", title);
+        formData.append("images", images);
+        formData.append("info", info);
 
-      await IndexAPI.post("/admin/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+        await IndexAPI.post("/admin/project/create", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+      }
 
       // createItem(response);
 
@@ -49,7 +51,7 @@ const AdminCreateProjectC = (props: IModalState) => {
   };
 
   let displayedImage = "";
-  if (images !== null) {
+  if (images !== undefined) {
     displayedImage = URL.createObjectURL(images);
   }
 
@@ -93,12 +95,12 @@ const AdminCreateProjectC = (props: IModalState) => {
               <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
                 <form
                   className="admin-form"
-                  action="/admin/products/create"
+                  action="/admin/project/create"
                   method="POST"
                   encType="multipart/form-data"
                 >
                   <Grid className="admin-form-title">
-                    <h2 className="align-center">Create</h2>
+                    <h1 className="align-center">Create</h1>
                   </Grid>
                   <Grid className="admin-form-field">
                     <label className="admin-label">Title:</label>

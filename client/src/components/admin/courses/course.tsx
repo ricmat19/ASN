@@ -9,7 +9,7 @@ import { ICourse } from "../../../interfaces";
 
 const AdminCourseC: FC = () => {
 
-  const { product, id } = useParams();
+  const { subject, id } = useParams();
 
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
@@ -31,14 +31,14 @@ const AdminCourseC: FC = () => {
     const fetchData = async () => {
       try {
 
-        const productResponse = await IndexAPI.get(
-          `/products/${product}/${id}`
+        const courseResponse = await IndexAPI.get(
+          `/courses/${subject}/${id}`
         );
-        console.log(productResponse.data.data.product.imagekey !== null)
+        console.log(courseResponse.data.data.course.imagekey !== null)
 
-        if (productResponse.data.data.product.imagekey !== null) {
+        if (courseResponse.data.data.course.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
-            `/images/${productResponse.data.data.product.imagekey}`,
+            `/images/${courseResponse.data.data.course.imagekey}`,
             {
               responseType: "arraybuffer",
             }
@@ -48,11 +48,11 @@ const AdminCourseC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setSelectedProduct(productResponse.data.data.item)
-        setTitle(productResponse.data.data.item.title);
-        setPrice(productResponse.data.data.item.price);
-        setQty(productResponse.data.data.item.qty);
-        setInfo(productResponse.data.data.item.info);
+        setSelectedProduct(courseResponse.data.data.item)
+        setTitle(courseResponse.data.data.item.title);
+        setPrice(courseResponse.data.data.item.price);
+        setQty(courseResponse.data.data.item.qty);
+        setInfo(courseResponse.data.data.item.info);
 
       } catch (err) {
         console.log(err);

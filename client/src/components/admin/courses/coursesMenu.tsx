@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 const AdminCoursesMenuC: FC = () => {
 
   return (
-    <Grid container sx={{justifyContent: "center", gap: "25px", mt: "10px"}}>
+    <Grid container sx={{justifyContent: "center", gap: "25px"}}>
         <a href="/admin/courses/drawing">
           <h1>drawing</h1>
         </a>

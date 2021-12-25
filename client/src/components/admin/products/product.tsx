@@ -111,11 +111,6 @@ const AdminProductC: FC = () => {
             <Grid className="big-image-div">
               <img className="big-image" src={imageBuffer} alt="main" />
             </Grid>
-            <Grid className="image-thumbnails">
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-            </Grid>
           </Grid>
         </Grid>
         <form
