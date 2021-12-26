@@ -21,7 +21,7 @@ const AdminCreateProjectC = (props: IModalState) => {
     require("dotenv").config();
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const createProject = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
       if(images){
@@ -139,7 +139,7 @@ const AdminCreateProjectC = (props: IModalState) => {
                     <Grid className="text-center">
                       <Grid>
                         <button
-                          onClick={handleSubmit}
+                          onClick={createProject}
                           type="submit"
                           className="btn form-button"
                         >

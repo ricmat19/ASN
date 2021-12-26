@@ -56,7 +56,6 @@ const AdminCoursesC: FC = () => {
     const fetchData = async () => {
       try {
         coursesResponse = await IndexAPI.get(`/admin/courses/${subject}`);
-        console.log(coursesResponse)
 
         for (let i = 0; i < coursesResponse.data.data.courses.length; i++) {
           if (coursesResponse.data.data.courses[i].imagekey !== null) {

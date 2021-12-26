@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IndexAPI from "../../../apis/indexAPI";
-import { IProduct } from "../../../interfaces";
+import { IProject } from "../../../interfaces";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
 import FooterC from "../../user/standard/footer";
@@ -11,9 +11,7 @@ import { Button, Grid } from "@mui/material";
 
 const AdminProjectsC: FC = () => {
 
-  const { project } = useParams();
-
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+  const [projects, setProjects ] = useState<IProject[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [open, setOpen] = useState(false);
@@ -23,27 +21,26 @@ const AdminProjectsC: FC = () => {
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
 
-  const displayItems = collection
+  const displayProjects = projects
     .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
+    .map((project) => {
       return (
         <div
           className="collection-item-div"
-          key={item.id}
-          onClick={() => displayItem(item.project)}
+          key={project.id}
+          onClick={() => displayItem(project.id)}
         >
           <div className="collection-item">
-            <img className="collection-thumbnail" src={item.imageBuffer} />
+            <img className="collection-thumbnail" src={project.imageBuffer} />
           </div>
-          <div className="collection-thumbnail-footer">
-            <div>{item.title}</div>
-            <div className="price">${item.price}.00</div>
+          <div>
+            <div>{project.title}</div>
           </div>
         </div>
       );
     });
 
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
+  const pageCount = Math.ceil(projects.length / itemsPerPage);
 
   const changePage = ({selected}: {selected:number}): void => {
     setPageNumber(selected);
@@ -51,16 +48,16 @@ const AdminProjectsC: FC = () => {
 
   let navigation = useNavigate();
 
-  let productResponse;
+  let projectsResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/admin/projects/${project}`);
+        projectsResponse = await IndexAPI.get(`/admin/projects`);
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < projectsResponse.data.data.projects.length; i++) {
+          if (projectsResponse.data.data.projects[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${projectsResponse.data.data.projects[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -68,12 +65,12 @@ const AdminProjectsC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            projectsResponse.data.data.projects[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setProjects(projectsResponse.data.data.projects);
 
       } catch (err) {
         console.log(err);
@@ -82,9 +79,9 @@ const AdminProjectsC: FC = () => {
     fetchData();
   }, []);
 
-  const displayItem = async (project: string) => {
+  const displayItem = async (id: string) => {
     try {
-      navigation(`/admin/projects/${project}`);
+      navigation(`/admin/projects/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -99,7 +96,7 @@ const AdminProjectsC: FC = () => {
         <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
           <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add project</a></Button>
         </Grid>
-        <div className="thumbnail-display">{displayItems}</div>
+        <div className="thumbnail-display">{displayProjects}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

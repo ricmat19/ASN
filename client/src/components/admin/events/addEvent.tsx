@@ -11,6 +11,7 @@ const AdminCreateEventC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
   const [images, setImages] = useState<File>();
+  const [date, setDate] = useState<string>("");
   const [spots, setSpots] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
@@ -25,7 +26,7 @@ const AdminCreateEventC = (props: IModalState) => {
     require("dotenv").config();
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const createEvent = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
       if(images){
@@ -33,6 +34,7 @@ const AdminCreateEventC = (props: IModalState) => {
 
         formData.append("title", title);
         formData.append("images", images);
+        formData.append("date", date)
         formData.append("spots", spots);
         formData.append("price", price);
         formData.append("info", info);
@@ -131,6 +133,17 @@ const AdminCreateEventC = (props: IModalState) => {
                     />
                   </Grid>
                   <Grid className="admin-form-field">
+                    <label className="admin-label">Date:</label>
+                    <input
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      type="date"
+                      name="date"
+                      className="form-control"
+                      required
+                    />
+                  </Grid>
+                  <Grid className="admin-form-field">
                     <label className="admin-label">Spots:</label>
                     <input
                       value={spots}
@@ -168,7 +181,7 @@ const AdminCreateEventC = (props: IModalState) => {
                     <Grid className="text-center">
                       <Grid>
                         <button
-                          onClick={handleSubmit}
+                          onClick={createEvent}
                           type="submit"
                           className="btn form-button"
                         >

@@ -56,7 +56,6 @@ const AdminProductsC: FC = () => {
     const fetchData = async () => {
       try {
         productResponse = await IndexAPI.get(`/admin/products/${product}`);
-        console.log(productResponse.data.data)
 
         for (let i = 0; i < productResponse.data.data.products.length; i++) {
           if (productResponse.data.data.products[i].imagekey !== null) {

@@ -10,19 +10,11 @@ import AdminMenuNavC from "../standard/menuNav";
 import AddMedia from "./addMedia";
 import { Button, Grid } from "@mui/material";
 
-// id: string,
-// title: string,
-// media: string,
-// imagekey?: string,
-// imageBuffer?: string,
-// info: string,
-// price: number,
-
 const AdminMediasC: FC = () => {
 
   const { media } = useParams();
 
-  const [medias, setMedias ] = useState<IMedia[]>([]);
+  const [medias, setMedias] = useState<IMedia[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [open, setOpen] = useState(false);
@@ -64,7 +56,6 @@ const AdminMediasC: FC = () => {
     const fetchData = async () => {
       try {
         mediasResponse = await IndexAPI.get(`/admin/medias/${media}`);
-        console.log(mediasResponse)
 
         for (let i = 0; i < mediasResponse.data.data.medias.length; i++) {
           if (mediasResponse.data.data.medias[i].imagekey !== null) {

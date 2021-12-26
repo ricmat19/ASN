@@ -29,6 +29,24 @@ router.get("/admin/products/:product", async (req, res) => {
   }
 });
 
+//Get a specific product
+router.get("/admin/products/:product/:id", async (req, res) => {
+  try {
+    const product = await db.query(`SELECT * FROM products WHERE id=$1`, [
+      req.params.id,
+    ]);
+    res.status(200).json({
+      status: "success",
+      results: product.rows.length,
+      data: {
+        product: product.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //Create a product
 router.post("/admin/product/create", upload.single("images"), async (req, res) => {
   try {
@@ -47,38 +65,6 @@ router.post("/admin/product/create", upload.single("images"), async (req, res) =
         req.body.info,
       ]
     );
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Delete a product
-router.delete("/admin/products/delete/:id", async (req, res) => {
-  try {
-    await db.query("DELETE FROM products WHERE id = $1", [
-      req.params.id,
-    ]);
-    res.status(204).json({
-      status: "success",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Get a specific product to update
-router.get("/admin/products/update/:id", async (req, res) => {
-  try {
-    const product = await db.query(`SELECT * FROM products WHERE id=$1`, [
-      req.params.id,
-    ]);
-    res.status(200).json({
-      status: "success",
-      results: product.rows.length,
-      data: {
-        product: product.rows[0],
-      },
-    });
   } catch (err) {
     console.log(err);
   }
@@ -112,6 +98,20 @@ router.put("/admin/products/update/:id", async (req, res) => {
       data: {
         product: product.rows[0],
       },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Delete a product
+router.delete("/admin/products/delete/:id", async (req, res) => {
+  try {
+    await db.query("DELETE FROM products WHERE id = $1", [
+      req.params.id,
+    ]);
+    res.status(204).json({
+      status: "success",
     });
   } catch (err) {
     console.log(err);

@@ -55,18 +55,24 @@ export interface IMedia {
   media: string,
   imagekey?: string,
   imageBuffer?: string,
+  content?: string,
   info: string,
-  price: number,
 }
 
 export interface IProject {
-
+  id: string,
+  title: string,
+  imagekey?: string,
+  imageBuffer?: string,
+  info: string,
 }
 
 export interface IEvent {
-
-}
-
-export interface IFile {
-
+  id: string,
+  title: string,
+  event_date: Date,
+  imagekey?: string,
+  imageBuffer?: string,
+  price?: number,
+  info: string,
 }

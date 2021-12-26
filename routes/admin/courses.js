@@ -29,6 +29,24 @@ router.get("/admin/courses/:subject", async (req, res) => {
   }
 });
 
+//Get a specific course
+router.get("/admin/courses/:subject/:id", async (req, res) => {
+  try {
+    const course = await db.query(`SELECT * FROM courses WHERE id=$1`, [
+      req.params.id,
+    ]);
+    res.status(200).json({
+      status: "success",
+      results: course.rows.length,
+      data: {
+        course: course.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //Create a course
 router.post("/admin/course/create", upload.single("images"), async (req, res) => {
   try {
@@ -48,38 +66,6 @@ router.post("/admin/course/create", upload.single("images"), async (req, res) =>
       ]
     );
     console.log(result.key)
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Delete a course
-router.delete("/admin/courses/delete/:id", async (req, res) => {
-  try {
-    await db.query("DELETE FROM courses WHERE id = $1", [
-      req.params.id,
-    ]);
-    res.status(204).json({
-      status: "success",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Get a specific course
-router.get("/admin/courses/update/:id", async (req, res) => {
-  try {
-    const course = await db.query(`SELECT * FROM courses WHERE id=$1`, [
-      req.params.id,
-    ]);
-    res.status(200).json({
-      status: "success",
-      results: course.rows.length,
-      data: {
-        item: course.rows[0],
-      },
-    });
   } catch (err) {
     console.log(err);
   }
@@ -113,6 +99,20 @@ router.put("/admin/courses/update/:id", async (req, res) => {
       data: {
         item: course.rows[0],
       },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Delete a course
+router.delete("/admin/courses/delete/:id", async (req, res) => {
+  try {
+    await db.query("DELETE FROM courses WHERE id = $1", [
+      req.params.id,
+    ]);
+    res.status(204).json({
+      status: "success",
     });
   } catch (err) {
     console.log(err);

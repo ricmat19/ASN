@@ -32,9 +32,9 @@ const AdminCourseC: FC = () => {
       try {
 
         const courseResponse = await IndexAPI.get(
-          `/courses/${subject}/${id}`
+          `/admin/courses/${subject}/${id}`
         );
-        console.log(courseResponse.data.data.course.imagekey !== null)
+        console.log(courseResponse)
 
         if (courseResponse.data.data.course.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(

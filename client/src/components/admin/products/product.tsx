@@ -29,11 +29,9 @@ const AdminProductC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-
         const productResponse = await IndexAPI.get(
-          `/products/${product}/${id}`
+          `/admin/products/${product}/${id}`
         );
-        console.log(productResponse.data.data.product.imagekey !== null)
 
         if (productResponse.data.data.product.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
@@ -72,7 +70,7 @@ const AdminProductC: FC = () => {
       formData.append("price", price);
       formData.append("info", info);
 
-      await IndexAPI.post("/admin/products/create", formData, {
+      await IndexAPI.put(`/admin/products/update/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => console.log(res))
@@ -115,8 +113,8 @@ const AdminProductC: FC = () => {
         </Grid>
         <form
           className="admin-form"
-          action="/admin/products/create"
-          method="POST"
+          action="/admin/products/update/:id"
+          method="PUT"
           encType="multipart/form-data"
         >
           <Grid className="admin-form-title">

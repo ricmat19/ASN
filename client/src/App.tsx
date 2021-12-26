@@ -88,11 +88,11 @@ const App: FC = () => {
           <Route path="/admin/courses/:subject" element={<AdminCoursesR />} />
           <Route path="/admin/courses/:subject/:id" element={<AdminCourseR />} />
           <Route path="/admin/medias/:media" element={<AdminMediasR />} />
-          <Route path="/admin/medias/:media/:post" element={<AdminMediaR />} />
+          <Route path="/admin/medias/:media/:id" element={<AdminMediaR />} />
           <Route path="/admin/projects" element={<AdminProjectsR />} />
-          <Route path="/admin/projects/:project" element={<AdminProjectR />} />
+          <Route path="/admin/projects/:id" element={<AdminProjectR />} />
           <Route path="/admin/events" element={<AdminEventsR />} />
-          <Route path="/admin/events/:event" element={<AdminEventR />} />
+          <Route path="/admin/events/:id" element={<AdminEventR />} />
           <Route path="/admin/threads" element={<AdminThreadsR />} />
           <Route path="/admin/threads/:thread" element={<AdminThreadR />} />
           <Route path="/admin/about" element={<AdminAboutR />} />

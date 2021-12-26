@@ -28,53 +28,8 @@ router.get("/admin/events", async (req, res) => {
   }
 });
 
-//Create an event
-router.post("/admin/event/create", upload.single("images"), async (req, res) => {
-  try {
-    // const result = ""
-    const file = req.file;
-    const result = await uploadFile(file);
-    res.send({ imagePath: `/images/${result.key}` });
-    await unlinkFile(file.path);
-    const events = await db.query(
-      "INSERT INTO events (title, product, imagekey, qty, price, info) values ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [
-        req.body.title,
-        req.body.product,
-        result.key,
-        req.body.quantity,
-        req.body.price,
-        req.body.info,
-      ]
-    );
-    res.status(201).json({
-      status: "success",
-      results: events.rows.length,
-      data: {
-        events: events.rows[0],
-      },
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Delete an event
-router.delete("/admin/events/delete/:id", async (req, res) => {
-  try {
-    await db.query("DELETE FROM events WHERE id = $1", [
-      req.params.id,
-    ]);
-    res.status(204).json({
-      status: "success",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Get a specific event to update
-router.get("/admin/events/update/:id", async (req, res) => {
+//Get a specific event
+router.get("/admin/events/:id", async (req, res) => {
   try {
     const events = await db.query(`SELECT * FROM events WHERE id=$1`, [
       req.params.id,
@@ -86,6 +41,29 @@ router.get("/admin/events/update/:id", async (req, res) => {
         events: events.rows[0],
       },
     });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Create an event
+router.post("/admin/event/create", upload.single("images"), async (req, res) => {
+  try {
+    const file = req.file;
+    const result = await uploadFile(file);
+    res.send({ imagePath: `/images/${result.key}` });
+    await unlinkFile(file.path);
+    await db.query(
+      "INSERT INTO events (title, event_date, imagekey, price, info, spots) values ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [
+        req.body.title,
+        req.body.date,
+        result.key,
+        req.body.price,
+        req.body.info,
+        req.body.spots,
+      ]
+    );
   } catch (err) {
     console.log(err);
   }
@@ -119,6 +97,20 @@ router.put("/admin/events/update/:id", async (req, res) => {
       data: {
         event: event.rows[0],
       },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Delete an event
+router.delete("/admin/events/delete/:id", async (req, res) => {
+  try {
+    await db.query("DELETE FROM events WHERE id = $1", [
+      req.params.id,
+    ]);
+    res.status(204).json({
+      status: "success",
     });
   } catch (err) {
     console.log(err);

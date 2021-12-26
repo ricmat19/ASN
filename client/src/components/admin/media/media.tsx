@@ -8,29 +8,27 @@ import { IMedia } from "../../../interfaces";
 import { Grid } from "@mui/material";
 
 const AdminMediaC: FC = () => {
-  const { type, id } = useParams();
+  const { media, id } = useParams();
 
   const [, setSelectedProduct] = useState<IMedia[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [media, setMedia] = useState<string>("");
+  const [mediaType, setMediaType] = useState<string>("");
   const [, setImages] = useState(null);
-  const [qty, setQty] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
   const [imageBuffer, setImageBuffer] = useState("../../images/loading.svg");
 
   const titleInput = useRef(null);
   const mediaInput = useRef(null);
-  const qtyInput = useRef(null);
-  const priceInput = useRef(null);
   const infoInput = useRef(null);
 
   useEffect((): void => {
     const fetchData = async () => {
       try {
+        console.log(id)
         const mediaResponse = await IndexAPI.get(
-          `/admin/medias/${type}/${id}`
+          `/admin/medias/${media}/${id}`
         );
+        console.log(mediaResponse.data.data.media)
 
         if (mediaResponse.data.data.media.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
@@ -61,10 +59,8 @@ const AdminMediaC: FC = () => {
       let formData = new FormData();
 
       formData.append("title", title);
-      formData.append("media", media);
+      formData.append("media", mediaType);
       // formData.append("images", images);
-      formData.append("quantity", qty);
-      formData.append("price", price);
       formData.append("info", info);
 
       await IndexAPI.post("/admin/media/create", formData, {
@@ -136,66 +132,33 @@ const AdminMediaC: FC = () => {
             </Grid>
             <Grid className="radio-div">
               <Grid>
-                <label className=" radio">print</label>
+                <label className=" radio">blog</label>
                 <input
                   value={media}
                   ref={mediaInput}
-                  onChange={() => setMedia("print")}
+                  onChange={() => setMediaType("blog")}
                   type="radio"
-                  name="product"
+                  name="media"
                 />
               </Grid>
               <Grid>
-                <label className=" radio">model</label>
+                <label className=" radio">podcast</label>
                 <input
                   value={media}
                   ref={mediaInput}
-                  onChange={() => setMedia("model")}
+                  onChange={() => setMediaType("podcast")}
                   type="radio"
-                  name="product"
+                  name="media"
                 />
               </Grid>
               <Grid>
-                <label className=" radio">painting</label>
+                <label className=" radio">channel</label>
                 <input
                   value={media}
                   ref={mediaInput}
-                  onChange={() => setMedia("painting")}
+                  onChange={() => setMediaType("channel")}
                   type="radio"
-                  name="product"
-                  required
-                />
-              </Grid>
-              <Grid>
-                <label className=" radio">sculpture</label>
-                <input
-                  value={media}
-                  ref={mediaInput}
-                  onChange={() => setMedia("sculpture")}
-                  type="radio"
-                  name="product"
-                  required
-                />
-              </Grid>
-              <Grid>
-                <label className=" radio">book</label>
-                <input
-                  value={media}
-                  ref={mediaInput}
-                  onChange={() => setMedia("book")}
-                  type="radio"
-                  name="product"
-                  required
-                />
-              </Grid>
-              <Grid>
-                <label className=" radio">comic</label>
-                <input
-                  value={media}
-                  ref={mediaInput}
-                  onChange={() => setMedia("comic")}
-                  type="radio"
-                  name="product"
+                  name="media"
                   required
                 />
               </Grid>
@@ -208,30 +171,6 @@ const AdminMediaC: FC = () => {
               onChange={(e: any) => setImages(e.target.files[0])}
               name="images"
               className="form-control file-input"
-              required
-            />
-          </Grid>
-          <Grid className="admin-form-field">
-            <label className="admin-label">Quantity:</label>
-            <input
-              value={qty}
-              ref={qtyInput}
-              onChange={(e) => setQty(e.target.value)}
-              type="number"
-              name="quantity"
-              className="form-control"
-              required
-            />
-          </Grid>
-          <Grid className="admin-form-field">
-            <label className="admin-label">Price:</label>
-            <input
-              value={price}
-              ref={priceInput}
-              onChange={(e) => setPrice(e.target.value)}
-              type="number"
-              name="price"
-              className="form-control"
               required
             />
           </Grid>

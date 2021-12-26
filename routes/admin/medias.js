@@ -29,6 +29,24 @@ router.get("/admin/medias/:media", async (req, res) => {
   }
 });
 
+//Get a specific media
+router.get("/admin/medias/:media/:id", async (req, res) => {
+  try {
+    const media = await db.query(`SELECT * FROM medias WHERE id=$1`, [
+      req.params.id,
+    ]);
+    res.status(200).json({
+      status: "success",
+      results: media.rows.length,
+      data: {
+        media: media.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //Create a media
 router.post("/admin/media/create", upload.single("images"), async (req, res) => {
   try {
@@ -45,38 +63,6 @@ router.post("/admin/media/create", upload.single("images"), async (req, res) => 
         req.body.info,
       ]
     );
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Delete a media
-router.delete("/admin/medias/delete/:id", async (req, res) => {
-  try {
-    await db.query("DELETE FROM medias WHERE id = $1", [
-      req.params.id,
-    ]);
-    res.status(204).json({
-      status: "success",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-//Get a specific media to update
-router.get("/admin/medias/:id", async (req, res) => {
-  try {
-    const media = await db.query(`SELECT * FROM medias WHERE id=$1`, [
-      req.params.id,
-    ]);
-    res.status(200).json({
-      status: "success",
-      results: media.rows.length,
-      data: {
-        media: media.rows[0],
-      },
-    });
   } catch (err) {
     console.log(err);
   }
@@ -110,6 +96,20 @@ router.put("/admin/medias/update/:id", async (req, res) => {
       data: {
         media: media.rows[0],
       },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//Delete a media
+router.delete("/admin/medias/delete/:id", async (req, res) => {
+  try {
+    await db.query("DELETE FROM medias WHERE id = $1", [
+      req.params.id,
+    ]);
+    res.status(204).json({
+      status: "success",
     });
   } catch (err) {
     console.log(err);

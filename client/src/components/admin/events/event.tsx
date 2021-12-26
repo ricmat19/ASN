@@ -8,10 +8,11 @@ import { IEvent } from "../../../interfaces";
 import { Grid } from "@mui/material";
 
 const AdminEventC: FC = () => {
-  const { product, id } = useParams();
+  const { id } = useParams();
 
   const [title, setTitle] = useState<string>("");
   const [, setImages] = useState(null);
+  const [date, setDate] = useState<string>("");
   const [spots, setSpots] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
@@ -26,13 +27,14 @@ const AdminEventC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const productResponse = await IndexAPI.get(
-          `/admin/products/${product}/${id}`
+        const eventResponse = await IndexAPI.get(
+          `/admin/events/${id}`
         );
+        console.log(eventResponse)
 
-        if (productResponse.data.data.item.imagekey !== null) {
+        if (eventResponse.data.data.events.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
-            `/images/${productResponse.data.data.item.imagekey}`,
+            `/images/${eventResponse.data.data.events.imagekey}`,
             {
               responseType: "arraybuffer",
             }
@@ -42,11 +44,12 @@ const AdminEventC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setSelectedProduct(productResponse.data.data.item)
-        setTitle(productResponse.data.data.item.title);
-        setPrice(productResponse.data.data.item.price);
-        setSpots(productResponse.data.data.item.qty);
-        setInfo(productResponse.data.data.item.info);
+        setSelectedProduct(eventResponse.data.data.events)
+        setTitle(eventResponse.data.data.event.title);
+        setDate(eventResponse.data.data.event.date);
+        setSpots(eventResponse.data.data.event.spots);
+        setPrice(eventResponse.data.data.event.price);
+        setInfo(eventResponse.data.data.event.info);
 
       } catch (err) {
         console.log(err);
@@ -105,21 +108,16 @@ const AdminEventC: FC = () => {
             <div className="big-image-div">
               <img className="big-image" src={imageBuffer} alt="main" />
             </div>
-            <div className="image-thumbnails">
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-            </div>
           </div>
         </div>
         <form
           className="admin-form"
-          action="/admin/products/create"
+          action="/admin/event/create"
           method="POST"
           encType="multipart/form-data"
         >
           <Grid className="admin-form-title">
-            <h2 className="align-center">Create</h2>
+            <h1 className="align-center">Create</h1>
           </Grid>
           <Grid className="admin-form-field">
             <label className="admin-label">Title:</label>
@@ -140,6 +138,17 @@ const AdminEventC: FC = () => {
               onChange={(e: any) => setImages(e.target.files[0])}
               name="images"
               className="form-control file-input"
+              required
+            />
+          </Grid>
+          <Grid className="admin-form-field">
+            <label className="admin-label">Date:</label>
+            <input
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              type="date"
+              name="date"
+              className="form-control"
               required
             />
           </Grid>

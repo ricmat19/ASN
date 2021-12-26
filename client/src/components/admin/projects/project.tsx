@@ -8,12 +8,10 @@ import { IProject } from "../../../interfaces";
 import { Grid } from "@mui/material";
 
 const AdminProjectC: FC = () => {
-  const { product, id } = useParams();
+  const { id } = useParams();
 
   const [title, setTitle] = useState<string>("");
   const [, setImages] = useState(null);
-  const [qty, setQty] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
 
   const [, setSelectedProduct] = useState<IProject[]>([]);
@@ -25,13 +23,14 @@ const AdminProjectC: FC = () => {
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const productResponse = await IndexAPI.get(
-          `/products/${product}/${id}`
+
+        const projectResponse = await IndexAPI.get(
+          `/admin/projects/${id}`
         );
 
-        if (productResponse.data.data.item.imagekey !== null) {
+        if (projectResponse.data.data.project.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
-            `/images/${productResponse.data.data.item.imagekey}`,
+            `/images/${projectResponse.data.data.project.imagekey}`,
             {
               responseType: "arraybuffer",
             }
@@ -41,11 +40,9 @@ const AdminProjectC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setSelectedProduct(productResponse.data.data.item)
-        setTitle(productResponse.data.data.item.title);
-        setPrice(productResponse.data.data.item.price);
-        setQty(productResponse.data.data.item.qty);
-        setInfo(productResponse.data.data.item.info);
+        setSelectedProduct(projectResponse.data.data.project)
+        setTitle(projectResponse.data.data.project.title);
+        setInfo(projectResponse.data.data.project.info);
 
       } catch (err) {
         console.log(err);
@@ -61,11 +58,9 @@ const AdminProjectC: FC = () => {
 
       formData.append("title", title);
       // formData.append("images", images);
-      formData.append("quantity", qty);
-      formData.append("price", price);
       formData.append("info", info);
 
-      await IndexAPI.post("/admin/products/create", formData, {
+      await IndexAPI.post("/admin/project/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => console.log(res))
@@ -104,16 +99,11 @@ const AdminProjectC: FC = () => {
           <Grid className="big-image-div">
             <img className="big-image" src={imageBuffer} alt="main" />
           </Grid>
-          <Grid className="image-thumbnails">
-            <img className="image-thumbnail" src="" alt="thumbnail" />
-            <img className="image-thumbnail" src="" alt="thumbnail" />
-            <img className="image-thumbnail" src="" alt="thumbnail" />
-          </Grid>
         </Grid>
       </Grid>
       <form
         className="admin-form"
-        action="/admin/products/create"
+        action="/admin/project/create"
         method="POST"
         encType="multipart/form-data"
       >
