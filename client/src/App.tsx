@@ -62,9 +62,9 @@ const App: FC = () => {
           <Route path="/courses/:subject" element={<CoursesR />} />
           <Route path="/courses/:subject/:id" element={<CourseR />} />
           <Route path="/medias/:media" element={<MediasR />} />
-          <Route path="/medias/:media/:post" element={<MediaR />} />
+          <Route path="/medias/:media/:id" element={<MediaR />} />
           <Route path="/projects" element={<ProjectsR />} />
-          <Route path="/projects/:project" element={<ProjectR />} />
+          <Route path="/projects/:id" element={<ProjectR />} />
           <Route path="/events" element={<EventsR />} />
           <Route path="/events/:event" element={<EventR />} />
           <Route path="/threads" element={<ThreadsR />} />

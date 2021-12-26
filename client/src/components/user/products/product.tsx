@@ -19,7 +19,7 @@ const ProductC: FC = () => {
   const [cartState, setCartState] = useState<boolean>(false);
   const [cartQty, setCartQty] = useState<number>(0);
   const [cartCost, setCartCost] = useState<number>(0);
-  const [imageBuffer, setImageBuffer] = useState("../../images/loading.svg");
+  const [imageBuffer, setImageBuffer] = useState("");
 
   useEffect((): void => {
     const fetchData = async () => {
@@ -28,9 +28,9 @@ const ProductC: FC = () => {
           `/products/${product}/${id}`
         );
 
-        if (productResponse.data.data.item.imagekey !== null) {
+        if (productResponse.data.data.product.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
-            `/images/${productResponse.data.data.item.imagekey}`,
+            `/images/${productResponse.data.data.product.imagekey}`,
             {
               responseType: "arraybuffer",
             }
@@ -40,11 +40,11 @@ const ProductC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setSelectedProduct(productResponse.data.data.item)
-        setTitle(productResponse.data.data.item.title);
-        setPrice(productResponse.data.data.item.price);
-        setQty(productResponse.data.data.item.qty);
-        setInfo(productResponse.data.data.item.info);
+        setSelectedProduct(productResponse.data.data.product)
+        setTitle(productResponse.data.data.product.title);
+        setPrice(productResponse.data.data.product.price);
+        setQty(productResponse.data.data.product.qty);
+        setInfo(productResponse.data.data.product.info);
 
         const cartResponse = await IndexAPI.get(`/cart`);
         setCart(cartResponse.data.data.cart);
@@ -82,6 +82,17 @@ const ProductC: FC = () => {
     }
   };
 
+  const addToCollection = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      await IndexAPI.post("/collection", {
+        id: id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // const imageURL = async (imagekey: string) =>{
 
   //     const imagesResponse = await IndexAPI.get(`/images/${imagekey}`, {
@@ -103,11 +114,6 @@ const ProductC: FC = () => {
           <div className="image-div">
             <div className="big-image-div">
               <img className="big-image" src={imageBuffer} alt="main" />
-            </div>
-            <div className="image-thumbnails">
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-              <img className="image-thumbnail" src="" alt="thumbnail" />
-              <img className="image-thumbnail" src="" alt="thumbnail" />
             </div>
           </div>
         </div>
@@ -131,6 +137,7 @@ const ProductC: FC = () => {
             <hr className="no-margin" />
             <div className="cart-options">
               <button onClick={addToCart}>Add To Cart</button>
+              <button onClick={addToCollection}><i className="far fa-heart"></i></button>
             </div>
           </div>
         </form>

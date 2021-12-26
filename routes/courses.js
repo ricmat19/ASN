@@ -14,7 +14,7 @@ router.get("/courses/:subject", async (req, res) => {
       status: "success",
       results: subject.rows.length,
       data: {
-        subject: subject.rows,
+        courses: subject.rows,
       },
     });
   } catch (err) {

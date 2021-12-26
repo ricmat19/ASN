@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IndexAPI from "../../../apis/indexAPI";
-import { IProduct } from "../../../interfaces";
+import { ICourse } from "../../../interfaces";
 import AccountNavC from "../standard/accountNav";
 import FooterC from "../standard/footer";
 import CoursesMenuC from "./coursesMenu";
@@ -10,52 +10,22 @@ import MenuNavC from "../standard/menuNav";
 
 const CoursesC: FC = () => {
 
-  const { product } = useParams();
+  const { subject } = useParams();
 
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+  const [courses, setCourses] = useState<ICourse[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const itemsPerPage: number = 9;
-  const pagesVisted: number = pageNumber * itemsPerPage;
-
-  const displayItems = collection
-    .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
-      return (
-        <div
-          className="collection-item-div"
-          key={item.id}
-          onClick={() => displayItem(item.product, item.id)}
-        >
-          <div className="collection-item">
-            <img className="collection-thumbnail" src={item.imageBuffer} />
-          </div>
-          <div className="collection-thumbnail-footer">
-            <div>{item.title}</div>
-            <div className="price">${item.price}.00</div>
-          </div>
-        </div>
-      );
-    });
-
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
-
-  const changePage = ({selected}: {selected:number}): void => {
-    setPageNumber(selected);
-  };
-
-  let navigation = useNavigate();
-
-  let productResponse;
+  let courseResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/products/${product}`);
+        courseResponse = await IndexAPI.get(`/courses/${subject}`);
+        console.log(courseResponse)
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < courseResponse.data.data.courses.length; i++) {
+          if (courseResponse.data.data.courses[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${courseResponse.data.data.courses[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -63,12 +33,12 @@ const CoursesC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            courseResponse.data.data.courses[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setCourses(courseResponse.data.data.courses);
 
       } catch (err) {
         console.log(err);
@@ -77,9 +47,39 @@ const CoursesC: FC = () => {
     fetchData();
   }, []);
 
-  const displayItem = async (product: string, id: string) => {
+  const itemsPerPage: number = 9;
+  const pagesVisted: number = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(courses.length / itemsPerPage);
+
+  const changePage = ({selected}: {selected:number}): void => {
+    setPageNumber(selected);
+  };
+
+  const displayCourses = courses
+    .slice(pagesVisted, pagesVisted + itemsPerPage)
+    .map((course) => {
+      return (
+        <div
+          className="collection-item-div"
+          key={course.id}
+          onClick={() => displayCourse(course.subject, course.id)}
+        >
+          <div className="collection-item">
+            <img className="collection-thumbnail" src={course.imageBuffer} />
+          </div>
+          <div className="collection-thumbnail-footer">
+            <div>{course.title}</div>
+            <div className="price">${course.price}.00</div>
+          </div>
+        </div>
+      );
+    });
+
+  let navigation = useNavigate();
+
+  const displayCourse = async (subject: string, id: string) => {
     try {
-      navigation(`/store/${product}/${id}`);
+      navigation(`/courses/${subject}/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +91,7 @@ const CoursesC: FC = () => {
       <MenuNavC />
       <div className="main-body">
         <CoursesMenuC />
-        <div className="thumbnail-display">{displayItems}</div>
+        <div className="thumbnail-display">{displayCourses}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

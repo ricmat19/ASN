@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IndexAPI from "../../../apis/indexAPI";
 import FooterC from "../standard/footer";
-import { IProduct } from "../../../interfaces";
+import { IMedia } from "../../../interfaces";
 import MediaMenuC from "./mediasMenu";
 import AccountNavC from "../standard/accountNav";
 import MenuNavC from "../standard/menuNav";
@@ -12,50 +12,19 @@ const MediasC: FC = () => {
 
   const { media } = useParams();
 
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+  const [medias, setMedias ] = useState<IMedia[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const itemsPerPage: number = 9;
-  const pagesVisted: number = pageNumber * itemsPerPage;
-
-  const displayItems = collection
-    .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
-      return (
-        <div
-          className="collection-item-div"
-          key={item.id}
-          onClick={() => displayItem(item.product, item.id)}
-        >
-          <div className="collection-item">
-            <img className="collection-thumbnail" src={item.imageBuffer} />
-          </div>
-          <div className="collection-thumbnail-footer">
-            <div>{item.title}</div>
-            <div className="price">${item.price}.00</div>
-          </div>
-        </div>
-      );
-    });
-
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
-
-  const changePage = ({selected}: {selected:number}): void => {
-    setPageNumber(selected);
-  };
-
-  let navigation = useNavigate();
-
-  let productResponse;
+  let mediaResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/medias/${media}`);
+        mediaResponse = await IndexAPI.get(`/medias/${media}`);
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < mediaResponse.data.data.medias.length; i++) {
+          if (mediaResponse.data.data.medias[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${mediaResponse.data.data.medias[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -63,12 +32,12 @@ const MediasC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            mediaResponse.data.data.medias[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setMedias(mediaResponse.data.data.medias);
 
       } catch (err) {
         console.log(err);
@@ -76,6 +45,35 @@ const MediasC: FC = () => {
     };
     fetchData();
   }, []);
+
+  const itemsPerPage: number = 9;
+  const pagesVisted: number = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(medias.length / itemsPerPage);
+
+  const changePage = ({selected}: {selected:number}): void => {
+    setPageNumber(selected);
+  };
+
+  const displayMedias = medias
+    .slice(pagesVisted, pagesVisted + itemsPerPage)
+    .map((media) => {
+      return (
+        <div
+          className="collection-item-div"
+          key={media.id}
+          onClick={() => displayItem(media.media, media.id)}
+        >
+          <div className="collection-item">
+            <img className="collection-thumbnail" src={media.imageBuffer} />
+          </div>
+          <div>
+            <div>{media.title}</div>
+          </div>
+        </div>
+      );
+    });
+
+  let navigation = useNavigate();
 
   const displayItem = async (media: string, id: string) => {
     try {
@@ -91,7 +89,7 @@ const MediasC: FC = () => {
       <MenuNavC />
       <div className="main-body">
         <MediaMenuC />
-        <div className="thumbnail-display">{displayItems}</div>
+        <div className="thumbnail-display">{displayMedias}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}

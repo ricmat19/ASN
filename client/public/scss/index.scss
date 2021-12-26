@@ -21,6 +21,10 @@ body {
     color: white;
   }
 
+  .file-input{
+    padding-left: 0;
+  }
+
   input{
     padding: 5px;
   }
@@ -574,13 +578,8 @@ body {
   }
   
   .admin-form {
-    padding: 0 40px 40px 40px;
-    background-color: #000000
-  }
-  
-  .admin-form-title {
-    display: grid;
-    padding-top: 15px;
+    align-self: center;
+    align-content: center;
   }
   
   .admin-form-field {
@@ -641,6 +640,34 @@ body {
     display: grid;
     grid-template-columns: auto auto auto;
     text-align: left;
+  }
+
+  .course-content, .video-container{
+    background-color: rgb(36, 36, 36);
+    height: fit-content;
+  }
+
+  .lesson-container{
+    border-bottom: 1px white solid;
+  }
+
+  .course-content-name{
+    margin-left: 25px;
+  }
+
+  .lesson-name{
+    margin-left: 25px;
+  }
+
+  .video{
+    width: 100%;
+    padding: 25px;
+  }
+
+  .play-icon-container{
+    align-self: center;
+    padding-right: 10px;
+    color: rgb(255, 68, 208);
   }
   
   .delete {

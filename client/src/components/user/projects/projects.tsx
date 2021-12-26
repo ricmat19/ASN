@@ -1,60 +1,28 @@
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IndexAPI from "../../../apis/indexAPI";
-import { IProduct } from "../../../interfaces";
+import { IProject } from "../../../interfaces";
 import AccountNavC from "../standard/accountNav";
 import MenuNavC from "../standard/menuNav";
 import FooterC from "../standard/footer";
 
 const ProjectsC: FC = () => {
 
-  const { project } = useParams();
-
-  const [collection, setCollection ] = useState<IProduct[]>([]);
+  const [projects, setProjects] = useState<IProject[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const itemsPerPage: number = 9;
-  const pagesVisted: number = pageNumber * itemsPerPage;
-
-  const displayItems = collection
-    .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((item) => {
-      return (
-        <div
-          className="collection-item-div"
-          key={item.id}
-          onClick={() => displayItem(item.project)}
-        >
-          <div className="collection-item">
-            <img className="collection-thumbnail" src={item.imageBuffer} />
-          </div>
-          <div className="collection-thumbnail-footer">
-            <div>{item.title}</div>
-            <div className="price">${item.price}.00</div>
-          </div>
-        </div>
-      );
-    });
-
-  const pageCount = Math.ceil(collection.length / itemsPerPage);
-
-  const changePage = ({selected}: {selected:number}): void => {
-    setPageNumber(selected);
-  };
-
-  let navigation = useNavigate();
-
-  let productResponse;
+  let projectResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        productResponse = await IndexAPI.get(`/projects/${project}`);
+        projectResponse = await IndexAPI.get(`/projects`);
+        console.log(projectResponse)
 
-        for (let i = 0; i < productResponse.data.data.product.length; i++) {
-          if (productResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < projectResponse.data.data.projects.length; i++) {
+          if (projectResponse.data.data.projects[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${productResponse.data.data.product[i].imagekey}`,
+              `/images/${projectResponse.data.data.projects[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -62,12 +30,12 @@ const ProjectsC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            productResponse.data.data.product[
+            projectResponse.data.data.projects[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setCollection(productResponse.data.data.product);
+        setProjects(projectResponse.data.data.projects);
 
       } catch (err) {
         console.log(err);
@@ -76,9 +44,38 @@ const ProjectsC: FC = () => {
     fetchData();
   }, []);
 
-  const displayItem = async (project: string) => {
+  const itemsPerPage: number = 9;
+  const pagesVisted: number = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(projects.length / itemsPerPage);
+
+  const changePage = ({selected}: {selected:number}): void => {
+    setPageNumber(selected);
+  };
+
+  const displayItems = projects
+    .slice(pagesVisted, pagesVisted + itemsPerPage)
+    .map((project) => {
+      return (
+        <div
+          className="collection-item-div"
+          key={project.id}
+          onClick={() => displayItem(project.id)}
+        >
+          <div className="collection-item">
+            <img className="collection-thumbnail" src={project.imageBuffer} />
+          </div>
+          <div>
+            <div>{project.title}</div>
+          </div>
+        </div>
+      );
+    });
+
+  let navigation = useNavigate();
+
+  const displayItem = async (id: string) => {
     try {
-      navigation(`/projects/${project}`);
+      navigation(`/projects/${id}`);
     } catch (err) {
       console.log(err);
     }
