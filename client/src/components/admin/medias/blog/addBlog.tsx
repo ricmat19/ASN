@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import IndexAPI from "../../../apis/indexAPI";
+import IndexAPI from "../../../../apis/indexAPI";
 import { Backdrop, Box, Fade, Modal, Grid } from "@mui/material";
 
 interface IModalState {
@@ -7,15 +7,13 @@ interface IModalState {
   handleClose: () => void
 }
 
-const AdminCreateMediaC = (props: IModalState) => {
+const AdminAddBlogC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
-  const [media, setMedia] = useState<string>("");
   const [images, setImages] = useState<File>();
   const [info, setInfo] = useState<string>("");
 
   const titleInput = useRef(null);
-  const typeInput = useRef(null);
   const infoInput = useRef(null);
 
   //insures that the .env file is only run in a development environment and not a production environment
@@ -31,7 +29,6 @@ const AdminCreateMediaC = (props: IModalState) => {
         let formData = new FormData();
 
         formData.append("title", title);
-        formData.append("media", media);
         formData.append("images", images);
         formData.append("info", info);
 
@@ -81,6 +78,8 @@ const AdminCreateMediaC = (props: IModalState) => {
             bgcolor: 'background.paper',
             border: '2px solid #000',
             boxShadow: 24,
+            width: '90vw',
+            // height: '80vh',
             p: 4
             }}
           > 
@@ -88,15 +87,18 @@ const AdminCreateMediaC = (props: IModalState) => {
               flexDirection: "row",
               flexWrap: "nowrap",
               alignItems: "center",
-              color: "#000"}}>
-              <Grid sx={{padding: "0 15px 0 0"}}>
-                <div className="image">
-                  <div className="big-image-div">
+              color: "#000",
+              backgroundColor: "#000",
+              justifyContent: "flex-end",
+              padding: "30px"}}>
+              <Grid sx={{padding: "0 30px 0 0", width: "50%"}}>
+                <Grid className="image">
+                  <Grid className="big-image-div">
                     <img className="big-image" src={displayedImage} />
-                  </div>
-                </div>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
+              <Grid sx={{width: "50%", padding: "0 0 0 30px", borderLeft: "1px #fff solid", height: "100%"}}>
                 <form
                   className="admin-form"
                   action="/admin/media/create"
@@ -119,45 +121,7 @@ const AdminCreateMediaC = (props: IModalState) => {
                     />
                   </Grid>
                   <Grid className="admin-form-field">
-                    <Grid>
-                      <label className="admin-label">Type:</label>
-                    </Grid>
-                    <Grid className="radio-div">
-                      <Grid>
-                        <label className=" radio">blog</label>
-                        <input
-                          value={media}
-                          ref={typeInput}
-                          onChange={() => setMedia("blog")}
-                          type="radio"
-                          name="media"
-                        />
-                      </Grid>
-                      <Grid>
-                        <label className=" radio">podcast</label>
-                        <input
-                          value={media}
-                          ref={typeInput}
-                          onChange={() => setMedia("podcast")}
-                          type="radio"
-                          name="media"
-                        />
-                      </Grid>
-                      <Grid>
-                        <label className=" radio">channel</label>
-                        <input
-                          value={media}
-                          ref={typeInput}
-                          onChange={() => setMedia("channel")}
-                          type="radio"
-                          name="media"
-                          required
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid className="admin-form-field">
-                    <label className="admin-label">Images:</label>
+                    <label className="admin-label">Image:</label>
                     <input
                       type="file"
                       onChange={(e: any) => setImages(e.target.files[0])}
@@ -173,7 +137,7 @@ const AdminCreateMediaC = (props: IModalState) => {
                       ref={infoInput}
                       onChange={(e) => setInfo(e.target.value)}
                       name="message"
-                      rows={5}
+                      rows={19}
                       required
                     ></textarea>
                   </Grid>
@@ -200,4 +164,4 @@ const AdminCreateMediaC = (props: IModalState) => {
   );
 };
 
-export default AdminCreateMediaC;
+export default AdminAddBlogC;

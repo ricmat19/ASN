@@ -1,13 +1,13 @@
 import React, { useEffect, FC, useState, useRef } from "react";
 import { useParams } from "react-router";
-import IndexAPI from "../../../apis/indexAPI";
-import AdminAccountNavC from "../standard/accountNav";
-import AdminMenuNavC from "../standard/menuNav";
-import FooterC from "../../user/standard/footer";
-import { IMedia } from "../../../interfaces";
+import IndexAPI from "../../../../apis/indexAPI";
+import AdminAccountNavC from "../../standard/accountNav";
+import AdminMenuNavC from "../../standard/menuNav";
+import FooterC from "../../../user/standard/footer";
+import { IMedia } from "../../../../interfaces";
 import { Grid } from "@mui/material";
 
-const AdminMediaC: FC = () => {
+const AdminBlogC: FC = () => {
   const { media, id } = useParams();
 
   const [, setSelectedProduct] = useState<IMedia[]>([]);
@@ -205,4 +205,4 @@ const AdminMediaC: FC = () => {
   );
 };
 
-export default AdminMediaC;
+export default AdminBlogC;

@@ -7,7 +7,7 @@ import FooterC from "../../../user/standard/footer";
 import { IMedia } from "../../../../interfaces";
 import { Grid } from "@mui/material";
 
-const AdminMediaC: FC = () => {
+const AdminPodcastC: FC = () => {
   const { media, id } = useParams();
 
   const [, setSelectedProduct] = useState<IMedia[]>([]);
@@ -205,4 +205,4 @@ const AdminMediaC: FC = () => {
   );
 };
 
-export default AdminMediaC;
+export default AdminPodcastC;

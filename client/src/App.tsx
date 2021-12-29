@@ -6,8 +6,10 @@ import ProductsR from "./routes/user/products/products";
 import ProductR from "./routes/user/products/product";
 import CoursesR from "./routes/user/courses/courses";
 import CourseR from "./routes/user/courses/course";
-import MediasR from "./routes/user/media/medias";
-import MediaR from "./routes/user/media/media";
+import MediasR from "./routes/user/medias/medias";
+import BlogR from "./routes/user/medias/blog";
+import VideoR from "./routes/user/medias/video";
+import PodcastR from "./routes/user/medias/podcast";
 import ProjectsR from "./routes/user/projects/projects";
 import ProjectR from "./routes/user/projects/project";
 import EventsR from "./routes/user/events/events";
@@ -32,8 +34,10 @@ import AdminProductsR from "./routes/admin/products/products";
 import AdminProductR from "./routes/admin/products/product";
 import AdminCoursesR from "./routes/admin/courses/courses";
 import AdminCourseR from "./routes/admin/courses/course";
-import AdminMediasR from "./routes/admin/media/medias";
-import AdminMediaR from "./routes/admin/media/media";
+import AdminMediasR from "./routes/admin/medias/medias";
+import AdminBlogR from "./routes/admin/medias/blog/blog";
+import AdminVideoR from "./routes/admin/medias/channel/video";
+import AdminPodcastR from "./routes/admin/medias/podcast/podcast";
 import AdminProjectsR from "./routes/admin/projects/projects";
 import AdminProjectR from "./routes/admin/projects/project";
 import AdminEventsR from "./routes/admin/events/events";
@@ -62,7 +66,9 @@ const App: FC = () => {
           <Route path="/courses/:subject" element={<CoursesR />} />
           <Route path="/courses/:subject/:id" element={<CourseR />} />
           <Route path="/medias/:media" element={<MediasR />} />
-          <Route path="/medias/:media/:id" element={<MediaR />} />
+          <Route path="/medias/blog/:id" element={<BlogR />} />
+          <Route path="/medias/video/:id" element={<VideoR />} />
+          <Route path="/medias/podcast/:id" element={<PodcastR />} />
           <Route path="/projects" element={<ProjectsR />} />
           <Route path="/projects/:id" element={<ProjectR />} />
           <Route path="/events" element={<EventsR />} />
@@ -88,7 +94,9 @@ const App: FC = () => {
           <Route path="/admin/courses/:subject" element={<AdminCoursesR />} />
           <Route path="/admin/courses/:subject/:id" element={<AdminCourseR />} />
           <Route path="/admin/medias/:media" element={<AdminMediasR />} />
-          <Route path="/admin/medias/:media/:id" element={<AdminMediaR />} />
+          <Route path="/admin/medias/blog/:id" element={<AdminBlogR />} />
+          <Route path="/admin/medias/video/:id" element={<AdminVideoR />} />
+          <Route path="/admin/medias/podcast/:id" element={<AdminPodcastR />} />
           <Route path="/admin/projects" element={<AdminProjectsR />} />
           <Route path="/admin/projects/:id" element={<AdminProjectR />} />
           <Route path="/admin/events" element={<AdminEventsR />} />

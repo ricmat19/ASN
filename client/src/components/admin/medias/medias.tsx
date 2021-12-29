@@ -7,9 +7,7 @@ import { IMedia } from "../../../interfaces";
 import MediaMenuC from "./mediasMenu";
 import AdminAccountNavC from "../standard/accountNav";
 import AdminMenuNavC from "../standard/menuNav";
-import AddBlog from "./blog/addPost";
-import AddVideo from "./channel/addVideo";
-import AddPodcast from "./podcast/addPodcast";
+import AddBlog from "./blog/addBlog";
 import { Button, Grid } from "@mui/material";
 
 const AdminMediasC: FC = () => {
@@ -29,10 +27,10 @@ const AdminMediasC: FC = () => {
       try {
         mediasResponse = await IndexAPI.get(`/admin/medias/${media}`);
 
-        for (let i = 0; i < mediasResponse.data.data.medias.length; i++) {
-          if (mediasResponse.data.data.medias[i].imagekey !== null) {
+        for (let i = 0; i < mediasResponse.data.data.blogs.length; i++) {
+          if (mediasResponse.data.data.blogs[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${mediasResponse.data.data.medias[i].imagekey}`,
+              `/images/${mediasResponse.data.data.blogs[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -40,19 +38,15 @@ const AdminMediasC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            mediasResponse.data.data.medias[
+            mediasResponse.data.data.blogs[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setMedias(mediasResponse.data.data.medias);
+        setMedias(mediasResponse.data.data.blogs);
 
         if(media === "blog"){
-          setType("post")
-        }else if(media === "podcast"){
-          setType("podcast")
-        }else if(media === "channel"){
-          setType("episode")
+          setType("add post")
         }
 
       } catch (err) {
@@ -101,15 +95,12 @@ const AdminMediasC: FC = () => {
 
   return (
     <div>
-      {media === 'blog' ? <AddBlog open={open} handleClose={handleClose}/>
-      :media === 'channel' ? <AddVideo open={open} handleClose={handleClose}/>
-      :media === 'podcast' ? <AddPodcast open={open} handleClose={handleClose}/>
-      : ""}
+      {media === 'blog' ? <AddBlog open={open} handleClose={handleClose}/> : ""}
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
         <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
-          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add {type}</a></Button>
+          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>{type}</a></Button>
         </Grid>
         <MediaMenuC />
         <div className="thumbnail-display">{displayMedias}</div>

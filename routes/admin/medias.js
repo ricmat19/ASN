@@ -9,19 +9,16 @@ const unlinkFile = util.promisify(fs.unlink);
 
 const upload = multer({ dest: "images/" });
 
-//Get all medias
-router.get("/admin/medias/:media", async (req, res) => {
+//Get all blogs
+router.get("/admin/medias/blog", async (req, res) => {
   try {
-    const medias = await db.query(
-      "SELECT * FROM medias WHERE media=$1",
-      [req.params.media]
-    );
+    const blogs = await db.query("SELECT * FROM blogs");
 
     res.status(200).json({
       status: "success",
-      results: medias.rows.length,
+      results: blogs.rows.length,
       data: {
-        medias: medias.rows,
+        blogs: blogs.rows,
       },
     });
   } catch (err) {
@@ -29,17 +26,17 @@ router.get("/admin/medias/:media", async (req, res) => {
   }
 });
 
-//Get a specific media
-router.get("/admin/medias/:media/:id", async (req, res) => {
+//Get a specific blog
+router.get("/admin/medias/blog/:id", async (req, res) => {
   try {
-    const media = await db.query(`SELECT * FROM medias WHERE id=$1`, [
+    const post = await db.query(`SELECT * FROM blogs WHERE id=$1`, [
       req.params.id,
     ]);
     res.status(200).json({
       status: "success",
-      results: media.rows.length,
+      results: post.rows.length,
       data: {
-        media: media.rows[0],
+        post: post.rows[0],
       },
     });
   } catch (err) {
@@ -47,18 +44,17 @@ router.get("/admin/medias/:media/:id", async (req, res) => {
   }
 });
 
-//Create a media
-router.post("/admin/media/create", upload.single("images"), async (req, res) => {
+//Create a blog post
+router.post("/admin/media/blog/create", upload.single("images"), async (req, res) => {
   try {
     const file = req.file;
     const result = await uploadFile(file);
     res.send({ imagePath: `/images/${result.key}` });
     await unlinkFile(file.path);
     await db.query(
-      "INSERT INTO medias (title, media, imagekey, info) values ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO blogs (title, imagekey, info) values ($1, $2, $3) RETURNING *",
       [
         req.body.title,
-        req.body.media,
         result.key,
         req.body.info,
       ]
@@ -68,42 +64,42 @@ router.post("/admin/media/create", upload.single("images"), async (req, res) => 
   }
 });
 
-//Update a media
-router.put("/admin/medias/update/:id", async (req, res) => {
-  try {
-    if (req.body.primaryImage === "on") {
-      await db.query(
-        "UPDATE medias SET primaryimage=false WHERE media=$1",
-        [req.body.type]
-      );
-    }
+//Update a blog
+// router.put("/admin/medias/blog/update/:id", async (req, res) => {
+//   try {
+//     if (req.body.primaryImage === "on") {
+//       await db.query(
+//         "UPDATE medias SET primaryimage=false WHERE media=$1",
+//         [req.body.type]
+//       );
+//     }
 
-    const media = await db.query(
-      "UPDATE medias SET title=$1, product=$2, qty=$3, price=$4, info=$5, primaryimage=$6 WHERE id=$7",
-      [
-        req.body.title,
-        req.body.type,
-        req.body.quantity,
-        req.body.price,
-        req.body.info,
-        req.body.primaryImage,
-        req.params.id,
-      ]
-    );
-    res.status(201).json({
-      status: "success",
-      results: media.rows.length,
-      data: {
-        media: media.rows[0],
-      },
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
+//     const media = await db.query(
+//       "UPDATE medias SET title=$1, product=$2, qty=$3, price=$4, info=$5, primaryimage=$6 WHERE id=$7",
+//       [
+//         req.body.title,
+//         req.body.type,
+//         req.body.quantity,
+//         req.body.price,
+//         req.body.info,
+//         req.body.primaryImage,
+//         req.params.id,
+//       ]
+//     );
+//     res.status(201).json({
+//       status: "success",
+//       results: media.rows.length,
+//       data: {
+//         media: media.rows[0],
+//       },
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 //Delete a media
-router.delete("/admin/medias/delete/:id", async (req, res) => {
+router.delete("/admin/medias/blog/delete/:id", async (req, res) => {
   try {
     await db.query("DELETE FROM medias WHERE id = $1", [
       req.params.id,

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import AdminMediasC from "../../../components/admin/media/medias";
+import AdminMediasC from "../../../components/admin/medias/medias";
 
 const AdminMediasR: FC = () => {
   return (

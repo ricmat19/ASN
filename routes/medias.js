@@ -1,20 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+const axios = require("axios");
 
-//Get all medias of a type
-router.get("/medias/:media", async (req, res) => {
+//Get all blogs
+router.get("/medias/blog", async (req, res) => {
   try {
-    const medias = await db.query(
-      "SELECT * FROM medias WHERE media=$1",
-      [req.params.media]
-    );
+    const blogs = await db.query(
+      "SELECT * FROM blogs");
 
     res.status(200).json({
       status: "success",
-      results: medias.rows.length,
+      results: blogs.rows.length,
       data: {
-        medias: medias.rows,
+        medias: blogs.rows,
       },
     });
   } catch (err) {
@@ -23,9 +22,9 @@ router.get("/medias/:media", async (req, res) => {
 });
 
 //Get a specific media post
-router.get("/medias/:media/:id", async (req, res) => {
+router.get("/medias/blog/:id", async (req, res) => {
   try {
-    const post = await db.query(`SELECT * FROM medias WHERE id=$1`, [
+    const post = await db.query(`SELECT * FROM blogs WHERE id=$1`, [
       req.params.id,
     ]);
     res.status(200).json({
@@ -33,6 +32,30 @@ router.get("/medias/:media/:id", async (req, res) => {
       results: post.rows.length,
       data: {
         post: post.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
+
+
+
+
+
+
+
+//Get all youtube videos
+router.get("/medias/channel", async (req, res) => {
+  try {
+    const videos = await axios.get("https://www.googleapis.com/youtube/v3/search?key=" + process.env.YOUTUBE_API_KEY + "&q=UCSJPFQdZwrOutnmSFYtbstA")
+    res.status(200).json({
+      status: "success",
+      results: videos.data,
+      data: {
+        videos: videos.data,
       },
     });
   } catch (err) {
