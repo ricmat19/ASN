@@ -4,13 +4,13 @@ import IndexAPI from "../../../../apis/indexAPI";
 import AdminAccountNavC from "../../standard/accountNav";
 import AdminMenuNavC from "../../standard/menuNav";
 import FooterC from "../../../user/standard/footer";
-import { IMedia } from "../../../../interfaces";
+import { IBlog } from "../../../../interfaces";
 import { Grid } from "@mui/material";
 
-const AdminBlogC: FC = () => {
+const AdminBlogPostC: FC = () => {
   const { media, id } = useParams();
 
-  const [, setSelectedProduct] = useState<IMedia[]>([]);
+  const [, setSelectedProduct] = useState<IBlog[]>([]);
   const [title, setTitle] = useState<string>("");
   const [mediaType, setMediaType] = useState<string>("");
   const [, setImages] = useState(null);
@@ -205,4 +205,4 @@ const AdminBlogC: FC = () => {
   );
 };
 
-export default AdminBlogC;
+export default AdminBlogPostC;

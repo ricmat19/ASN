@@ -2,18 +2,19 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const axios = require("axios");
+const youtubeBaseURL = "https://www.googleapis.com/youtube/v3/";
 
-//Get all blogs
+//Get all blog posts
 router.get("/medias/blog", async (req, res) => {
   try {
-    const blogs = await db.query(
+    const posts = await db.query(
       "SELECT * FROM blogs");
 
     res.status(200).json({
       status: "success",
-      results: blogs.rows.length,
+      results: posts.rows.length,
       data: {
-        medias: blogs.rows,
+        posts: posts.rows,
       },
     });
   } catch (err) {
@@ -39,18 +40,11 @@ router.get("/medias/blog/:id", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-//Get all youtube videos
+//Get all youtube videos in my channel
 router.get("/medias/channel", async (req, res) => {
   try {
-    const videos = await axios.get("https://www.googleapis.com/youtube/v3/search?key=" + process.env.YOUTUBE_API_KEY + "&q=UCSJPFQdZwrOutnmSFYtbstA")
+    const videos = await axios.get(youtubeBaseURL + "search?key=" + process.env.YOUTUBE_API_KEY + "&channelId=" + "UCO7uiK9jqQnfiikVAKIdC5g")
+    console.log(videos.data)
     res.status(200).json({
       status: "success",
       results: videos.data,

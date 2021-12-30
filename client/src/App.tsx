@@ -1,15 +1,35 @@
 import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+//Admin Routes
+import AdminProductsR from "./routes/admin/products/products";
+import AdminProductR from "./routes/admin/products/product";
+import AdminCoursesR from "./routes/admin/courses/courses";
+import AdminCourseR from "./routes/admin/courses/course";
+import AdminMediasR from "./routes/admin/medias/medias";
+import AdminBlogPostR from "./routes/admin/medias/blog/blogPost";
+import AdminProjectsR from "./routes/admin/projects/projects";
+import AdminProjectR from "./routes/admin/projects/project";
+import AdminEventsR from "./routes/admin/events/events";
+import AdminEventR from "./routes/admin/events/event";
+import AdminThreadsR from "./routes/admin/community/threads";
+import AdminThreadR from "./routes/admin/community/thread";
+import AdminAboutR from "./routes/admin/info/about";
+import AdminHelpR from "./routes/admin/info/help";
+import AdminPrivacyPolicyR from "./routes/admin/info/privacyPolicy";
+import AdminTermsOfServiceR from "./routes/admin/info/termsOfService";
+
 //User Routes
 import ProductsR from "./routes/user/products/products";
 import ProductR from "./routes/user/products/product";
 import CoursesR from "./routes/user/courses/courses";
 import CourseR from "./routes/user/courses/course";
-import MediasR from "./routes/user/medias/medias";
-import BlogR from "./routes/user/medias/blog";
-import VideoR from "./routes/user/medias/video";
-import PodcastR from "./routes/user/medias/podcast";
+import BlogPostsR from "./routes/user/medias/blog/blogPosts";
+import BlogPostR from "./routes/user/medias/blog/blogPost";
+import VideosR from "./routes/user/medias/channel/videos";
+import VideoR from "./routes/user/medias/channel/video";
+import PodcastsR from "./routes/user/medias/podcasts/podcasts";
+import PodcastR from "./routes/user/medias/podcasts/podcast";
 import ProjectsR from "./routes/user/projects/projects";
 import ProjectR from "./routes/user/projects/project";
 import EventsR from "./routes/user/events/events";
@@ -29,26 +49,6 @@ import PrivacyPolicyR from "./routes/user/info/privacyPolicy";
 import SubscribeR from "./routes/user/info/subscribe";
 import TermsOfServiceR from "./routes/user/info/termsOfService";
 
-//Admin Routes
-import AdminProductsR from "./routes/admin/products/products";
-import AdminProductR from "./routes/admin/products/product";
-import AdminCoursesR from "./routes/admin/courses/courses";
-import AdminCourseR from "./routes/admin/courses/course";
-import AdminMediasR from "./routes/admin/medias/medias";
-import AdminBlogR from "./routes/admin/medias/blog/blog";
-import AdminVideoR from "./routes/admin/medias/channel/video";
-import AdminPodcastR from "./routes/admin/medias/podcast/podcast";
-import AdminProjectsR from "./routes/admin/projects/projects";
-import AdminProjectR from "./routes/admin/projects/project";
-import AdminEventsR from "./routes/admin/events/events";
-import AdminEventR from "./routes/admin/events/event";
-import AdminThreadsR from "./routes/admin/community/threads";
-import AdminThreadR from "./routes/admin/community/thread";
-import AdminAboutR from "./routes/admin/info/about";
-import AdminHelpR from "./routes/admin/info/help";
-import AdminPrivacyPolicyR from "./routes/admin/info/privacyPolicy";
-import AdminTermsOfServiceR from "./routes/admin/info/termsOfService";
-
 import Contact from "./routes/contact";
 import AdminHome from "./routes/admin/home";
 import AdminCollection from "./routes/admin/collection";
@@ -60,14 +60,34 @@ const App: FC = () => {
     <div>
       <Router>
         <Routes>
-          {/* Users */}
-          <Route path="/products/:product" element={<ProductsR />} />
+          {/* Admin */}
+          <Route path="/admin/products/:product" element={<AdminProductsR />} />
+          <Route path="/admin/products/:product/:id" element={<AdminProductR />} />
+          <Route path="/admin/courses/:subject" element={<AdminCoursesR />} />
+          <Route path="/admin/courses/:subject/:id" element={<AdminCourseR />} />
+          <Route path="/admin/medias/:media" element={<AdminMediasR />} />
+          <Route path="/admin/medias/blog/:id" element={<AdminBlogPostR />} />
+          <Route path="/admin/projects" element={<AdminProjectsR />} />
+          <Route path="/admin/projects/:id" element={<AdminProjectR />} />
+          <Route path="/admin/events" element={<AdminEventsR />} />
+          <Route path="/admin/events/:id" element={<AdminEventR />} />
+          <Route path="/admin/threads" element={<AdminThreadsR />} />
+          <Route path="/admin/threads/:thread" element={<AdminThreadR />} />
+          <Route path="/admin/about" element={<AdminAboutR />} />
+          <Route path="/admin/help" element={<AdminHelpR />} />
+          <Route path="/admin/privacyPolicy" element={<AdminPrivacyPolicyR />} />
+          <Route path="/admin/termsOfService" element={<AdminTermsOfServiceR />} />
+
+           {/* Users */}
+           <Route path="/products/:product" element={<ProductsR />} />
           <Route path="/products/:product/:id" element={<ProductR />} />
           <Route path="/courses/:subject" element={<CoursesR />} />
           <Route path="/courses/:subject/:id" element={<CourseR />} />
-          <Route path="/medias/:media" element={<MediasR />} />
-          <Route path="/medias/blog/:id" element={<BlogR />} />
-          <Route path="/medias/video/:id" element={<VideoR />} />
+          <Route path="/medias/blog" element={<BlogPostsR />} />
+          <Route path="/medias/blog/:id" element={<BlogPostR />} />
+          <Route path="/medias/channel" element={<VideosR />} />
+          <Route path="/medias/channel/:id" element={<VideoR />} />
+          <Route path="/medias/podcast" element={<PodcastsR />} />
           <Route path="/medias/podcast/:id" element={<PodcastR />} />
           <Route path="/projects" element={<ProjectsR />} />
           <Route path="/projects/:id" element={<ProjectR />} />
@@ -87,26 +107,6 @@ const App: FC = () => {
           <Route path="/privacyPolicy" element={<PrivacyPolicyR />} />
           <Route path="/subscribe" element={<SubscribeR />} />
           <Route path="/termsOfService" element={<TermsOfServiceR />} />
-
-          {/* Admin */}
-          <Route path="/admin/products/:product" element={<AdminProductsR />} />
-          <Route path="/admin/products/:product/:id" element={<AdminProductR />} />
-          <Route path="/admin/courses/:subject" element={<AdminCoursesR />} />
-          <Route path="/admin/courses/:subject/:id" element={<AdminCourseR />} />
-          <Route path="/admin/medias/:media" element={<AdminMediasR />} />
-          <Route path="/admin/medias/blog/:id" element={<AdminBlogR />} />
-          <Route path="/admin/medias/video/:id" element={<AdminVideoR />} />
-          <Route path="/admin/medias/podcast/:id" element={<AdminPodcastR />} />
-          <Route path="/admin/projects" element={<AdminProjectsR />} />
-          <Route path="/admin/projects/:id" element={<AdminProjectR />} />
-          <Route path="/admin/events" element={<AdminEventsR />} />
-          <Route path="/admin/events/:id" element={<AdminEventR />} />
-          <Route path="/admin/threads" element={<AdminThreadsR />} />
-          <Route path="/admin/threads/:thread" element={<AdminThreadR />} />
-          <Route path="/admin/about" element={<AdminAboutR />} />
-          <Route path="/admin/help" element={<AdminHelpR />} />
-          <Route path="/admin/privacyPolicy" element={<AdminPrivacyPolicyR />} />
-          <Route path="/admin/termsOfService" element={<AdminTermsOfServiceR />} />
 
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin/home" element={<AdminHome />} />

@@ -49,14 +49,39 @@ export interface ICourse {
   price: number,
 }
 
-export interface IMedia {
-  id: string,
-  title: string,
-  media: string,
-  imagekey?: string,
+export interface IBlog {
+  id: string
+  title: string
+  imagekey?: string
   imageBuffer?: string,
-  content?: string,
-  info: string,
+  content: any
+  info: string
+}
+
+export interface IVideos {
+  kind: string
+  etag: string
+  nextPageToken: string
+  regionCode: string
+  pageInfo: IPageInfo
+  items: IItem[]
+}
+
+export interface IPageInfo {
+  totalResults: number
+  resultsPerPage: number
+}
+
+export interface IItem {
+  kind: string
+  etag: string
+  id: IId
+}
+
+export interface IId {
+  kind: string
+  videoId?: string
+  channelId?: string
 }
 
 export interface IProject {

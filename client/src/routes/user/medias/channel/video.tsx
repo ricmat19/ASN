@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import VideoC from "../../../components/user/medias/video";
+import VideoC from "../../../../components/user/medias/channel/video";
 
 const VideoR: FC = () => {
   return (

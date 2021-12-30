@@ -1,30 +1,30 @@
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import IndexAPI from "../../../../apis/indexAPI";
+import FooterC from "../../standard/footer";
+import MediaMenuC from "../mediasMenu";
+import AccountNavC from "../../standard/accountNav";
+import MenuNavC from "../../standard/menuNav";
+import { IBlog } from "../../../../interfaces";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import IndexAPI from "../../../apis/indexAPI";
-import FooterC from "../standard/footer";
-import { IMedia } from "../../../interfaces";
-import MediaMenuC from "./mediasMenu";
-import AccountNavC from "../standard/accountNav";
-import MenuNavC from "../standard/menuNav";
 
-const MediasC: FC = () => {
+const BlogPostsC: FC = () => {
 
-  const { media } = useParams();
+  const [ blog , setBlog ] = useState<IBlog[]>([]);
+  const [ pageNumber, setPageNumber] = useState<number>(0);
 
-  const [medias, setMedias ] = useState<IMedia[]>([]);
-  const [pageNumber, setPageNumber] = useState<number>(0);
-
-  let mediaResponse;
+  let blogResponse;
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        mediaResponse = await IndexAPI.get(`/medias/${media}`);
 
-        for (let i = 0; i < mediaResponse.data.data.medias.length; i++) {
-          if (mediaResponse.data.data.medias[i].imagekey !== null) {
+        blogResponse = await IndexAPI.get(`/medias/blog`);
+        console.log(blogResponse.data.data.posts);
+        
+        for (let i = 0; i < blogResponse.data.data.posts.length; i++) {
+          if (blogResponse.data.data.posts[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${mediaResponse.data.data.medias[i].imagekey}`,
+              `/images/${blogResponse.data.data.posts[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -32,12 +32,12 @@ const MediasC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            mediaResponse.data.data.medias[
+            blogResponse.data.data.posts[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        setMedias(mediaResponse.data.data.medias);
+        setBlog(blogResponse.data.data.posts);
 
       } catch (err) {
         console.log(err);
@@ -48,26 +48,26 @@ const MediasC: FC = () => {
 
   const itemsPerPage: number = 9;
   const pagesVisted: number = pageNumber * itemsPerPage;
-  const pageCount = Math.ceil(medias.length / itemsPerPage);
+  const pageCount = Math.ceil(blog.length / itemsPerPage);
 
   const changePage = ({selected}: {selected:number}): void => {
     setPageNumber(selected);
   };
 
-  const displayMedias = medias
+  const displayBlog = blog
     .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((media) => {
+    .map((post) => {
       return (
         <div
           className="collection-item-div"
-          key={media.id}
-          onClick={() => displayItem(media.media, media.id)}
+          key={post.id}
+          onClick={() => displayPost(post.id)}
         >
           <div className="collection-item">
-            <img className="collection-thumbnail" src={media.imageBuffer} />
+            <img className="collection-thumbnail" src={post.imageBuffer} />
           </div>
           <div>
-            <div>{media.title}</div>
+            <div>{post.title}</div>
           </div>
         </div>
       );
@@ -75,9 +75,9 @@ const MediasC: FC = () => {
 
   let navigation = useNavigate();
 
-  const displayItem = async (media: string, id: string) => {
+  const displayPost = async (id: string) => {
     try {
-      navigation(`/medias/${media}/${id}`);
+      navigation(`/medias/blog/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +89,8 @@ const MediasC: FC = () => {
       <MenuNavC />
       <div className="main-body">
         <MediaMenuC />
-        <div className="thumbnail-display">{displayMedias}</div>
+        <div className="collection-menu">{}</div>
+        <div className="thumbnail-display">{displayBlog}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}
@@ -106,4 +107,4 @@ const MediasC: FC = () => {
   );
 };
 
-export default MediasC;
+export default BlogPostsC;

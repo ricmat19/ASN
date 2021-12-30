@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import IndexAPI from "../../../apis/indexAPI";
-import FooterC from "../../user/standard/footer";
-import { IMedia } from "../../../interfaces";
-import MediaMenuC from "./mediasMenu";
-import AdminAccountNavC from "../standard/accountNav";
-import AdminMenuNavC from "../standard/menuNav";
-import AddBlog from "./blog/addBlog";
+import IndexAPI from "../../../../apis/indexAPI";
+import FooterC from "../../../user/standard/footer";
+import { IBlog } from "../../../../interfaces";
+import MediaMenuC from "./blogMenu";
+import AdminAccountNavC from "../../standard/accountNav";
+import AdminMenuNavC from "../../standard/menuNav";
+import AddBlog from "./addBlog";
 import { Button, Grid } from "@mui/material";
 
 const AdminMediasC: FC = () => {
@@ -15,7 +15,7 @@ const AdminMediasC: FC = () => {
   const { media } = useParams();
 
   const [type, setType] = useState<string>("");
-  const [medias, setMedias] = useState<IMedia[]>([]);
+  const [medias, setMedias] = useState<IBlog[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -62,36 +62,37 @@ const AdminMediasC: FC = () => {
 
   const changePage = ({selected}: {selected:number}): void => {
     setPageNumber(selected);
+    console.log(pagesVisted)
   };
 
-  const displayMedias = medias
-    .slice(pagesVisted, pagesVisted + itemsPerPage)
-    .map((media) => {
-      return (
-        <Grid
-          className="collection-item-div"
-          key={media.id}
-          onClick={() => displayItem(media.media, media.id)}
-        >
-          <Grid className="collection-item">
-            <img className="collection-thumbnail" src={media.imageBuffer} />
-          </Grid>
-          <Grid>
-            <Grid>{media.title}</Grid>
-          </Grid>
-        </Grid>
-      );
-    });
+  const displayMedias = medias;
+    // .slice(pagesVisted, pagesVisted + itemsPerPage)
+    // .map((media) => {
+    //   return (
+    //     <Grid
+    //       className="collection-item-div"
+    //       key={media.id}
+    //       onClick={() => displayItem(media.media, media.id)}
+    //     >
+    //       <Grid className="collection-item">
+    //         <img className="collection-thumbnail" src={media.imageBuffer} />
+    //       </Grid>
+    //       <Grid>
+    //         <Grid>{media.title}</Grid>
+    //       </Grid>
+    //     </Grid>
+    //   );
+    // });
 
-  let navigation = useNavigate();
+  // let navigation = useNavigate();
 
-  const displayItem = async (media: string, id: string) => {
-    try {
-      navigation(`/admin/medias/${media}/${id}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const displayItem = async (media: string, id: string) => {
+  //   try {
+  //     navigation(`/admin/medias/${media}/${id}`);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div>

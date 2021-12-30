@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import IndexAPI from "../../../apis/indexAPI";
-import FooterC from "../standard/footer";
-import AccountHeaderC from "../standard/accountNav";
-import MenuHeaderC from "../standard/menuNav";
+import IndexAPI from "../../../../apis/indexAPI";
+import FooterC from "../../standard/footer";
+import AccountHeaderC from "../../standard/accountNav";
+import MenuHeaderC from "../../standard/menuNav";
 
-const BlogC: FC = () => {
+const BlogPostC: FC = () => {
   const { media, id } = useParams();
 
   const [, setTitle] = useState<string>("");
@@ -56,4 +56,4 @@ const BlogC: FC = () => {
   );
 };
 
-export default BlogC;
+export default BlogPostC;
