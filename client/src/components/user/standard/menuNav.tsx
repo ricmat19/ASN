@@ -6,7 +6,7 @@ const MenuNavC: FC = () => {
   return (
     <header>
       <nav>
-        <Grid container sx={{pt: "5px", pb: "5px"}}>
+        <Grid container sx={{pt: "5px", pb: "5px", justifyContent: "center"}}>
           <Grid container xs={2} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-store-alt"></i>
@@ -37,7 +37,7 @@ const MenuNavC: FC = () => {
               </a>
             </Grid>
           </Grid>
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          {/* <Grid container xs={2} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-paint-brush"></i>
             </Grid>
@@ -46,7 +46,7 @@ const MenuNavC: FC = () => {
                 <h1 className="pointer">projects</h1>
               </a>
             </Grid>
-          </Grid>
+          </Grid> */}
           <Grid container xs={2} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-calendar-check"></i>

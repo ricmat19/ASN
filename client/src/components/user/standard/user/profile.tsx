@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import AccountHeaderC from "../standard/accountNav";
-import MenuHeaderC from "../standard/menuNav";
-import FooterC from "../standard/footer";
+import AccountHeaderC from "../accountNav";
+import MenuHeaderC from "../menuNav";
+import FooterC from "../footer";
 
-const InboxC: FC = () => {
+const ProfileC: FC = () => {
 
   return (
     <div>
@@ -15,4 +15,4 @@ const InboxC: FC = () => {
   );
 };
 
-export default InboxC;
+export default ProfileC;

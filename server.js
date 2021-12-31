@@ -17,6 +17,7 @@ const cartR = require("./routes/cart");
 const communityR = require("./routes/community");
 const usersR = require("./routes/users");
 const contactR = require("./routes/contact");
+const notificationsR = require("./routes/notifications")
 
 //insures that the .env file is only run in a development environment and not a production environment
 if (process.env.NODE_ENV !== "production") {
@@ -58,5 +59,6 @@ app.use(mediasR);
 app.use(productsR);
 app.use(projectsR);
 app.use(usersR);
+app.use(notificationsR);
 
 app.use(contactR);

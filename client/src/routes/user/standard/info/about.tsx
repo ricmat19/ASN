@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import AboutC from "../../../components/user/info/about";
+import AboutC from "../../../../components/user/standard/info/about";
 
 const AboutR: FC = () => {
   return (

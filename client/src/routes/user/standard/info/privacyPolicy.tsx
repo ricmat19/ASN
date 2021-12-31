@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import PrivacyPolicyC from "../../../components/user/info/privacyPolicy";
+import PrivacyPolicyC from "../../../../components/user/standard/info/privacyPolicy";
 
 const PrivacyPolicyR: FC = () => {
   return (

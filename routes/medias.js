@@ -43,7 +43,7 @@ router.get("/medias/blog/:id", async (req, res) => {
 //Get all youtube videos in my channel
 router.get("/medias/channel", async (req, res) => {
   try {
-    const videos = await axios.get(youtubeBaseURL + "search?key=" + process.env.YOUTUBE_API_KEY + "&channelId=" + "UCO7uiK9jqQnfiikVAKIdC5g")
+    const videos = await axios.get(youtubeBaseURL + "search?key=" + process.env.YOUTUBE_API_KEY + "&channelId=" + "UCaem2HqM0PPak4fvf-uxlnQ")
     console.log(videos.data)
     res.status(200).json({
       status: "success",

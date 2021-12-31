@@ -69,3 +69,12 @@ CREATE TABLE community(
     post_date DATE NOT NULL DEFAULT CURRENT_DATE,
     post VARCHAR(300) NOT NULL
 );
+
+CREATE TABLE notifications(
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+    date DATE NOT NULL DEFAULT CURRENT_DATE,
+    type VARCHAR(50) NOT NULL,
+    price MONEY,
+    image VARCHAR(300)
+);

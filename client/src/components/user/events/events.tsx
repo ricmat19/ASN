@@ -1,23 +1,24 @@
-import React, { FC, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { FC, useEffect, useState } from "react";
 import IndexAPI from "../../../apis/indexAPI";
-import FooterC from "../standard/footer";
-import AccountNavC from "../standard/accountNav";
-import MenuNavC from "../standard/menuNav";
+import FooterC from "../../user/standard/footer";
+import AdminAccountNavC from "../standard/accountNav";
+import AdminMenuNavC from "../standard/menuNav";
+import { IEvent } from "../../../interfaces";
+import CalendarC from "./calendar";
 
 const EventsC: FC = () => {
 
-//   let navigation = useNavigate();
+  const [, setEvents] = useState<IEvent[]>([]);
 
   useEffect((): void => {
     const fetchData = async () => {
       try {
         const eventsResponse = await IndexAPI.get(`/events`);
 
-        for (let i = 0; i < eventsResponse.data.data.product.length; i++) {
-          if (eventsResponse.data.data.product[i].imagekey !== null) {
+        for (let i = 0; i < eventsResponse.data.data.events.length; i++) {
+          if (eventsResponse.data.data.events[i].imagekey !== null) {
             let imagesResponse = await IndexAPI.get(
-              `/images/${eventsResponse.data.data.product[i].imagekey}`,
+              `/images/${eventsResponse.data.data.events[i].imagekey}`,
               {
                 responseType: "arraybuffer",
               }
@@ -25,12 +26,12 @@ const EventsC: FC = () => {
               Buffer.from(response.data, "binary").toString("base64")
             );
 
-            eventsResponse.data.data.product[
+            eventsResponse.data.data.events[
               i
             ].imageBuffer = `data:image/png;base64,${imagesResponse}`;
           }
         }
-        // setCollection(eventsResponse.data.data.product);
+        setEvents(eventsResponse.data.data.events);
 
       } catch (err) {
         console.log(err);
@@ -39,20 +40,20 @@ const EventsC: FC = () => {
     fetchData();
   }, []);
 
-//   const displayItem = async (event: string) => {
-//     try {
-//       navigation(`/events/${event}`);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
+  // const displayEvent = async (event: string) => {
+  //   try {
+  //     navigation(`/admin/events/${event}`);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div>
-      <AccountNavC />
-      <MenuNavC />
+      <AdminAccountNavC />
+      <AdminMenuNavC />
       <div className="main-body">
-        <div className="collection-menu">{}</div>
+        <CalendarC />
       </div>
       <FooterC />
     </div>

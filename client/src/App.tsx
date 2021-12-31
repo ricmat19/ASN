@@ -40,14 +40,13 @@ import CartR from "./routes/user/cart/cart";
 import CheckoutR from "./routes/user/cart/checkout";
 import ShippingR from "./routes/user/cart/shipping";
 import PaymentR from "./routes/user/cart/stripe";
-import InboxR from "./routes/user/account/inbox";
-import CollectionR from "./routes/user/account/collection";
-import PortfolioR from "./routes/user/account/portfolio";
-import AboutR from "./routes/user/info/about";
-import HelpR from "./routes/user/info/help";
-import PrivacyPolicyR from "./routes/user/info/privacyPolicy";
-import SubscribeR from "./routes/user/info/subscribe";
-import TermsOfServiceR from "./routes/user/info/termsOfService";
+import InboxR from "./routes/user/standard/user/inbox";
+import CollectionR from "./routes/user/standard/user/collection";
+import ProfileR from "./routes/user/standard/user/profile";
+import AboutR from "./routes/user/standard/info/about";
+import HelpR from "./routes/user/standard/info/help";
+import PrivacyPolicyR from "./routes/user/standard/info/privacyPolicy";
+import TermsOfServiceR from "./routes/user/standard/info/termsOfService";
 
 import Contact from "./routes/contact";
 import AdminHome from "./routes/admin/home";
@@ -101,11 +100,10 @@ const App: FC = () => {
           <Route path="/shipping" element={<ShippingR />} />
           <Route path="/inbox" element={<InboxR />} />
           <Route path="/collection" element={<CollectionR />} />
-          <Route path="/portfolio" element={<PortfolioR />} />
+          <Route path="/profile" element={<ProfileR />} />
           <Route path="/about" element={<AboutR />} />
           <Route path="/help" element={<HelpR />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicyR />} />
-          <Route path="/subscribe" element={<SubscribeR />} />
           <Route path="/termsOfService" element={<TermsOfServiceR />} />
 
           <Route path="/contact" element={<Contact />} />

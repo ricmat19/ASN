@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import CollectionC from "../../../components/user/account/collection";
+import CollectionC from "../../../../components/user/standard/user/collection";
 
 const CollectionR: FC = () => {
   return (

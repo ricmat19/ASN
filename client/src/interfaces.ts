@@ -108,3 +108,17 @@ export interface IEvent {
   price?: number,
   info: string,
 }
+
+export interface INotification {
+  id: string,
+  title: string,
+  date: string,
+  type: string,
+  price?: number,
+  imagekey?: string,
+  imageBuffer?: string,
+}
+
+export interface ICollection {
+
+}

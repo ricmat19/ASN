@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import HelpC from "../../../components/user/info/help";
+import HelpC from "../../../../components/user/standard/info/help";
 
 const HelpR: FC = () => {
   return (
