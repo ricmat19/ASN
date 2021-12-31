@@ -79,7 +79,6 @@ const AdminAddBlogC = (props: IModalState) => {
             border: '2px solid #000',
             boxShadow: 24,
             width: '90vw',
-            // height: '80vh',
             p: 4
             }}
           > 
@@ -88,8 +87,8 @@ const AdminAddBlogC = (props: IModalState) => {
               flexWrap: "nowrap",
               alignItems: "center",
               color: "#000",
-              backgroundColor: "#000",
               justifyContent: "flex-end",
+              backgroundColor: "#000",
               padding: "30px"}}>
               <Grid sx={{padding: "0 30px 0 0", width: "50%"}}>
                 <Grid className="image">

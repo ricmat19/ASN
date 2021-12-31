@@ -8,31 +8,27 @@ import { IBlog } from "../../../../interfaces";
 import { Grid } from "@mui/material";
 
 const AdminBlogPostC: FC = () => {
-  const { media, id } = useParams();
+  const { id } = useParams();
 
-  const [, setSelectedProduct] = useState<IBlog[]>([]);
+  const [, setSelectedBlog] = useState<IBlog[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [mediaType, setMediaType] = useState<string>("");
   const [, setImages] = useState(null);
   const [info, setInfo] = useState<string>("");
-  const [imageBuffer, setImageBuffer] = useState("../../images/loading.svg");
+  const [imageBuffer, setImageBuffer] = useState("");
 
   const titleInput = useRef(null);
-  const mediaInput = useRef(null);
   const infoInput = useRef(null);
 
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        console.log(id)
-        const mediaResponse = await IndexAPI.get(
-          `/admin/medias/${media}/${id}`
+        const blogResponse = await IndexAPI.get(
+          `/admin/medias/blog/${id}`
         );
-        console.log(mediaResponse.data.data.media)
 
-        if (mediaResponse.data.data.media.imagekey !== null) {
+        if (blogResponse.data.data.post.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
-            `/images/${mediaResponse.data.data.media.imagekey}`,
+            `/images/${blogResponse.data.data.post.imagekey}`,
             {
               responseType: "arraybuffer",
             }
@@ -42,10 +38,10 @@ const AdminBlogPostC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setTitle(mediaResponse.data.data.media.title);
-        setInfo(mediaResponse.data.data.media.info);
+        setTitle(blogResponse.data.data.post.title);
+        setInfo(blogResponse.data.data.post.info);
         
-        setSelectedProduct(mediaResponse.data.data.media)
+        setSelectedBlog(blogResponse.data.data.post)
       } catch (err) {
         console.log(err);
       }
@@ -59,7 +55,6 @@ const AdminBlogPostC: FC = () => {
       let formData = new FormData();
 
       formData.append("title", title);
-      formData.append("media", mediaType);
       // formData.append("images", images);
       formData.append("info", info);
 
@@ -125,44 +120,6 @@ const AdminBlogPostC: FC = () => {
               className="form-control"
               required
             />
-          </Grid>
-          <Grid className="admin-form-field">
-            <Grid>
-              <label className="admin-label">Type:</label>
-            </Grid>
-            <Grid className="radio-div">
-              <Grid>
-                <label className=" radio">blog</label>
-                <input
-                  value={media}
-                  ref={mediaInput}
-                  onChange={() => setMediaType("blog")}
-                  type="radio"
-                  name="media"
-                />
-              </Grid>
-              <Grid>
-                <label className=" radio">podcast</label>
-                <input
-                  value={media}
-                  ref={mediaInput}
-                  onChange={() => setMediaType("podcast")}
-                  type="radio"
-                  name="media"
-                />
-              </Grid>
-              <Grid>
-                <label className=" radio">channel</label>
-                <input
-                  value={media}
-                  ref={mediaInput}
-                  onChange={() => setMediaType("channel")}
-                  type="radio"
-                  name="media"
-                  required
-                />
-              </Grid>
-            </Grid>
           </Grid>
           <Grid className="admin-form-field">
             <label className="admin-label">Images:</label>

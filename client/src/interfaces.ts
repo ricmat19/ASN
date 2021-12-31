@@ -92,10 +92,17 @@ export interface IProject {
   info: string,
 }
 
+export interface IDay {
+  value: number | string,
+  event: string | null,
+  date: string,
+  today: string,
+}
+
 export interface IEvent {
   id: string,
   title: string,
-  event_date: Date,
+  event_date: string,
   imagekey?: string,
   imageBuffer?: string,
   price?: number,

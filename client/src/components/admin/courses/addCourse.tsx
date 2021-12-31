@@ -85,6 +85,7 @@ const AdminCreateCourseC = (props: IModalState) => {
             bgcolor: 'background.paper',
             border: '2px solid #000',
             boxShadow: 24,
+            width: '90vw',
             p: 4
             }}
           > 
@@ -92,15 +93,18 @@ const AdminCreateCourseC = (props: IModalState) => {
               flexDirection: "row",
               flexWrap: "nowrap",
               alignItems: "center",
-              color: "#000"}}>
-              <Grid sx={{padding: "0 15px 0 0"}}>
+              color: "#000",
+              justifyContent: "flex-end",
+              backgroundColor: "#000",
+              padding: "30px"}}>
+              <Grid sx={{padding: "0 30px 0 0", width: "50%"}}>
                 <div className="image">
                   <div className="big-image-div">
                     <img className="big-image" src={displayedImage} />
                   </div>
                 </div>
               </Grid>
-              <Grid sx={{width: "500px", padding: "0 0 0 15px", borderLeft: "1px #000 solid"}}>
+              <Grid sx={{width: "50%", padding: "0 0 0 30px", borderLeft: "1px #fff solid", height: "100%"}}>
                 <form
                   className="admin-form"
                   action="/admin/course/create"
