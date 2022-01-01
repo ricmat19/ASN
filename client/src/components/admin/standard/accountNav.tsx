@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 // import SignInModalC from "../auth/signinModal";
-import { Grid, Menu, Avatar, Divider, MenuItem, ListItemIcon } from '@mui/material';
+import { Grid, Menu, MenuItem, ListItemIcon } from '@mui/material';
 
 // interface IModalState {
 //   open: boolean,
@@ -39,11 +39,8 @@ const AdminAccountNavC: FC = () => {
               <h1>logo</h1>
             </Grid>
             <Grid container xs={1} sx={{alignContent: "center"}}>
-              <Grid xs={6} container sx={{justifyContent: "center"}}>
+              <Grid container sx={{justifyContent: "center"}}>
                 <h1><i className="fas fa-user-circle account-menu-icon" onClick={handleClick}></i></h1>
-              </Grid>
-              <Grid xs={6} container sx={{justifyContent: "center"}}>
-                  <h1><i className="fas fa-ellipsis-v" onClick={handleClick}></i></h1>
               </Grid>
             </Grid>
           </Grid>
@@ -82,82 +79,10 @@ const AdminAccountNavC: FC = () => {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <MenuItem>
-            <Avatar /> Profile
-          </MenuItem>
-          <MenuItem>
-            <Avatar /> My account
-          </MenuItem>
-          <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <i className="fas fa-cog account-menu-icon"></i>
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-          <MenuItem>
             <ListItemIcon>
               <i className="fas fa-sign-out-alt account-menu-icon"></i>
             </ListItemIcon>
             Logout
-          </MenuItem>
-        </Menu>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleAccountMenuClose}
-          onClick={handleAccountMenuClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem>
-            <ListItemIcon>
-              <i className="fas fa-cog account-menu-icon"></i>
-            </ListItemIcon>
-            About
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <i className="fas fa-cog account-menu-icon"></i>
-            </ListItemIcon>
-            Help
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <i className="fas fa-cog account-menu-icon"></i>
-            </ListItemIcon>
-            Terms of Service
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <i className="fas fa-cog account-menu-icon"></i>
-            </ListItemIcon>
-            Privacy Policy
           </MenuItem>
         </Menu>
         </nav>

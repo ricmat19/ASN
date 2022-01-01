@@ -5,6 +5,19 @@ body {
   margin: 0;
 }
 
+.component-container{
+  min-height: 100vh;
+}
+
+.main-body {
+  animation: transitionIn 1000ms;
+  min-height: calc(100vh - (52px + 52px + 73px));
+}
+
+footer{
+  background-color: black;
+}
+
 a {
   color: white;
 }
@@ -333,10 +346,6 @@ button a {
   color: rgb(255, 68, 208);
 }
 
-.main-body {
-  animation: transitionIn 1000ms;
-}
-
 button {
   cursor: pointer;
 }
@@ -551,14 +560,19 @@ button {
 .form-div {
   display: grid;
   justify-content: center;
-  padding: 40px;
+  padding: 30px;
+}
+
+.form-container{
+  background-color: white;
+  padding: 30px;
 }
 
 .contact-form {
   display: grid;
   justify-content: center;
   border-style: none;
-  background: rgb(243, 243, 243);
+  background: black;
   padding: 40px;
   grid-template-columns: repeat(1, minmax(0px, 800px));
 }
@@ -948,4 +962,9 @@ label {
 .inbox-content {
   border-left: white solid 1px;
   background-color: #2b2b2b;
+}
+
+.admin-textbox{
+  width: 80%;
+  min-height: 400px;
 }

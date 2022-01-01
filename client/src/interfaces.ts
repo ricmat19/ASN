@@ -122,3 +122,16 @@ export interface INotification {
 export interface ICollection {
 
 }
+
+export interface IUser {
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  city: string,
+  state: string,
+  zip: number,
+  iv: string,
+  interests: [],
+  cart: ICart[],
+}

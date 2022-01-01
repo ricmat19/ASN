@@ -14,10 +14,6 @@ import AdminEventsR from "./routes/admin/events/events";
 import AdminEventR from "./routes/admin/events/event";
 import AdminThreadsR from "./routes/admin/community/threads";
 import AdminThreadR from "./routes/admin/community/thread";
-import AdminAboutR from "./routes/admin/info/about";
-import AdminHelpR from "./routes/admin/info/help";
-import AdminPrivacyPolicyR from "./routes/admin/info/privacyPolicy";
-import AdminTermsOfServiceR from "./routes/admin/info/termsOfService";
 
 //User Routes
 import ProductsR from "./routes/user/products/products";
@@ -40,19 +36,13 @@ import CartR from "./routes/user/cart/cart";
 import CheckoutR from "./routes/user/cart/checkout";
 import ShippingR from "./routes/user/cart/shipping";
 import PaymentR from "./routes/user/cart/stripe";
-import InboxR from "./routes/user/standard/user/inbox";
 import CollectionR from "./routes/user/standard/user/collection";
 import ProfileR from "./routes/user/standard/user/profile";
 import AboutR from "./routes/user/standard/info/about";
 import HelpR from "./routes/user/standard/info/help";
 import PrivacyPolicyR from "./routes/user/standard/info/privacyPolicy";
 import TermsOfServiceR from "./routes/user/standard/info/termsOfService";
-
-import Contact from "./routes/contact";
-import AdminHome from "./routes/admin/home";
-import AdminCollection from "./routes/admin/collection";
-import AdminCreate from "./routes/admin/create";
-import AdminUpdate from "./routes/admin/update";
+import Contact from "./routes/user/standard/info/contact";
 
 const App: FC = () => {
   return (
@@ -72,10 +62,6 @@ const App: FC = () => {
           <Route path="/admin/events/:id" element={<AdminEventR />} />
           <Route path="/admin/threads" element={<AdminThreadsR />} />
           <Route path="/admin/threads/:thread" element={<AdminThreadR />} />
-          <Route path="/admin/about" element={<AdminAboutR />} />
-          <Route path="/admin/help" element={<AdminHelpR />} />
-          <Route path="/admin/privacyPolicy" element={<AdminPrivacyPolicyR />} />
-          <Route path="/admin/termsOfService" element={<AdminTermsOfServiceR />} />
 
            {/* Users */}
            <Route path="/products/:product" element={<ProductsR />} />
@@ -98,23 +84,13 @@ const App: FC = () => {
           <Route path="/checkout" element={<CheckoutR />} />
           <Route path="/payment" element={<PaymentR />} />
           <Route path="/shipping" element={<ShippingR />} />
-          <Route path="/inbox" element={<InboxR />} />
           <Route path="/collection" element={<CollectionR />} />
           <Route path="/profile" element={<ProfileR />} />
           <Route path="/about" element={<AboutR />} />
           <Route path="/help" element={<HelpR />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicyR />} />
           <Route path="/termsOfService" element={<TermsOfServiceR />} />
-
           <Route path="/contact" element={<Contact />} />
-          <Route path="/admin/home" element={<AdminHome />} />
-          <Route
-            path="/admin/collection/:product"
-            element={<AdminCollection />}
-          />
-          <Route path="/admin/create" element={<AdminCreate />} />
-          <Route path="/admin/update/:id" element={<AdminUpdate />} />
-
         </Routes>
       </Router>
     </div>

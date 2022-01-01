@@ -9,12 +9,26 @@ CREATE TABLE products(
     info VARCHAR(300)
 );
 
-CREATE TABLE users(
+
+CREATE TABLE admin_users(
     email VARCHAR(50) PRIMARY KEY,
     password VARCHAR(50),
     firstName VARCHAR(100),
     lastName VARCHAR(100),
     iv VARCHAR(255),
+    cart VARCHAR[]
+);
+
+CREATE TABLE users(
+    email VARCHAR(50) PRIMARY KEY,
+    password VARCHAR(50),
+    firstName VARCHAR(100),
+    lastName VARCHAR(100),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    zip BIGINT,
+    iv VARCHAR(255),
+    interests VARCHAR[],
     cart VARCHAR[]
 );
 

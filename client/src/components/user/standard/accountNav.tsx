@@ -190,7 +190,7 @@ const AccountNavC: FC = () => {
                 />
               </Grid>
             </Grid>
-            <Grid container xs={2} sx={{ alignContent: "center" }}>
+            <Grid container xs={2} sx={{ alignContent: "center", justifyContent: "center"}}>
               <Grid xs={2} container sx={{ justifyContent: "center" }}>
                 <h1>
                   <i
@@ -198,13 +198,6 @@ const AccountNavC: FC = () => {
                     onClick={handleNotificationClick}
                   ></i>
                 </h1>
-              </Grid>
-              <Grid xs={2} container sx={{ justifyContent: "center" }}>
-                <a href="/inbox">
-                  <h1>
-                    <i className="far fa-paper-plane account-menu-icon"></i>
-                  </h1>
-                </a>
               </Grid>
               <Grid xs={2} container sx={{ justifyContent: "center" }}>
                 <a href="/collection">
