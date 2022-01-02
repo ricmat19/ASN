@@ -12,7 +12,7 @@ const AdminMenuNavC: FC = () => {
               <i className="fas fa-store-alt"></i>
             </Grid>
             <Grid sx={{textAlign: 'center', alignSelf: "center"}}>
-              <a href="/admin/products/2D">
+              <a href="/admin/products/print">
                 <h1 className="pointer">store</h1>
               </a>
             </Grid>
@@ -57,7 +57,7 @@ const AdminMenuNavC: FC = () => {
               </a>
             </Grid>
           </Grid>
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          {/* <Grid container xs={2} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-comments"></i>
             </Grid>
@@ -66,7 +66,7 @@ const AdminMenuNavC: FC = () => {
                 <h1 className="pointer">community</h1>
               </a>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </nav>
       <hr/>

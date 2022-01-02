@@ -12,7 +12,6 @@ const AdminProductC: FC = () => {
 
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [, setImages] = useState(null);
   const [qty, setQty] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
@@ -45,12 +44,12 @@ const AdminProductC: FC = () => {
 
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
-        setSelectedProduct(productResponse.data.data.item)
-        setTitle(productResponse.data.data.item.title);
-        setPrice(productResponse.data.data.item.price);
-        setQty(productResponse.data.data.item.qty);
-        setInfo(productResponse.data.data.item.info);
-
+        setSelectedProduct(productResponse.data.data.product);
+        setTitle(productResponse.data.data.product.title);
+        setType(productResponse.data.data.product.product);
+        setQty(productResponse.data.data.product.qty);
+        setPrice(productResponse.data.data.product.price);
+        setInfo(productResponse.data.data.product.info);
       } catch (err) {
         console.log(err);
       }
@@ -58,31 +57,16 @@ const AdminProductC: FC = () => {
     fetchData();
   }, []);
 
-  const updateProduct = async (e: { preventDefault: () => void; }) => {
+  const updateProduct = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      let formData = new FormData();
-
-      formData.append("title", title);
-      formData.append("product", type);
-      // formData.append("images", images);
-      formData.append("quantity", qty);
-      formData.append("price", price);
-      formData.append("info", info);
-
-      await IndexAPI.put(`/admin/products/update/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-
-      // createItem(response);
-
-      // titleInput.current.value = "";
-      // typeInput.current.value = "";
-      // quantityInput.current.value = "";
-      // priceInput.current.value = "";
-      // infoInput.current.value = "";
+      await IndexAPI.put(`/admin/products/update/${id}`, {
+        title,
+        type,
+        qty,
+        price,
+        info,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -97,7 +81,7 @@ const AdminProductC: FC = () => {
   //     // setImages(imagesResponse);
   // }
 
-    // onChange={imageURL(selectedItem.imagekey)}
+  // onChange={imageURL(selectedItem.imagekey)}
 
   return (
     <div>
@@ -118,7 +102,7 @@ const AdminProductC: FC = () => {
           encType="multipart/form-data"
         >
           <Grid className="admin-form-title">
-            <h2 className="align-center">Create</h2>
+            <h2 className="align-center">Update</h2>
           </Grid>
           <Grid className="admin-form-field">
             <label className="admin-label">Title:</label>
@@ -140,7 +124,7 @@ const AdminProductC: FC = () => {
               <Grid>
                 <label className=" radio">print</label>
                 <input
-                  value={type}
+                  checked={type === "print"}
                   ref={typeInput}
                   onChange={() => setType("print")}
                   type="radio"
@@ -150,7 +134,7 @@ const AdminProductC: FC = () => {
               <Grid>
                 <label className=" radio">model</label>
                 <input
-                  value={type}
+                  checked={type === "model"}
                   ref={typeInput}
                   onChange={() => setType("model")}
                   type="radio"
@@ -160,7 +144,7 @@ const AdminProductC: FC = () => {
               <Grid>
                 <label className=" radio">painting</label>
                 <input
-                  value={type}
+                  checked={type === "painting"}
                   ref={typeInput}
                   onChange={() => setType("painting")}
                   type="radio"
@@ -171,7 +155,7 @@ const AdminProductC: FC = () => {
               <Grid>
                 <label className=" radio">sculpture</label>
                 <input
-                  value={type}
+                  checked={type === "sculpture"}
                   ref={typeInput}
                   onChange={() => setType("sculpture")}
                   type="radio"
@@ -182,7 +166,7 @@ const AdminProductC: FC = () => {
               <Grid>
                 <label className=" radio">book</label>
                 <input
-                  value={type}
+                  checked={type === "book"}
                   ref={typeInput}
                   onChange={() => setType("book")}
                   type="radio"
@@ -193,7 +177,7 @@ const AdminProductC: FC = () => {
               <Grid>
                 <label className=" radio">comic</label>
                 <input
-                  value={type}
+                  checked={type === "comic"}
                   ref={typeInput}
                   onChange={() => setType("comic")}
                   type="radio"
@@ -202,17 +186,6 @@ const AdminProductC: FC = () => {
                 />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid className="admin-form-field">
-            <label className="admin-label">Images:</label>
-            <input
-              type="file"
-              // ref={imageInput}
-              onChange={(e: any) => setImages(e.target.files[0])}
-              name="images"
-              className="form-control file-input"
-              required
-            />
           </Grid>
           <Grid className="admin-form-field">
             <label className="admin-label">Quantity:</label>

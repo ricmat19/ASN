@@ -70,25 +70,27 @@ router.post("/admin/product/create", upload.single("images"), async (req, res) =
   }
 });
 
+
+
+
+
+
+
+
+
+
 //Update a product
 router.put("/admin/products/update/:id", async (req, res) => {
   try {
-    if (req.body.primaryImage === "on") {
-      await db.query(
-        "UPDATE products SET primaryimage=false WHERE product=$1",
-        [req.body.type]
-      );
-    }
 
     const product = await db.query(
-      "UPDATE products SET title=$1, product=$2, qty=$3, price=$4, info=$5, primaryimage=$6 WHERE id=$7",
+      "UPDATE products SET title=$1, product=$2, qty=$3, price=$4, info=$5 WHERE id=$6",
       [
         req.body.title,
         req.body.type,
-        req.body.quantity,
+        req.body.qty,
         req.body.price,
         req.body.info,
-        req.body.primaryImage,
         req.params.id,
       ]
     );

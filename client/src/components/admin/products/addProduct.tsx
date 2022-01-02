@@ -11,7 +11,7 @@ const AdminCreateProductC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [images, setImages] = useState<File>();
+  const [image, setImage] = useState<File>();
   const [quantity, setQuantity] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [info, setInfo] = useState<string>("");
@@ -32,12 +32,12 @@ const AdminCreateProductC = (props: IModalState) => {
     e.preventDefault();
     try {
 
-      if(images){
+      if(image){
         let formData = new FormData();
 
         formData.append("title", title);
         formData.append("product", type);
-        formData.append("images", images);
+        formData.append("images", image);
         formData.append("quantity", quantity);
         formData.append("price", price);
         formData.append("info", info);
@@ -62,8 +62,8 @@ const AdminCreateProductC = (props: IModalState) => {
   };
 
   let displayedImage = "";
-  if (images !== undefined) {
-    displayedImage = URL.createObjectURL(images);
+  if (image !== undefined) {
+    displayedImage = URL.createObjectURL(image);
   }
 
   return (
@@ -201,11 +201,11 @@ const AdminCreateProductC = (props: IModalState) => {
                     </Grid>
                   </Grid>
                   <Grid className="admin-form-field">
-                    <label className="admin-label">Images:</label>
+                    <label className="admin-label">Image:</label>
                     <input
                       type="file"
-                      onChange={(e: any) => setImages(e.target.files[0])}
-                      name="images"
+                      onChange={(e: any) => setImage(e.target.files[0])}
+                      name="image"
                       className="form-control file-input"
                       required
                     />

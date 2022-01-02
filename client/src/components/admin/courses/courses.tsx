@@ -31,13 +31,13 @@ const AdminCoursesC: FC = () => {
         <Grid
           className="collection-item-div"
           key={course.id}
-          onClick={() => displayCourse(course.subject, course.id)}
         >
-          <Grid className="collection-item">
+          <Grid className="collection-item" onClick={() => displayCourse(course.subject, course.id)}>
             <img className="collection-thumbnail" src={course.imageBuffer} />
           </Grid>
-          <Grid>
-            <Grid>{course.title}</Grid>
+          <Grid container>
+            <Grid xs={6} sx={{textAlign: "left"}}>{course.title}</Grid>
+            <Grid xs={6} sx={{textAlign: "right"}}><button className="delete-button">Delete</button></Grid>
           </Grid>
         </Grid>
       );

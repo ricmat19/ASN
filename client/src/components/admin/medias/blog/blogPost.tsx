@@ -12,19 +12,17 @@ const AdminBlogPostC: FC = () => {
 
   const [, setSelectedBlog] = useState<IBlog[]>([]);
   const [title, setTitle] = useState<string>("");
-  const [, setImages] = useState(null);
-  const [info, setInfo] = useState<string>("");
+  // const [, setImages] = useState(null);
+  const [content, setContent] = useState<string>("");
   const [imageBuffer, setImageBuffer] = useState("");
 
   const titleInput = useRef(null);
-  const infoInput = useRef(null);
+  const contentInput = useRef(null);
 
   useEffect((): void => {
     const fetchData = async () => {
       try {
-        const blogResponse = await IndexAPI.get(
-          `/admin/medias/blog/${id}`
-        );
+        const blogResponse = await IndexAPI.get(`/admin/medias/blog/${id}`);
 
         if (blogResponse.data.data.post.imagekey !== null) {
           let imagesResponse = await IndexAPI.get(
@@ -39,9 +37,9 @@ const AdminBlogPostC: FC = () => {
           setImageBuffer(`data:image/png;base64,${imagesResponse}`);
         }
         setTitle(blogResponse.data.data.post.title);
-        setInfo(blogResponse.data.data.post.info);
-        
-        setSelectedBlog(blogResponse.data.data.post)
+        setContent(blogResponse.data.data.post.content);
+
+        setSelectedBlog(blogResponse.data.data.post);
       } catch (err) {
         console.log(err);
       }
@@ -49,33 +47,19 @@ const AdminBlogPostC: FC = () => {
     fetchData();
   }, []);
 
-  const updateMedia = async (e: { preventDefault: () => void; }) => {
+  const updateBlog = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      let formData = new FormData();
 
-      formData.append("title", title);
-      // formData.append("images", images);
-      formData.append("info", info);
+      await IndexAPI.put(`/admin/medias/blog/update/${id}`, {
+        title,
+        content,
+      });
 
-      await IndexAPI.post("/admin/media/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-
-      // createItem(response);
-
-      // titleInput.current.value = "";
-      // typeInput.current.value = "";
-      // quantityInput.current.value = "";
-      // priceInput.current.value = "";
-      // infoInput.current.value = "";
     } catch (err) {
       console.log(err);
     }
   };
-
 
   // const imageURL = async (imagekey: string) =>{
 
@@ -86,28 +70,24 @@ const AdminBlogPostC: FC = () => {
   //     // setImages(imagesResponse);
   // }
 
-    // onChange={imageURL(selectedItem.imagekey)}
+  // onChange={imageURL(selectedItem.imagekey)}
 
   return (
     <div>
       <AdminAccountNavC />
       <AdminMenuNavC />
-      <div className="main-body item-details">
-        <div className="item-images">
-          <div className="image-div">
-            <div className="big-image-div">
-              <img className="big-image" src={imageBuffer} alt="main" />
-            </div>
-          </div>
-        </div>
+      <Grid className="blog-banner">
+          <img className="blog-banner-image" src={imageBuffer} alt="main" />
+      </Grid>
+      <Grid className="main-body" sx={{margin: "0 100px"}}>
         <form
           className="admin-form"
           action="/admin/media/create"
           method="POST"
           encType="multipart/form-data"
         >
-          <Grid className="admin-form-title">
-            <h2 className="align-center">Create</h2>
+          <Grid sx={{margin: "30px 0"}}>
+            <h2 className="align-center">Update</h2>
           </Grid>
           <Grid className="admin-form-field">
             <label className="admin-label">Title:</label>
@@ -121,7 +101,7 @@ const AdminBlogPostC: FC = () => {
               required
             />
           </Grid>
-          <Grid className="admin-form-field">
+          {/* <Grid className="admin-form-field">
             <label className="admin-label">Images:</label>
             <input
               type="file"
@@ -130,15 +110,14 @@ const AdminBlogPostC: FC = () => {
               className="form-control file-input"
               required
             />
-          </Grid>
+          </Grid> */}
           <Grid className="admin-form-field">
-            <label className="admin-label">Info:</label>
+            <label className="admin-label">content:</label>
             <textarea
-              value={info}
-              ref={infoInput}
-              onChange={(e) => setInfo(e.target.value)}
-              name="message"
-              rows={5}
+              value={content}
+              ref={contentInput}
+              onChange={(e) => setContent(e.target.value)}
+              name="content"
               required
             ></textarea>
           </Grid>
@@ -146,7 +125,7 @@ const AdminBlogPostC: FC = () => {
             <Grid className="text-center">
               <Grid>
                 <button
-                  onClick={updateMedia}
+                  onClick={updateBlog}
                   type="submit"
                   className="btn form-button"
                 >
@@ -156,7 +135,7 @@ const AdminBlogPostC: FC = () => {
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Grid>
       <FooterC />
     </div>
   );

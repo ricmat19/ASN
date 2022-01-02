@@ -5,22 +5,22 @@ const ProductsMenuC: FC = () => {
 
   return (
     <Grid container sx={{justifyContent: "center", gap: "25px", mt: "10px"}}>
-      <a href="/products/2D">
+      <a href="/products/print">
         <h1>2D prints</h1>
       </a>
-      <a href="/products/3D">
+      <a href="/products/model">
         <h1>3D models</h1>
       </a>
-      <a href="/products/paintings">
+      <a href="/products/painting">
         <h1>paintings</h1>
       </a>
-      <a href="/products/sculptures">
+      <a href="/products/sculpture">
         <h1>sculptures</h1>
       </a>
-      <a href="/products/books">
+      <a href="/products/book">
         <h1>books</h1>
       </a>
-      <a href="/products/comics">
+      <a href="/products/comic">
         <h1>comics</h1>
       </a>
     </Grid>

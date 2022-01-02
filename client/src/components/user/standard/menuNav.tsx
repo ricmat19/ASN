@@ -7,17 +7,17 @@ const MenuNavC: FC = () => {
     <header>
       <nav>
         <Grid container sx={{pt: "5px", pb: "5px", justifyContent: "center"}}>
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          <Grid container xs={3} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-store-alt"></i>
             </Grid>
             <Grid sx={{textAlign: 'center', alignSelf: "center"}}>
-              <a href="/products/2D">
+              <a href="/products/print">
                 <h1 className="pointer">store</h1>
               </a>
             </Grid>
           </Grid>
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          <Grid container xs={3} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-chalkboard-teacher"></i>
             </Grid>
@@ -27,7 +27,7 @@ const MenuNavC: FC = () => {
               </a>
             </Grid>
           </Grid>
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          <Grid container xs={3} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-tv"></i>
             </Grid>
@@ -47,7 +47,7 @@ const MenuNavC: FC = () => {
               </a>
             </Grid>
           </Grid> */}
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          <Grid container xs={3} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-calendar-check"></i>
             </Grid>
@@ -57,7 +57,7 @@ const MenuNavC: FC = () => {
               </a>
             </Grid>
           </Grid>
-          <Grid container xs={2} sx={{justifyContent: "center"}}>
+          {/* <Grid container xs={2} sx={{justifyContent: "center"}}>
             <Grid sx={{textAlign: 'center', alignSelf: "center", m: "5px"}}>
               <i className="fas fa-comments"></i>
             </Grid>
@@ -66,7 +66,7 @@ const MenuNavC: FC = () => {
                 <h1 className="pointer">community</h1>
               </a>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </nav>
       <hr/>

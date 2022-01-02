@@ -5,10 +5,10 @@ const AdminProductsMenuC: FC = () => {
 
   return (
     <Grid container sx={{justifyContent: "center", gap: "25px"}}>
-      <a href="/admin/products/2D">
+      <a href="/admin/products/print">
         <h1>2D prints</h1>
       </a>
-      <a href="/admin/products/3D">
+      <a href="/admin/products/model">
         <h1>3D models</h1>
       </a>
       <a href="/admin/products/painting">

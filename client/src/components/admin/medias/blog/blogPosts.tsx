@@ -10,7 +10,7 @@ import AddBlog from "./addBlog";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const AdminMediasC: FC = () => {
+const AdminBlogPostsC: FC = () => {
 
   // const [type, setType] = useState<string>("");
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -59,20 +59,20 @@ const AdminMediasC: FC = () => {
     console.log(pagesVisted)
   };
 
-  const displayMedias = blogs
+  const displayBlogs = blogs
     .slice(pagesVisted, pagesVisted + itemsPerPage)
     .map((blog) => {
       return (
         <Grid
           className="collection-item-div"
           key={blog.id}
-          onClick={() => displayBlog(blog.id)}
         >
-          <Grid className="collection-item">
+          <Grid className="collection-item" onClick={() => displayBlog(blog.id)}>
             <img className="collection-thumbnail" src={blog.imageBuffer} />
           </Grid>
-          <Grid>
-            <Grid>{blog.title}</Grid>
+          <Grid container>
+            <Grid xs={6} sx={{textAlign: "left"}}>{blog.title}</Grid>
+            <Grid xs={6} sx={{textAlign: "right"}}><button className="delete-button" onClick={() => deleteBlog(blog.id)}>Delete</button></Grid>
           </Grid>
         </Grid>
       );
@@ -88,6 +88,19 @@ const AdminMediasC: FC = () => {
     }
   };
 
+  const deleteBlog = async (id: string) => {
+    try {
+      await IndexAPI.delete(`/admin/medias/blog/delete/${id}`);
+      setBlogs(
+        blogs.filter((blog) => {
+          return blog.id !== id;
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <AddBlog open={open} handleClose={handleClose}/>
@@ -98,7 +111,7 @@ const AdminMediasC: FC = () => {
           <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add blog</a></Button>
         </Grid>
         <MediaMenuC />
-        <div className="thumbnail-display">{displayMedias}</div>
+        <div className="thumbnail-display">{displayBlogs}</div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}
@@ -115,5 +128,4 @@ const AdminMediasC: FC = () => {
   );
 };
 
-export default AdminMediasC;
-
+export default AdminBlogPostsC;

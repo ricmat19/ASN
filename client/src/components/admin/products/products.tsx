@@ -11,10 +11,9 @@ import AddProduct from "./addProduct";
 import { Grid, Button } from "@mui/material";
 
 const AdminProductsC: FC = () => {
-
   const { product } = useParams();
 
-  const [products, setProducts ] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [open, setOpen] = useState(false);
@@ -28,16 +27,26 @@ const AdminProductsC: FC = () => {
     .slice(pagesVisted, pagesVisted + itemsPerPage)
     .map((product) => {
       return (
-        <Grid
-          className="collection-item-div"
-          key={product.id}
-          onClick={() => displayItem(product.product, product.id)}
-        >
-          <Grid sx={{justifySelf: "center"}} className="collection-item">
+        <Grid className="collection-item-div" key={product.id}>
+          <Grid
+            sx={{ justifySelf: "center" }}
+            className="collection-item"
+            onClick={() => displayItem(product.product, product.id)}
+          >
             <img className="collection-thumbnail" src={product.imageBuffer} />
           </Grid>
-          <Grid>
-            <Grid>{product.title}</Grid>
+          <Grid container>
+            <Grid xs={6} sx={{ textAlign: "left" }}>
+              {product.title}
+            </Grid>
+            <Grid xs={6} sx={{ textAlign: "right" }}>
+              <button
+                className="delete-button"
+                onClick={() => deleteItem(product.id)}
+              >
+                Delete
+              </button>
+            </Grid>
           </Grid>
         </Grid>
       );
@@ -45,7 +54,7 @@ const AdminProductsC: FC = () => {
 
   const pageCount = Math.ceil(products.length / itemsPerPage);
 
-  const changePage = ({selected}: {selected:number}): void => {
+  const changePage = ({ selected }: { selected: number }): void => {
     setPageNumber(selected);
   };
 
@@ -74,7 +83,6 @@ const AdminProductsC: FC = () => {
           }
         }
         setProducts(productResponse.data.data.products);
-
       } catch (err) {
         console.log(err);
       }
@@ -90,14 +98,37 @@ const AdminProductsC: FC = () => {
     }
   };
 
+  const deleteItem = async (id: string) => {
+    try {
+      await IndexAPI.delete(`/admin/products/delete/${id}`);
+      setProducts(
+        products.filter((product) => {
+          return product.id !== id;
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
-      <AddProduct open={open} handleClose={handleClose}/>
+      <AddProduct open={open} handleClose={handleClose} />
       <AdminAccountNavC />
       <AdminMenuNavC />
       <div className="main-body">
-        <Grid sx={{ textAlign: 'right', paddingRight: "50px" }}>
-          <Button onClick={handleOpen} sx={{ fontFamily: "Rajdhani", fontSize: "20px", color: "white", textTransform: "none"}}><a>add product</a></Button>
+        <Grid sx={{ textAlign: "right", paddingRight: "50px" }}>
+          <Button
+            onClick={handleOpen}
+            sx={{
+              fontFamily: "Rajdhani",
+              fontSize: "20px",
+              color: "white",
+              textTransform: "none",
+            }}
+          >
+            <a>add product</a>
+          </Button>
         </Grid>
         <StoreMenuC />
         <div className="thumbnail-display">{displayItems}</div>
@@ -110,7 +141,10 @@ const AdminProductsC: FC = () => {
           previousLinkClassName={"prevButton"}
           nextLinkClassName={"nextButton"}
           disabledClassName={"disabledButton"}
-          activeClassName={"activeButton"} pageRangeDisplayed={5} marginPagesDisplayed={5}/>
+          activeClassName={"activeButton"}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={5}
+        />
       </div>
       <FooterC />
     </div>

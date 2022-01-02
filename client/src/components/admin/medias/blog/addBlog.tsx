@@ -10,11 +10,11 @@ interface IModalState {
 const AdminAddBlogC = (props: IModalState) => {
 
   const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [images, setImages] = useState<File>();
-  const [info, setInfo] = useState<string>("");
 
   const titleInput = useRef(null);
-  const infoInput = useRef(null);
+  const contentInput = useRef(null);
 
   //insures that the .env file is only run in a development environment and not a production environment
   if (process.env.NODE_ENV !== "production") {
@@ -29,10 +29,10 @@ const AdminAddBlogC = (props: IModalState) => {
         let formData = new FormData();
 
         formData.append("title", title);
+        formData.append("content", content);
         formData.append("images", images);
-        formData.append("info", info);
 
-        await IndexAPI.post("/admin/media/create", formData, {
+        await IndexAPI.post("/admin/media/blog/create", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => console.log(res))
@@ -130,12 +130,12 @@ const AdminAddBlogC = (props: IModalState) => {
                     />
                   </Grid>
                   <Grid className="admin-form-field">
-                    <label className="admin-label">Info:</label>
+                    <label className="admin-label">Content:</label>
                     <textarea
-                      value={info}
-                      ref={infoInput}
-                      onChange={(e) => setInfo(e.target.value)}
-                      name="message"
+                      value={content}
+                      ref={contentInput}
+                      onChange={(e) => setContent(e.target.value)}
+                      name="content"
                       rows={19}
                       required
                     ></textarea>

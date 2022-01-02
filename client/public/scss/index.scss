@@ -440,13 +440,10 @@ button {
   padding: 50px 200px;
 }
 
-.collection-item-div {
-  cursor: pointer;
-}
-
 .collection-item {
   text-align: center;
   justify-self: center;
+  cursor: pointer;
 }
 
 .collection-thumbnail {
@@ -489,6 +486,16 @@ button {
   height: auto;
   width: 100%;
   max-height: 440px;
+}
+
+.blog-banner {
+
+}
+
+.blog-banner-image {
+  border-style: none;
+  height: 300px;
+  width: 100%;
 }
 
 .image-thumbnail {
@@ -801,9 +808,7 @@ label {
 }
 
 .delete-button {
-  cursor: pointer;
-  font-weight: 900;
-  font-size: 20px;
+  background-color: rgb(190, 0, 0);
 }
 
 .paginationButtons {
